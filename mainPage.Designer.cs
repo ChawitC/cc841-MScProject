@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.intensitySelectTrackBar = new System.Windows.Forms.TrackBar();
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.previewButton = new System.Windows.Forms.Button();
@@ -50,12 +50,16 @@
             this.presetButton1 = new System.Windows.Forms.Button();
             this.cloneModeCheckBox = new System.Windows.Forms.CheckBox();
             this.toggleModeCheckBox = new System.Windows.Forms.CheckBox();
-            this.presetButton2 = new System.Windows.Forms.Button();
             this.loadCustomButton1 = new System.Windows.Forms.Button();
             this.loadCustomButton2 = new System.Windows.Forms.Button();
             this.saveCustomButton1 = new System.Windows.Forms.Button();
             this.saveCustomButton2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            this.presetButton3 = new System.Windows.Forms.Button();
+            this.commitButton = new System.Windows.Forms.Button();
+            this.historyLabel = new System.Windows.Forms.Label();
+            this.undoButton = new System.Windows.Forms.Button();
+            this.presetButton2 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -69,18 +73,18 @@
             this.button1.Text = "1";
             this.button1.UseVisualStyleBackColor = false;
             // 
-            // trackBar1
+            // intensitySelectTrackBar
             // 
-            this.trackBar1.BackColor = System.Drawing.SystemColors.Control;
-            this.trackBar1.Location = new System.Drawing.Point(1146, 133);
-            this.trackBar1.Maximum = 51;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.trackBar1.Size = new System.Drawing.Size(69, 435);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.intensitySelectTrackBar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.intensitySelectTrackBar.Location = new System.Drawing.Point(1151, 133);
+            this.intensitySelectTrackBar.Maximum = 51;
+            this.intensitySelectTrackBar.Name = "intensitySelectTrackBar";
+            this.intensitySelectTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.intensitySelectTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.intensitySelectTrackBar.Size = new System.Drawing.Size(69, 435);
+            this.intensitySelectTrackBar.TabIndex = 1;
+            this.intensitySelectTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.intensitySelectTrackBar.Scroll += new System.EventHandler(this.intensitySelect_Scroll);
             // 
             // button2
             // 
@@ -297,16 +301,6 @@
             this.toggleModeCheckBox.UseVisualStyleBackColor = true;
             this.toggleModeCheckBox.CheckedChanged += new System.EventHandler(this.ToggleIndexIntensityCheckbox_CheckedChanged);
             // 
-            // presetButton2
-            // 
-            this.presetButton2.Location = new System.Drawing.Point(306, 12);
-            this.presetButton2.Name = "presetButton2";
-            this.presetButton2.Size = new System.Drawing.Size(124, 66);
-            this.presetButton2.TabIndex = 23;
-            this.presetButton2.Tag = "p2";
-            this.presetButton2.Text = "Load Preset 2";
-            this.presetButton2.UseVisualStyleBackColor = true;
-            // 
             // loadCustomButton1
             // 
             this.loadCustomButton1.Location = new System.Drawing.Point(176, 657);
@@ -347,17 +341,70 @@
             this.saveCustomButton2.Text = "Save Custom Pattern 2";
             this.saveCustomButton2.UseVisualStyleBackColor = true;
             // 
+            // presetButton3
+            // 
+            this.presetButton3.Location = new System.Drawing.Point(436, 12);
+            this.presetButton3.Name = "presetButton3";
+            this.presetButton3.Size = new System.Drawing.Size(124, 66);
+            this.presetButton3.TabIndex = 28;
+            this.presetButton3.Tag = "p3";
+            this.presetButton3.Text = "Load Preset 3";
+            this.presetButton3.UseVisualStyleBackColor = true;
+            // 
+            // commitButton
+            // 
+            this.commitButton.Location = new System.Drawing.Point(1133, 729);
+            this.commitButton.Name = "commitButton";
+            this.commitButton.Size = new System.Drawing.Size(96, 68);
+            this.commitButton.TabIndex = 29;
+            this.commitButton.Text = "Commit";
+            this.commitButton.UseVisualStyleBackColor = true;
+            this.commitButton.Click += new System.EventHandler(this.commitButton_Click);
+            // 
+            // historyLabel
+            // 
+            this.historyLabel.AutoSize = true;
+            this.historyLabel.Location = new System.Drawing.Point(249, 833);
+            this.historyLabel.Name = "historyLabel";
+            this.historyLabel.Size = new System.Drawing.Size(127, 20);
+            this.historyLabel.TabIndex = 30;
+            this.historyLabel.Text = "History Message";
+            // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(1235, 574);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(96, 68);
+            this.undoButton.TabIndex = 31;
+            this.undoButton.Text = "Undo";
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
+            // presetButton2
+            // 
+            this.presetButton2.Location = new System.Drawing.Point(306, 12);
+            this.presetButton2.Name = "presetButton2";
+            this.presetButton2.Size = new System.Drawing.Size(124, 66);
+            this.presetButton2.TabIndex = 33;
+            this.presetButton2.Tag = "p2";
+            this.presetButton2.Text = "Load Preset 2";
+            this.presetButton2.UseVisualStyleBackColor = true;
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(1351, 862);
+            this.Controls.Add(this.presetButton2);
+            this.Controls.Add(this.undoButton);
+            this.Controls.Add(this.historyLabel);
+            this.Controls.Add(this.commitButton);
+            this.Controls.Add(this.presetButton3);
             this.Controls.Add(this.saveCustomButton2);
             this.Controls.Add(this.saveCustomButton1);
             this.Controls.Add(this.loadCustomButton2);
             this.Controls.Add(this.loadCustomButton1);
-            this.Controls.Add(this.presetButton2);
             this.Controls.Add(this.toggleModeCheckBox);
             this.Controls.Add(this.cloneModeCheckBox);
             this.Controls.Add(this.presetButton1);
@@ -378,11 +425,11 @@
             this.Controls.Add(this.previewButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.trackBar1);
+            this.Controls.Add(this.intensitySelectTrackBar);
             this.Controls.Add(this.button1);
             this.Name = "mainPage";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -391,7 +438,7 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.TrackBar intensitySelectTrackBar;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button previewButton;
@@ -412,11 +459,15 @@
         private System.Windows.Forms.Button presetButton1;
         private System.Windows.Forms.CheckBox cloneModeCheckBox;
         private System.Windows.Forms.CheckBox toggleModeCheckBox;
-        private System.Windows.Forms.Button presetButton2;
         private System.Windows.Forms.Button loadCustomButton1;
         private System.Windows.Forms.Button loadCustomButton2;
         private System.Windows.Forms.Button saveCustomButton1;
         private System.Windows.Forms.Button saveCustomButton2;
+        private System.Windows.Forms.Button presetButton3;
+        private System.Windows.Forms.Button commitButton;
+        private System.Windows.Forms.Label historyLabel;
+        private System.Windows.Forms.Button undoButton;
+        private System.Windows.Forms.Button presetButton2;
     }
 }
 
