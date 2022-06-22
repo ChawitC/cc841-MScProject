@@ -23,7 +23,8 @@ namespace cc841.MScProject
         bool cloneMode = false;
         bool toggleMode = false;
         List<Button> buttonsList = new List<Button>();
-        Stack<int[]> historyIntensityStack = new Stack<int[]>();
+        Stack<int[]> historyUndoStack = new Stack<int[]>();
+        Stack<int[]> historyRedoStack = new Stack<int[]>();
 
         public mainPage()
         {
@@ -50,6 +51,11 @@ namespace cc841.MScProject
 
             // Initializing
             loadSavedArray(workspaceArray);
+            int[] pushArray = new int[16];
+            workspaceArray.CopyTo(pushArray, 0);
+            //historyUndoStack.Push(pushArray);
+            Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+
         }
 
         public static Color ColorFromHSV(double hue)
@@ -143,26 +149,40 @@ namespace cc841.MScProject
             int arrayIndex = Int32.Parse(buttonText);
             arrayIndex -= 1; //step down since an array's index starts from 0
 
-            if (!cloneMode) // Input value from trackBar
+            if (workspaceArray[arrayIndex] != selectedColor) 
+                //if the button's current color is the same as selected color, don't perform any action.
             {
-                //write to History Stack
-                int[] pushArray = new int[16];
-                workspaceArray.CopyTo(pushArray, 0);
-                historyIntensityStack.Push(pushArray);
+                if (!cloneMode) // Input value from trackBar
+                {
 
-                workspaceArray[arrayIndex] = selectedColor;
-                ((Button)sender).BackColor = ColorFromHSV(selectedColor);
+                    //write to History Stack (Currently Bugged for redo to make it work for Undo, to flip move this block to <-DOWN HERE->
+                    int[] pushUndoArray = new int[16];
+                    //int[] pushRedoArray = new int[16];
+                    workspaceArray.CopyTo(pushUndoArray, 0);
+                    //workspaceArray.CopyTo(pushRedoArray, 0);
+                    historyUndoStack.Push(pushUndoArray);
+                    historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+                    //historyRedoStack.Push(pushRedoArray);
+                    Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
-                // Update Text on button depending on which display mode is selected
-                if (!toggleMode) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
-                else { ((Button)sender).Text = selectedColor.ToString(); }
-                
-            }
-            else //Clone Input value from selected button
-            {
-                previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
-                previewButton.Text = workspaceArray[arrayIndex].ToString();
-                intensitySelectTrackBar.Value = workspaceArray[arrayIndex] / 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
+
+                    workspaceArray[arrayIndex] = selectedColor;
+                    ((Button)sender).BackColor = ColorFromHSV(selectedColor);
+
+                    // Update Text on button depending on which display mode is selected
+                    if (!toggleMode) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
+                    else { ((Button)sender).Text = selectedColor.ToString(); }
+
+                    //<-DOWN HERE->
+                    //If moved here undo will be bugged instead
+
+                }
+                else //Clone Input value from selected button
+                {
+                    previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
+                    previewButton.Text = workspaceArray[arrayIndex].ToString();
+                    intensitySelectTrackBar.Value = workspaceArray[arrayIndex] / 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
+                }
             }
 
         }
@@ -206,11 +226,30 @@ namespace cc841.MScProject
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            if (historyIntensityStack.Count > 0)
+            if (historyUndoStack.Count > 0)
             {
-                Debug.WriteLine("Stack Size:" + historyIntensityStack.Count.ToString());
-                historyIntensityStack.Pop().CopyTo(workspaceArray, 0);
+                Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                int[] pushArray = new int[16];
+                historyUndoStack.Pop().CopyTo(pushArray, 0);
+                pushArray.CopyTo(workspaceArray, 0);
                 loadSavedArray(workspaceArray);
+                historyRedoStack.Push(pushArray);
+                Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+            }
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            if (historyRedoStack.Count > 0)
+            {
+                Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                int[] pushArray = new int[16];
+                historyRedoStack.Pop().CopyTo(pushArray, 0);
+                pushArray.CopyTo(workspaceArray, 0);
+                loadSavedArray(workspaceArray);
+                historyUndoStack.Push(pushArray);
+                Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+
             }
         }
     }
