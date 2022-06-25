@@ -33,6 +33,11 @@ namespace cc841.MScProject
             buttonsList = new List<Button>{
             button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,
             button11, button12, button13, button14, button15, button16//, button17, button18, button19,
+            //button21, button22, button23, button24, button25, button26, button27, button28, button29,
+            //button31, button32, button33, button34, button35, button36, button37, button38, button39,
+            //button41, button42, button43, button44, button45, button46, button47, button48, button49,
+            //button51, button52, button53, button54, button55, button56, button57, button58, button59,
+            //button61, button62, button63
             };
 
             for (int i = 0; i < buttonsList.Count; i++)
@@ -117,6 +122,13 @@ namespace cc841.MScProject
 
         private void PresetsButton_Click(object sender, EventArgs e)
         {
+            //currently it is possible to Undo to Before clicking the presets
+            //Redo to newly selected presets are also possible
+            int[] pushUndoArray = new int[16];
+            workspaceArray.CopyTo(pushUndoArray, 0);
+            historyUndoStack.Push(pushUndoArray);
+            historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+
             if (((Button)sender).Tag.ToString() == "p1")
             {
                 savedArray1.CopyTo(workspaceArray,0);
@@ -155,14 +167,11 @@ namespace cc841.MScProject
                 if (!cloneMode) // Input value from trackBar
                 {
 
-                    //write to History Stack (Currently Bugged for redo to make it work for Undo, to flip move this block to <-DOWN HERE->
+                    //write to History Stack
                     int[] pushUndoArray = new int[16];
-                    //int[] pushRedoArray = new int[16];
                     workspaceArray.CopyTo(pushUndoArray, 0);
-                    //workspaceArray.CopyTo(pushRedoArray, 0);
                     historyUndoStack.Push(pushUndoArray);
                     historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-                    //historyRedoStack.Push(pushRedoArray);
                     Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
 
@@ -229,11 +238,15 @@ namespace cc841.MScProject
             if (historyUndoStack.Count > 0)
             {
                 Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                int[] pushArray = new int[16];
-                historyUndoStack.Pop().CopyTo(pushArray, 0);
-                pushArray.CopyTo(workspaceArray, 0);
+                int[] pushArrayUndo = new int[16];
+                int[] pushArrayRedo = new int[16];
+                // save current layout to Redo stack first
+                workspaceArray.CopyTo(pushArrayRedo, 0);
+                historyRedoStack.Push(pushArrayRedo);
+                // load top of Undostack
+                historyUndoStack.Pop().CopyTo(pushArrayUndo, 0);
+                pushArrayUndo.CopyTo(workspaceArray, 0);
                 loadSavedArray(workspaceArray);
-                historyRedoStack.Push(pushArray);
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
@@ -243,11 +256,15 @@ namespace cc841.MScProject
             if (historyRedoStack.Count > 0)
             {
                 Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                int[] pushArray = new int[16];
-                historyRedoStack.Pop().CopyTo(pushArray, 0);
-                pushArray.CopyTo(workspaceArray, 0);
+                int[] pushArrayUndo = new int[16];
+                int[] pushArrayRedo = new int[16];
+                // save current layout to Redo stack first
+                workspaceArray.CopyTo(pushArrayUndo, 0);
+                historyUndoStack.Push(pushArrayUndo);
+                // load top of Undostack
+                historyRedoStack.Pop().CopyTo(pushArrayRedo, 0);
+                pushArrayRedo.CopyTo(workspaceArray, 0);
                 loadSavedArray(workspaceArray);
-                historyUndoStack.Push(pushArray);
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
             }
