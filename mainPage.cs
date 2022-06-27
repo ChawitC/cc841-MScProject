@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,11 +16,13 @@ namespace cc841.MScProject
     {
         int selectedColor = 0;
         int[] workspaceArray = new int[16];
+        // presets are loaded into programs and should not be changeable
         int[] savedArray1 = new int[16] {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75} ;
         int[] savedArray2 = new int[16] {100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175 };
         int[] savedArray3 = new int[16] { 5, 10, 15, 20, 25, 30, 35, 40, 140, 145, 150, 155, 160, 165, 170, 175 };
-        int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
-        int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
+        // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
+        //int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
+        //int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
         bool cloneMode = false;
         bool toggleMode = false;
         List<Button> buttonsList = new List<Button>();
@@ -55,7 +58,7 @@ namespace cc841.MScProject
             saveCustomButton2.Click += saveWorkspaceToCustom_Click;
 
             // Initializing
-            loadSavedArray(workspaceArray);
+            updateWorkspaceColor(workspaceArray);
             int[] pushArray = new int[16];
             workspaceArray.CopyTo(pushArray, 0);
             //historyUndoStack.Push(pushArray);
@@ -70,6 +73,7 @@ namespace cc841.MScProject
             //in our case there is no change in Saturation or Value
             int saturation = 1; 
             int value = 1;
+            if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
             hue = 255 - hue; //inverting value so that 255 is represeting red, and 0 representing blue
             //original Hue spectrum runs from 0 to 360, but we decided to use only 0-255 since it is representatively sufficient.
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
@@ -95,7 +99,7 @@ namespace cc841.MScProject
                 return Color.FromArgb(255, v, p, q);
         }
 
-        public void loadSavedArray (int[] savedArray)
+        public void updateWorkspaceColor (int[] savedArray)
         {
            for (int i = 0; i < savedArray.Length; i++)
             {
@@ -112,12 +116,44 @@ namespace cc841.MScProject
         {
             if (((Button)sender).Tag.ToString() == "sc1")
             {
-                workspaceArray.CopyTo(customArray1, 0);
+                //workspaceArray.CopyTo(customArray1, 0);
+                writeArrayToFile("custom1.txt");
             }
             if (((Button)sender).Tag.ToString() == "sc2")
             {
-                workspaceArray.CopyTo(customArray2, 0);
+                //workspaceArray.CopyTo(customArray2, 0);
+                writeArrayToFile("custom2.txt");
             }
+        }
+
+        public void readArrayFromFile(string filename)
+        {
+            // Code adapted from https://social.msdn.microsoft.com/Forums/vstudio/en-US/3ea018ab-ffb0-427a-992a-4e78efcbe1f7/read-text-file-insert-data-into-array?forum=csharpgeneral
+            // Number is read from save file, one line at a time, put into list and parsed to int which is then saved to workspace.
+            List<int> temporarylist = new List<int>();
+            int counter = 0;
+            string[] stringArray = System.IO.File.ReadAllLines(@"C:\Users\ASUS\source\repos\cc841-MScProject\"+filename);
+            foreach (string readNumber in stringArray)
+            {
+                temporarylist.Add(Convert.ToInt32(readNumber.Trim()));
+                workspaceArray[counter] = Convert.ToInt32(readNumber.Trim());
+                ++counter;
+                Debug.WriteLine("Value of " + readNumber + " is recorded to workspaceArray[" + counter.ToString() + "]");
+            }
+        }
+
+        public void writeArrayToFile(string filename)
+        {
+            // Code adapted from https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
+            // Convert workspace array (int) into array of strings  
+            string[] writtenNumbers = workspaceArray.Select(x => x.ToString()).ToArray();
+            // Write array of strings to a file using WriteAllLines.  
+            // If the file does not exists, it will create a new file.  
+            // This method automatically opens the file, writes to it, and closes file  
+            File.WriteAllLines(@"C:\Users\ASUS\source\repos\cc841-MScProject\" + filename, writtenNumbers);
+            // Debug : Read the file  
+            string readText = File.ReadAllText(@"C:\Users\ASUS\source\repos\cc841-MScProject\" + filename);
+            Debug.WriteLine("The text file " + filename + " is now as follows:\n" + readText);
         }
 
         private void PresetsButton_Click(object sender, EventArgs e)
@@ -127,34 +163,40 @@ namespace cc841.MScProject
             int[] pushUndoArray = new int[16];
             workspaceArray.CopyTo(pushUndoArray, 0);
             historyUndoStack.Push(pushUndoArray);
+            undoButton.BackColor = SystemColors.Control;
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+            redoButton.BackColor = SystemColors.ControlDark;
+
 
             if (((Button)sender).Tag.ToString() == "p1")
             {
                 savedArray1.CopyTo(workspaceArray,0);
-                loadSavedArray(workspaceArray);
+                updateWorkspaceColor(workspaceArray);
             }
             else if (((Button)sender).Tag.ToString() == "p2")
             {
                 savedArray2.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                updateWorkspaceColor(workspaceArray);
             }
             else if (((Button)sender).Tag.ToString() == "p3")
             {
                 savedArray3.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                updateWorkspaceColor(workspaceArray);
             }
             else if (((Button)sender).Tag.ToString() == "lc1")
             {
-                customArray1.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                //customArray1.CopyTo(workspaceArray, 0);
+                readArrayFromFile("custom1.txt");
+                updateWorkspaceColor(workspaceArray);
             }
             else if (((Button)sender).Tag.ToString() == "lc2")
             {
-                customArray2.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                //customArray2.CopyTo(workspaceArray, 0);
+                readArrayFromFile("custom2.txt");
+                updateWorkspaceColor(workspaceArray);
             }
         }
+
         private void Button_Click(object sender, EventArgs e)
         {
             string buttonText = ((Button)sender).Tag.ToString();
@@ -171,7 +213,9 @@ namespace cc841.MScProject
                     int[] pushUndoArray = new int[16];
                     workspaceArray.CopyTo(pushUndoArray, 0);
                     historyUndoStack.Push(pushUndoArray);
+                    undoButton.BackColor = SystemColors.Control;
                     historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+                    redoButton.BackColor = SystemColors.ControlDark;
                     Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
 
@@ -182,8 +226,6 @@ namespace cc841.MScProject
                     if (!toggleMode) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
                     else { ((Button)sender).Text = selectedColor.ToString(); }
 
-                    //<-DOWN HERE->
-                    //If moved here undo will be bugged instead
 
                 }
                 else //Clone Input value from selected button
@@ -222,7 +264,6 @@ namespace cc841.MScProject
                 else { buttonsList[i].Text = i.ToString(); }
             }
         }
-
         private void commitButton_Click(object sender, EventArgs e)
         {
             label2.Text = "Inputs sent:";
@@ -232,7 +273,6 @@ namespace cc841.MScProject
                 label2.Text += " " + workspaceArray[i].ToString();
             }
         }
-
         private void undoButton_Click(object sender, EventArgs e)
         {
             if (historyUndoStack.Count > 0)
@@ -246,11 +286,13 @@ namespace cc841.MScProject
                 // load top of Undostack
                 historyUndoStack.Pop().CopyTo(pushArrayUndo, 0);
                 pushArrayUndo.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                updateWorkspaceColor(workspaceArray);
+                if (historyUndoStack.Count > 0) { undoButton.BackColor = SystemColors.Control; }
+                else { undoButton.BackColor = SystemColors.ControlDark; }
+                redoButton.BackColor = SystemColors.Control;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
-
         private void redoButton_Click(object sender, EventArgs e)
         {
             if (historyRedoStack.Count > 0)
@@ -264,7 +306,10 @@ namespace cc841.MScProject
                 // load top of Undostack
                 historyRedoStack.Pop().CopyTo(pushArrayRedo, 0);
                 pushArrayRedo.CopyTo(workspaceArray, 0);
-                loadSavedArray(workspaceArray);
+                updateWorkspaceColor(workspaceArray);
+                if (historyRedoStack.Count > 0) { redoButton.BackColor = SystemColors.Control; }
+                else { redoButton.BackColor = SystemColors.ControlDark; }
+                undoButton.BackColor = SystemColors.Control;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
             }
