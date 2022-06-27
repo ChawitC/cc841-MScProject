@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,7 +29,8 @@ namespace cc841.MScProject
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
         Stack<int[]> historyRedoStack = new Stack<int[]>();
-
+        string filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString() + "\\SavedCustomInputs\\";
+        
         public mainPage()
         {
             InitializeComponent();
@@ -61,14 +63,13 @@ namespace cc841.MScProject
             updateWorkspaceColor(workspaceArray);
             int[] pushArray = new int[16];
             workspaceArray.CopyTo(pushArray, 0);
-            //historyUndoStack.Push(pushArray);
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-
+            Debug.WriteLine(filepath);
         }
 
         public static Color ColorFromHSV(double hue)
         {
-            // .NET frame work does not have built-in RGB > HSV or HSV > Color conversion
+            // .NET framework does not have built-in RGB > HSV or HSV > Color conversion
             //adapted from https://stackoverflow.com/questions/1335426/is-there-a-built-in-c-net-system-api-for-hsv-to-rgb
             //in our case there is no change in Saturation or Value
             int saturation = 1; 
@@ -108,8 +109,10 @@ namespace cc841.MScProject
                 {
                     buttonsList[i].Text = savedArray[i].ToString();
                 }
-            }
-           
+                // recolor button's text to white if color is dark blue or dark red.
+                if (savedArray[i] <= 40 || savedArray[i] >= 235) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                else { buttonsList[i].ForeColor = SystemColors.ControlText; }
+            }    
         }
 
         public void saveWorkspaceToCustom_Click(object sender, EventArgs e)
@@ -132,7 +135,7 @@ namespace cc841.MScProject
             // Number is read from save file, one line at a time, put into list and parsed to int which is then saved to workspace.
             List<int> temporarylist = new List<int>();
             int counter = 0;
-            string[] stringArray = System.IO.File.ReadAllLines(@"C:\Users\ASUS\source\repos\cc841-MScProject\"+filename);
+            string[] stringArray = System.IO.File.ReadAllLines(@filepath+filename);
             foreach (string readNumber in stringArray)
             {
                 temporarylist.Add(Convert.ToInt32(readNumber.Trim()));
@@ -150,9 +153,9 @@ namespace cc841.MScProject
             // Write array of strings to a file using WriteAllLines.  
             // If the file does not exists, it will create a new file.  
             // This method automatically opens the file, writes to it, and closes file  
-            File.WriteAllLines(@"C:\Users\ASUS\source\repos\cc841-MScProject\" + filename, writtenNumbers);
+            File.WriteAllLines(@filepath + filename, writtenNumbers);
             // Debug : Read the file  
-            string readText = File.ReadAllText(@"C:\Users\ASUS\source\repos\cc841-MScProject\" + filename);
+            string readText = File.ReadAllText(@filepath + filename);
             Debug.WriteLine("The text file " + filename + " is now as follows:\n" + readText);
         }
 
@@ -166,7 +169,6 @@ namespace cc841.MScProject
             undoButton.BackColor = SystemColors.Control;
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
             redoButton.BackColor = SystemColors.ControlDark;
-
 
             if (((Button)sender).Tag.ToString() == "p1")
             {
@@ -218,14 +220,16 @@ namespace cc841.MScProject
                     redoButton.BackColor = SystemColors.ControlDark;
                     Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
-
                     workspaceArray[arrayIndex] = selectedColor;
                     ((Button)sender).BackColor = ColorFromHSV(selectedColor);
+
+                    // recolor button's text to white if color is dark blue or dark red.
+                    if (selectedColor <= 40 || selectedColor >= 235){ ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
+                    else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
                     // Update Text on button depending on which display mode is selected
                     if (!toggleMode) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
                     else { ((Button)sender).Text = selectedColor.ToString(); }
-
 
                 }
                 else //Clone Input value from selected button
@@ -235,7 +239,6 @@ namespace cc841.MScProject
                     intensitySelectTrackBar.Value = workspaceArray[arrayIndex] / 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
                 }
             }
-
         }
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
@@ -243,6 +246,9 @@ namespace cc841.MScProject
             selectedColor = intensitySelectTrackBar.Value * 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
             previewButton.BackColor = ColorFromHSV(selectedColor);
             previewButton.Text = selectedColor.ToString();
+            // recolor preview button's text to white if color is dark blue or dark red.
+            if (selectedColor <= 40 || selectedColor >= 235) { previewButton.ForeColor = SystemColors.ControlLightLight; }
+            else { previewButton.ForeColor = SystemColors.ControlText; }
         }
         private void cloneModeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
@@ -256,10 +262,8 @@ namespace cc841.MScProject
         private void ToggleIndexIntensityCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             toggleMode = toggleModeCheckBox.Checked;
-
             for (int i = 0; i < workspaceArray.Length; i++)
             {
-                
                 if (toggleMode) { buttonsList[i].Text = workspaceArray[i].ToString(); }
                 else { buttonsList[i].Text = i.ToString(); }
             }
@@ -311,7 +315,6 @@ namespace cc841.MScProject
                 else { redoButton.BackColor = SystemColors.ControlDark; }
                 undoButton.BackColor = SystemColors.Control;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-
             }
         }
     }
