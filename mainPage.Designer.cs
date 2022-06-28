@@ -60,6 +60,7 @@
             this.undoButton = new System.Windows.Forms.Button();
             this.presetButton2 = new System.Windows.Forms.Button();
             this.redoButton = new System.Windows.Forms.Button();
+            this.inputTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -78,15 +79,17 @@
             // intensitySelectTrackBar
             // 
             this.intensitySelectTrackBar.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.intensitySelectTrackBar.Location = new System.Drawing.Point(767, 86);
+            this.intensitySelectTrackBar.LargeChange = 1;
+            this.intensitySelectTrackBar.Location = new System.Drawing.Point(764, 86);
             this.intensitySelectTrackBar.Margin = new System.Windows.Forms.Padding(2);
-            this.intensitySelectTrackBar.Maximum = 51;
+            this.intensitySelectTrackBar.Maximum = 1023;
             this.intensitySelectTrackBar.Name = "intensitySelectTrackBar";
             this.intensitySelectTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.intensitySelectTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.intensitySelectTrackBar.Size = new System.Drawing.Size(45, 283);
             this.intensitySelectTrackBar.TabIndex = 1;
-            this.intensitySelectTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.intensitySelectTrackBar.TickFrequency = 64;
+            this.intensitySelectTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.intensitySelectTrackBar.Scroll += new System.EventHandler(this.intensitySelect_Scroll);
             // 
             // button2
@@ -113,6 +116,7 @@
             // 
             // previewButton
             // 
+            this.previewButton.Enabled = false;
             this.previewButton.Location = new System.Drawing.Point(755, 373);
             this.previewButton.Margin = new System.Windows.Forms.Padding(2);
             this.previewButton.Name = "previewButton";
@@ -319,11 +323,11 @@
             this.toggleModeCheckBox.Location = new System.Drawing.Point(749, 447);
             this.toggleModeCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.toggleModeCheckBox.Name = "toggleModeCheckBox";
-            this.toggleModeCheckBox.Size = new System.Drawing.Size(101, 17);
+            this.toggleModeCheckBox.Size = new System.Drawing.Size(110, 17);
             this.toggleModeCheckBox.TabIndex = 22;
-            this.toggleModeCheckBox.Text = "Toggle Intensity";
+            this.toggleModeCheckBox.Text = "Show Input Value";
             this.toggleModeCheckBox.UseVisualStyleBackColor = true;
-            this.toggleModeCheckBox.CheckedChanged += new System.EventHandler(this.ToggleIndexIntensityCheckbox_CheckedChanged);
+            this.toggleModeCheckBox.CheckedChanged += new System.EventHandler(this.ToggleIndexInputCheckbox_CheckedChanged);
             // 
             // loadCustomButton1
             // 
@@ -443,12 +447,23 @@
             this.redoButton.UseVisualStyleBackColor = false;
             this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
             // 
+            // inputTextBox
+            // 
+            this.inputTextBox.Location = new System.Drawing.Point(764, 385);
+            this.inputTextBox.Name = "inputTextBox";
+            this.inputTextBox.Size = new System.Drawing.Size(45, 20);
+            this.inputTextBox.TabIndex = 35;
+            this.inputTextBox.Text = "Input";
+            this.inputTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.inputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputTextBox_KeyPress);
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(901, 560);
+            this.Controls.Add(this.inputTextBox);
             this.Controls.Add(this.redoButton);
             this.Controls.Add(this.presetButton2);
             this.Controls.Add(this.undoButton);
@@ -524,6 +539,7 @@
         private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.Button presetButton2;
         private System.Windows.Forms.Button redoButton;
+        private System.Windows.Forms.TextBox inputTextBox;
     }
 }
 

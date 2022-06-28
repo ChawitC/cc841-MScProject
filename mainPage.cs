@@ -18,9 +18,9 @@ namespace cc841.MScProject
         int selectedColor = 0;
         int[] workspaceArray = new int[16];
         // presets are loaded into programs and should not be changeable
-        int[] savedArray1 = new int[16] {0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75} ;
-        int[] savedArray2 = new int[16] {100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175 };
-        int[] savedArray3 = new int[16] { 5, 10, 15, 20, 25, 30, 35, 40, 140, 145, 150, 155, 160, 165, 170, 175 };
+        int[] savedArray1 = new int[16] { 0, 68, 136, 204, 272, 340, 408, 476, 544, 612, 680, 748, 816, 884, 952, 1020 };
+        int[] savedArray2 = new int[16] {0,17,34,51,68,85,102,119,136,153,170,187,204,221,238,255 };
+        int[] savedArray3 = new int[16] { 768, 785, 802, 819, 836, 853, 870, 887, 904, 921, 938, 955, 972, 989, 1006, 1023 };
         // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
         //int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
         //int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
@@ -74,6 +74,7 @@ namespace cc841.MScProject
             //in our case there is no change in Saturation or Value
             int saturation = 1; 
             int value = 1;
+            hue /= 4; //input value ranges from 0-1023
             if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
             hue = 255 - hue; //inverting value so that 255 is represeting red, and 0 representing blue
             //original Hue spectrum runs from 0 to 360, but we decided to use only 0-255 since it is representatively sufficient.
@@ -110,7 +111,7 @@ namespace cc841.MScProject
                     buttonsList[i].Text = savedArray[i].ToString();
                 }
                 // recolor button's text to white if color is dark blue or dark red.
-                if (savedArray[i] <= 40 || savedArray[i] >= 235) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                if (savedArray[i] <= 160 || savedArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
             }    
         }
@@ -224,7 +225,7 @@ namespace cc841.MScProject
                     ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
                     // recolor button's text to white if color is dark blue or dark red.
-                    if (selectedColor <= 40 || selectedColor >= 235){ ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
+                    if (selectedColor <= 160 || selectedColor >= 940){ ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
                     else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
                     // Update Text on button depending on which display mode is selected
@@ -235,20 +236,17 @@ namespace cc841.MScProject
                 else //Clone Input value from selected button
                 {
                     previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
-                    previewButton.Text = workspaceArray[arrayIndex].ToString();
-                    intensitySelectTrackBar.Value = workspaceArray[arrayIndex] / 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
+                    inputTextBox.Text = workspaceArray[arrayIndex].ToString();
+                    intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
                 }
             }
         }
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
         {
-            selectedColor = intensitySelectTrackBar.Value * 5; //there are 51 steps in trackbars, in an increment of 5, producing minimum 0 and maximum 255
+            selectedColor = intensitySelectTrackBar.Value; //minimum 0 and maximum 1023
             previewButton.BackColor = ColorFromHSV(selectedColor);
-            previewButton.Text = selectedColor.ToString();
-            // recolor preview button's text to white if color is dark blue or dark red.
-            if (selectedColor <= 40 || selectedColor >= 235) { previewButton.ForeColor = SystemColors.ControlLightLight; }
-            else { previewButton.ForeColor = SystemColors.ControlText; }
+            inputTextBox.Text = selectedColor.ToString();
         }
         private void cloneModeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
@@ -256,10 +254,10 @@ namespace cc841.MScProject
             if (!cloneMode) 
             { 
                 previewButton.BackColor = ColorFromHSV(selectedColor);
-                previewButton.Text = selectedColor.ToString();
+                inputTextBox.Text = selectedColor.ToString();
             }
         }
-        private void ToggleIndexIntensityCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void ToggleIndexInputCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             toggleMode = toggleModeCheckBox.Checked;
             for (int i = 0; i < workspaceArray.Length; i++)
@@ -315,6 +313,51 @@ namespace cc841.MScProject
                 else { redoButton.BackColor = SystemColors.ControlDark; }
                 undoButton.BackColor = SystemColors.Control;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+            }
+        }
+
+        private void inputTextBox_TextChanged(object sender, EventArgs e)
+        {
+            inputTextBox.Text = inputTextBox.Text.Trim();
+            //if can be compile to number
+            int textBoxValue = Int32.Parse(inputTextBox.Text);
+            //int textBoxValue = 0;
+            if (textBoxValue < 0) { textBoxValue = 0; }
+            else if (textBoxValue > 1023) { textBoxValue = 1023; }
+            else
+            {
+                selectedColor = textBoxValue;
+                textBoxValue = intensitySelectTrackBar.Value;
+
+            }
+        }
+
+        private void inputTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            inputTextBox.Text = inputTextBox.Text.Trim();
+
+            //Check for Enter Key Press first first
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                //Whatever is in the input field will always be parsable to number due to the conditioning below
+                if (inputTextBox.Text == "") { inputTextBox.Text = "0"; } //if field is empty, set value to 0
+                int textBoxValue = Int32.Parse(inputTextBox.Text);
+                if (textBoxValue < 0) { textBoxValue = 0; MessageBox.Show("Input value cannot be lower than 0"); }
+                else if (textBoxValue > 1023) { textBoxValue = 1023; MessageBox.Show("Input value cannot be higher than 1023"); }
+                else
+                {
+                    selectedColor = textBoxValue;
+                    intensitySelectTrackBar.Value = textBoxValue;
+                    previewButton.BackColor = ColorFromHSV(textBoxValue);
+                    e.Handled = true; //To suppress the Ding sounds, indicating that there is no error.
+                }
+
+            }
+            // Only accepts numbers and backspace, no alphabets or "."
+            else if (!char.IsDigit(e.KeyChar) && (e.KeyChar != (char)8))
+            {
+                MessageBox.Show("Input value can only be numbers");
+                inputTextBox.Text = "";
             }
         }
     }
