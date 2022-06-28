@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -21,15 +22,17 @@ namespace cc841.MScProject
         int[] savedArray1 = new int[16] { 0, 68, 136, 204, 272, 340, 408, 476, 544, 612, 680, 748, 816, 884, 952, 1020 };
         int[] savedArray2 = new int[16] {0,17,34,51,68,85,102,119,136,153,170,187,204,221,238,255 };
         int[] savedArray3 = new int[16] { 768, 785, 802, 819, 836, 853, 870, 887, 904, 921, 938, 955, 972, 989, 1006, 1023 };
+        SerialPort SP = new SerialPort("COM4", 115200);
         // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
         //int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
         //int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
         bool cloneMode = false;
-        bool toggleMode = false;
+        int toggleMode = 1;
+        double degfromvalue = 180.0f / 1024.0f;
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
         Stack<int[]> historyRedoStack = new Stack<int[]>();
-        string filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString() + "\\SavedCustomInputs\\";
+        string filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString();
         
         public mainPage()
         {
@@ -65,6 +68,14 @@ namespace cc841.MScProject
             workspaceArray.CopyTo(pushArray, 0);
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             Debug.WriteLine(filepath);
+
+            // overriding image resources path so that it is relative to the build.
+
+            //Initialize serial port
+            try { SP.Open(); } catch { }
+            if (SP.IsOpen) { historyLabel.Text = "Serial Port Connected"; }
+            else { historyLabel.Text = "Serial Port Disconnected"; }
+
         }
 
         public static Color ColorFromHSV(double hue)
@@ -76,8 +87,8 @@ namespace cc841.MScProject
             int value = 1;
             hue /= 4; //input value ranges from 0-1023
             if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
-            hue = 255 - hue; //inverting value so that 255 is represeting red, and 0 representing blue
-            //original Hue spectrum runs from 0 to 360, but we decided to use only 0-255 since it is representatively sufficient.
+            hue = 255 - hue - 8; //inverting value so that 255 is represeting red, and 0 representing blue
+            //original Hue spectrum runs from 0 to 360, but we decided to use only 8-263 since it is representatively sufficient.
             int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
             double f = hue / 60 - Math.Floor(hue / 60);
 
@@ -106,13 +117,25 @@ namespace cc841.MScProject
            for (int i = 0; i < savedArray.Length; i++)
             {
                 buttonsList[i].BackColor = ColorFromHSV(savedArray[i]);
-                if (toggleMode) //if Toggle Intensity is on, load saved intensity number on the button's text.
-                {
-                    buttonsList[i].Text = savedArray[i].ToString();
-                }
+
                 // recolor button's text to white if color is dark blue or dark red.
                 if (savedArray[i] <= 160 || savedArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
+
+                // display value on each button based on display mode.
+                if (toggleMode == 1)
+                {
+                    buttonsList[i].Text = i.ToString();
+                }
+                else if (toggleMode == 2) //if Toggle Input Value is on, load saved intensity number on the button's text.
+                {
+                    buttonsList[i].Text = savedArray[i].ToString();
+                }
+                else // if (toggleMode == 3) //Degree mode
+                {
+                    buttonsList[i].Text = (Math.Round(savedArray[i]*degfromvalue, 2)).ToString(); //Degree mode
+                }
+                
             }    
         }
 
@@ -121,22 +144,22 @@ namespace cc841.MScProject
             if (((Button)sender).Tag.ToString() == "sc1")
             {
                 //workspaceArray.CopyTo(customArray1, 0);
-                writeArrayToFile("custom1.txt");
+                writeArrayToFile("\\SavedCustomInputs\\custom1.txt");
             }
             if (((Button)sender).Tag.ToString() == "sc2")
             {
                 //workspaceArray.CopyTo(customArray2, 0);
-                writeArrayToFile("custom2.txt");
+                writeArrayToFile("\\SavedCustomInputs\\custom2.txt");
             }
         }
 
-        public void readArrayFromFile(string filename)
+        public void readArrayFromFile(string filenamepath)
         {
             // Code adapted from https://social.msdn.microsoft.com/Forums/vstudio/en-US/3ea018ab-ffb0-427a-992a-4e78efcbe1f7/read-text-file-insert-data-into-array?forum=csharpgeneral
             // Number is read from save file, one line at a time, put into list and parsed to int which is then saved to workspace.
             List<int> temporarylist = new List<int>();
             int counter = 0;
-            string[] stringArray = System.IO.File.ReadAllLines(@filepath+filename);
+            string[] stringArray = System.IO.File.ReadAllLines(@filepath+filenamepath);
             foreach (string readNumber in stringArray)
             {
                 temporarylist.Add(Convert.ToInt32(readNumber.Trim()));
@@ -146,7 +169,7 @@ namespace cc841.MScProject
             }
         }
 
-        public void writeArrayToFile(string filename)
+        public void writeArrayToFile(string filenamepath)
         {
             // Code adapted from https://www.c-sharpcorner.com/article/c-sharp-write-to-file/
             // Convert workspace array (int) into array of strings  
@@ -154,10 +177,10 @@ namespace cc841.MScProject
             // Write array of strings to a file using WriteAllLines.  
             // If the file does not exists, it will create a new file.  
             // This method automatically opens the file, writes to it, and closes file  
-            File.WriteAllLines(@filepath + filename, writtenNumbers);
+            File.WriteAllLines(@filepath + filenamepath, writtenNumbers);
             // Debug : Read the file  
-            string readText = File.ReadAllText(@filepath + filename);
-            Debug.WriteLine("The text file " + filename + " is now as follows:\n" + readText);
+            string readText = File.ReadAllText(@filepath + filenamepath);
+            Debug.WriteLine("The text file " + filenamepath + " is now as follows:\n" + readText);
         }
 
         private void PresetsButton_Click(object sender, EventArgs e)
@@ -189,13 +212,13 @@ namespace cc841.MScProject
             else if (((Button)sender).Tag.ToString() == "lc1")
             {
                 //customArray1.CopyTo(workspaceArray, 0);
-                readArrayFromFile("custom1.txt");
+                readArrayFromFile("\\SavedCustomInputs\\custom1.txt");
                 updateWorkspaceColor(workspaceArray);
             }
             else if (((Button)sender).Tag.ToString() == "lc2")
             {
                 //customArray2.CopyTo(workspaceArray, 0);
-                readArrayFromFile("custom2.txt");
+                readArrayFromFile("\\SavedCustomInputs\\custom2.txt");
                 updateWorkspaceColor(workspaceArray);
             }
         }
@@ -211,7 +234,6 @@ namespace cc841.MScProject
             {
                 if (!cloneMode) // Input value from trackBar
                 {
-
                     //write to History Stack
                     int[] pushUndoArray = new int[16];
                     workspaceArray.CopyTo(pushUndoArray, 0);
@@ -229,9 +251,9 @@ namespace cc841.MScProject
                     else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
                     // Update Text on button depending on which display mode is selected
-                    if (!toggleMode) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
-                    else { ((Button)sender).Text = selectedColor.ToString(); }
-
+                    if (toggleMode == 1) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
+                    else if (toggleMode == 2) { ((Button)sender).Text = selectedColor.ToString(); }
+                    else { ((Button)sender).Text = (Math.Round(selectedColor*degfromvalue, 2)).ToString(); } //Degree mode 1024/180 = 5.68
                 }
                 else //Clone Input value from selected button
                 {
@@ -257,23 +279,43 @@ namespace cc841.MScProject
                 inputTextBox.Text = selectedColor.ToString();
             }
         }
-        private void ToggleIndexInputCheckbox_CheckedChanged(object sender, EventArgs e)
+        private void toggleDisplayModesRadioButtons_CheckedChanged(object sender, EventArgs e)
         {
-            toggleMode = toggleModeCheckBox.Checked;
+            if (modeRadioButton1.Checked) { toggleMode = 1; }
+            else if (modeRadioButton2.Checked) { toggleMode = 2; }
+            else //if (modeRadioButton3.Checked) 
+            { toggleMode = 3; }
+
+            // Updating displayed value on Radio button click depending on selected mode
             for (int i = 0; i < workspaceArray.Length; i++)
             {
-                if (toggleMode) { buttonsList[i].Text = workspaceArray[i].ToString(); }
-                else { buttonsList[i].Text = i.ToString(); }
+                // recolor button's text to white if color is dark blue or dark red.
+                if (workspaceArray[i] <= 160 || workspaceArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                else { buttonsList[i].ForeColor = SystemColors.ControlText; }
+
+                if (toggleMode == 1) { buttonsList[i].Text = i.ToString(); }
+                else if (toggleMode == 2) { buttonsList[i].Text = workspaceArray[i].ToString(); }
+                else //if (toggle Mode == 3) 
+                { buttonsList[i].Text = (Math.Round(workspaceArray[i]*degfromvalue, 2)).ToString(); } //Degree mode
             }
         }
         private void commitButton_Click(object sender, EventArgs e)
         {
-            label2.Text = "Inputs sent:";
-            for (int i = 0; i < workspaceArray.Length; i++)
+            try { SP.Open(); } catch { }
+            String sentData = "2.";
+            if (SP.IsOpen)
             {
-                Debug.WriteLine(".1."+i.ToString()+"."+workspaceArray[i].ToString());
-                label2.Text += " " + workspaceArray[i].ToString();
+                historyLabel.Text = "Serial Port is open";
+                label2.Text = "Single serial input: 2.";
+                for (int i = 0; i < workspaceArray.Length; i++)
+                {
+                    label2.Text += workspaceArray[i].ToString() + ".";
+                    sentData += workspaceArray[i].ToString() + ".";
+                    Debug.WriteLine("4." + i.ToString() + "." + workspaceArray[i].ToString() + ".");
+                }
+                //SP.Write(sentData); //Uncomment this when done mapping, avoid sending incomplete data
             }
+            else { historyLabel.Text = "Serial Port is not open"; }
         }
         private void undoButton_Click(object sender, EventArgs e)
         {
@@ -328,7 +370,6 @@ namespace cc841.MScProject
             {
                 selectedColor = textBoxValue;
                 textBoxValue = intensitySelectTrackBar.Value;
-
             }
         }
 
