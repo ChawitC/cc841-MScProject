@@ -17,12 +17,12 @@ namespace cc841.MScProject
     public partial class mainPage : Form
     {
         int selectedColor = 0;
-        int[] workspaceArray = new int[16];
+        int[] workspaceArray = new int[64];
         // presets are loaded into programs and should not be changeable
-        int[] savedArray1 = new int[16] { 0, 68, 136, 204, 272, 340, 408, 476, 544, 612, 680, 748, 816, 884, 952, 1020 };
-        int[] savedArray2 = new int[16] {0,17,34,51,68,85,102,119,136,153,170,187,204,221,238,255 };
-        int[] savedArray3 = new int[16] { 768, 785, 802, 819, 836, 853, 870, 887, 904, 921, 938, 955, 972, 989, 1006, 1023 };
-        SerialPort SP = new SerialPort("COM4", 115200);
+        int[] savedArray1 = new int[64] { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 784, 800, 816, 832, 848, 864, 880, 896, 912, 928, 944, 960, 976, 992, 1008 };
+        int[] savedArray2 = new int[64] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        int[] savedArray3 = new int[64] { 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+        SerialPort SP = new SerialPort("COM3", 115200);
         // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
         //int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
         //int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
@@ -40,13 +40,15 @@ namespace cc841.MScProject
 
             buttonsList = new List<Button>{
             button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,
-            button11, button12, button13, button14, button15, button16//, button17, button18, button19,
-            //button21, button22, button23, button24, button25, button26, button27, button28, button29,
-            //button31, button32, button33, button34, button35, button36, button37, button38, button39,
-            //button41, button42, button43, button44, button45, button46, button47, button48, button49,
-            //button51, button52, button53, button54, button55, button56, button57, button58, button59,
-            //button61, button62, button63
+            button11, button12, button13, button14, button15, button16, button17, button18, button19, button20,
+            button21, button22, button23, button24, button25, button26, button27, button28, button29, button30,
+            button31, button32, button33, button34, button35, button36, button37, button38, button39, button40,
+            button41, button42, button43, button44, button45, button46, button47, button48, button49, button50,
+            button51, button52, button53, button54, button55, button56, button57, button58, button59, button60,
+            button61, button62, button63, button64
             };
+
+            //Debug.WriteLine(buttonsList.Count);
 
             for (int i = 0; i < buttonsList.Count; i++)
             {
@@ -64,7 +66,7 @@ namespace cc841.MScProject
 
             // Initializing
             updateWorkspaceColor(workspaceArray);
-            int[] pushArray = new int[16];
+            int[] pushArray = new int[64];
             workspaceArray.CopyTo(pushArray, 0);
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             Debug.WriteLine(filepath);
@@ -72,10 +74,30 @@ namespace cc841.MScProject
             // overriding image resources path so that it is relative to the build.
 
             //Initialize serial port
-            try { SP.Open(); } catch { }
-            if (SP.IsOpen) { historyLabel.Text = "Serial Port Connected"; }
-            else { historyLabel.Text = "Serial Port Disconnected"; }
+            CheckSPconnection();
+        }
 
+        public void CheckSPconnection()
+        {
+            // Check Serial Port connection status and updates the status button accordingly.
+            // Checking status is currently not done asynchoronously.
+            // Implemented to be called from most user's action.
+            if (!SP.IsOpen) // Only attempt to open if the status is not current open.
+            {
+                try { SP.Open(); } catch { Debug.WriteLine("Serial Port not Connected"); }
+            }
+            if (SP.IsOpen) 
+            {
+                SPstatusButton.Text = "Connected";
+                SPstatusButton.BackColor = Color.Lime;
+                historyLabel.Text = "Serial Port Connected"; 
+            }
+            else 
+            {
+                SPstatusButton.Text = "Disconnected";
+                SPstatusButton.BackColor = Color.Red;
+                historyLabel.Text = "Serial Port Disconnected"; 
+            }
         }
 
         public static Color ColorFromHSV(double hue)
@@ -125,7 +147,7 @@ namespace cc841.MScProject
                 // display value on each button based on display mode.
                 if (toggleMode == 1)
                 {
-                    buttonsList[i].Text = i.ToString();
+                    buttonsList[i].Text = (i+1).ToString();
                 }
                 else if (toggleMode == 2) //if Toggle Input Value is on, load saved intensity number on the button's text.
                 {
@@ -141,6 +163,7 @@ namespace cc841.MScProject
 
         public void saveWorkspaceToCustom_Click(object sender, EventArgs e)
         {
+            CheckSPconnection();
             if (((Button)sender).Tag.ToString() == "sc1")
             {
                 //workspaceArray.CopyTo(customArray1, 0);
@@ -185,9 +208,10 @@ namespace cc841.MScProject
 
         private void PresetsButton_Click(object sender, EventArgs e)
         {
+            CheckSPconnection();
             //currently it is possible to Undo to Before clicking the presets
             //Redo to newly selected presets are also possible
-            int[] pushUndoArray = new int[16];
+            int[] pushUndoArray = new int[64];
             workspaceArray.CopyTo(pushUndoArray, 0);
             historyUndoStack.Push(pushUndoArray);
             undoButton.BackColor = SystemColors.Control;
@@ -225,6 +249,7 @@ namespace cc841.MScProject
 
         private void Button_Click(object sender, EventArgs e)
         {
+            CheckSPconnection();
             string buttonText = ((Button)sender).Tag.ToString();
             int arrayIndex = Int32.Parse(buttonText);
             arrayIndex -= 1; //step down since an array's index starts from 0
@@ -235,7 +260,7 @@ namespace cc841.MScProject
                 if (!cloneMode) // Input value from trackBar
                 {
                     //write to History Stack
-                    int[] pushUndoArray = new int[16];
+                    int[] pushUndoArray = new int[64];
                     workspaceArray.CopyTo(pushUndoArray, 0);
                     historyUndoStack.Push(pushUndoArray);
                     undoButton.BackColor = SystemColors.Control;
@@ -266,12 +291,14 @@ namespace cc841.MScProject
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
         {
+            //CheckSPconnection(); //keep checking for port here causes too much programme lag.
             selectedColor = intensitySelectTrackBar.Value; //minimum 0 and maximum 1023
             previewButton.BackColor = ColorFromHSV(selectedColor);
             inputTextBox.Text = selectedColor.ToString();
         }
         private void cloneModeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
+            CheckSPconnection();
             cloneMode = cloneModeCheckBox.Checked;
             if (!cloneMode) 
             { 
@@ -281,6 +308,7 @@ namespace cc841.MScProject
         }
         private void toggleDisplayModesRadioButtons_CheckedChanged(object sender, EventArgs e)
         {
+            CheckSPconnection();
             if (modeRadioButton1.Checked) { toggleMode = 1; }
             else if (modeRadioButton2.Checked) { toggleMode = 2; }
             else //if (modeRadioButton3.Checked) 
@@ -301,7 +329,7 @@ namespace cc841.MScProject
         }
         private void commitButton_Click(object sender, EventArgs e)
         {
-            try { SP.Open(); } catch { }
+            CheckSPconnection();
             String sentData = "2.";
             if (SP.IsOpen)
             {
@@ -319,11 +347,12 @@ namespace cc841.MScProject
         }
         private void undoButton_Click(object sender, EventArgs e)
         {
+            CheckSPconnection();
             if (historyUndoStack.Count > 0)
             {
                 Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                int[] pushArrayUndo = new int[16];
-                int[] pushArrayRedo = new int[16];
+                int[] pushArrayUndo = new int[64];
+                int[] pushArrayRedo = new int[64];
                 // save current layout to Redo stack first
                 workspaceArray.CopyTo(pushArrayRedo, 0);
                 historyRedoStack.Push(pushArrayRedo);
@@ -339,11 +368,12 @@ namespace cc841.MScProject
         }
         private void redoButton_Click(object sender, EventArgs e)
         {
+            CheckSPconnection();
             if (historyRedoStack.Count > 0)
             {
                 Debug.WriteLine("(Begin) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                int[] pushArrayUndo = new int[16];
-                int[] pushArrayRedo = new int[16];
+                int[] pushArrayUndo = new int[64];
+                int[] pushArrayRedo = new int[64];
                 // save current layout to Redo stack first
                 workspaceArray.CopyTo(pushArrayUndo, 0);
                 historyUndoStack.Push(pushArrayUndo);
@@ -360,6 +390,7 @@ namespace cc841.MScProject
 
         private void inputTextBox_TextChanged(object sender, EventArgs e)
         {
+            CheckSPconnection();
             inputTextBox.Text = inputTextBox.Text.Trim();
             //if can be compile to number
             int textBoxValue = Int32.Parse(inputTextBox.Text);
@@ -375,8 +406,8 @@ namespace cc841.MScProject
 
         private void inputTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            CheckSPconnection();
             inputTextBox.Text = inputTextBox.Text.Trim();
-
             //Check for Enter Key Press first first
             if (e.KeyChar == (char)Keys.Enter)
             {
