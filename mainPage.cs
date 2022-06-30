@@ -316,22 +316,22 @@ namespace cc841.MScProject
                 savedArray6.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc1 || cib1")
+            else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom1.txt");
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc2 || cib2")
+            else if (((Button)sender).Tag.ToString() == "lc2" || ((Button)sender).Tag.ToString() == "cib2")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom2.txt");
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc3 || cib3")
+            else if (((Button)sender).Tag.ToString() == "lc3" || ((Button)sender).Tag.ToString() == "cib3")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom3.txt");
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc4 || cib4")
+            else if (((Button)sender).Tag.ToString() == "lc4" || ((Button)sender).Tag.ToString() == "cib4")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom4.txt");
                 updateWorkspaceColor(workspaceArray);

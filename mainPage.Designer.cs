@@ -1226,7 +1226,7 @@
             // ci2Label
             // 
             this.ci2Label.AutoSize = true;
-            this.ci2Label.Location = new System.Drawing.Point(184, 325);
+            this.ci2Label.Location = new System.Drawing.Point(184, 329);
             this.ci2Label.Name = "ci2Label";
             this.ci2Label.Size = new System.Drawing.Size(13, 13);
             this.ci2Label.TabIndex = 99;
@@ -1235,7 +1235,7 @@
             // ci1Label
             // 
             this.ci1Label.AutoSize = true;
-            this.ci1Label.Location = new System.Drawing.Point(21, 325);
+            this.ci1Label.Location = new System.Drawing.Point(21, 329);
             this.ci1Label.Name = "ci1Label";
             this.ci1Label.Size = new System.Drawing.Size(13, 13);
             this.ci1Label.TabIndex = 100;
@@ -1244,20 +1244,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 490);
+            this.label1.Location = new System.Drawing.Point(21, 494);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(13, 13);
             this.label1.TabIndex = 108;
-            this.label1.Text = "1";
+            this.label1.Text = "3";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(184, 490);
+            this.label3.Location = new System.Drawing.Point(184, 494);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(13, 13);
             this.label3.TabIndex = 107;
-            this.label3.Text = "2";
+            this.label3.Text = "4";
             // 
             // saveCustomButton4
             // 
@@ -1375,7 +1375,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1064, 661);
+            this.ClientSize = new System.Drawing.Size(1064, 671);
             this.Controls.Add(this.customImageButton4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
