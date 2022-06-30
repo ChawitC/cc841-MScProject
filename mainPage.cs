@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Ports;
@@ -22,18 +23,21 @@ namespace cc841.MScProject
         int[] savedArray1 = new int[64] { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 784, 800, 816, 832, 848, 864, 880, 896, 912, 928, 944, 960, 976, 992, 1008 };
         int[] savedArray2 = new int[64] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
         int[] savedArray3 = new int[64] { 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+        int[] savedArray4 = new int[64] { 1023, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 784, 800, 816, 832, 848, 864, 880, 896, 912, 928, 944, 960, 976, 992, 1008 };
+        int[] savedArray5 = new int[64] { 1023, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        int[] savedArray6 = new int[64] { 1023, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+
         SerialPort SP = new SerialPort("COM3", 115200);
         // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
-        //int[] customArray1 = new int[16] { 0, 15, 10, 15, 20, 125, 30, 35, 40, 45, 150, 55, 60, 165, 70, 75 };
-        //int[] customArray2 = new int[16] { 100, 105, 110, 15, 120, 125, 130, 105, 140, 145, 150, 155, 160, 105, 170, 175 };
         bool cloneMode = false;
         int toggleMode = 1;
         double degfromvalue = 180.0f / 1024.0f;
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
         Stack<int[]> historyRedoStack = new Stack<int[]>();
-        string filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString();
-        
+        static string filepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString();
+
+
         public mainPage()
         {
             InitializeComponent();
@@ -48,8 +52,6 @@ namespace cc841.MScProject
             button61, button62, button63, button64
             };
 
-            //Debug.WriteLine(buttonsList.Count);
-
             for (int i = 0; i < buttonsList.Count; i++)
             {
                 buttonsList[i].Click += Button_Click; // Attach all buttons in the list with button click method.
@@ -58,23 +60,48 @@ namespace cc841.MScProject
             presetButton1.Click += PresetsButton_Click;
             presetButton2.Click += PresetsButton_Click;
             presetButton3.Click += PresetsButton_Click;
+            presetButton4.Click += PresetsButton_Click;
+            presetButton5.Click += PresetsButton_Click;
+            presetButton6.Click += PresetsButton_Click;
             loadCustomButton1.Click += PresetsButton_Click;
+            customImageButton1.Click += PresetsButton_Click;
             loadCustomButton2.Click += PresetsButton_Click;
+            customImageButton2.Click += PresetsButton_Click;
+            loadCustomButton3.Click += PresetsButton_Click;
+            customImageButton3.Click += PresetsButton_Click;
+            loadCustomButton4.Click += PresetsButton_Click;
+            customImageButton4.Click += PresetsButton_Click;
 
             saveCustomButton1.Click += saveWorkspaceToCustom_Click;
             saveCustomButton2.Click += saveWorkspaceToCustom_Click;
+            saveCustomButton3.Click += saveWorkspaceToCustom_Click;
+            saveCustomButton4.Click += saveWorkspaceToCustom_Click;
 
             // Initializing
             updateWorkspaceColor(workspaceArray);
             int[] pushArray = new int[64];
             workspaceArray.CopyTo(pushArray, 0);
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-            Debug.WriteLine(filepath);
+            Debug.WriteLine("current bin path is:" + filepath);
 
             // overriding image resources path so that it is relative to the build.
 
+            // load Saved custom pattern images to preview buttons
+            customImageButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom1.png");
+            customImageButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom2.png");
+
             //Initialize serial port
             CheckSPconnection();
+        }
+
+        public static Image nonLockImageFromFile(string path)
+        {
+            // Taken from https://stackoverflow.com/questions/4803935/free-file-locked-by-new-bitmapfilepath/8701748
+            //function Image.FromFile that does not cause file locking
+            var bytes = File.ReadAllBytes(path);
+            var ms = new MemoryStream(bytes);
+            var img = Image.FromStream(ms);
+            return img;
         }
 
         public void CheckSPconnection()
@@ -97,6 +124,38 @@ namespace cc841.MScProject
                 SPstatusButton.Text = "Disconnected";
                 SPstatusButton.BackColor = Color.Red;
                 historyLabel.Text = "Serial Port Disconnected"; 
+            }
+        }
+
+        public void CaptureWorkspaceImage(string sentImgName)
+        {
+            Rectangle bounds = this.Bounds; // Get location bound of the application from screen size
+            using (Bitmap bitmap = new Bitmap(450, 450))
+            {
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    //Capture picture from indicated coordinate of workspace area
+                    g.CopyFromScreen(new Point(bounds.Left + 433, bounds.Top + 122), Point.Empty, new Size(450, 450));
+                }
+                //bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png); //Does not work 
+                bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png);
+
+                if (sentImgName == "custom1.png")
+                { 
+                    customImageButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\" + sentImgName);
+                }
+                else if (sentImgName == "custom2.png")
+                {
+                    customImageButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\" + sentImgName);
+                }
+                else if (sentImgName == "custom3.png")
+                {
+                    customImageButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\" + sentImgName);
+                }
+                else if (sentImgName == "custom4.png")
+                {
+                    customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\" + sentImgName);
+                }
             }
         }
 
@@ -156,8 +215,7 @@ namespace cc841.MScProject
                 else // if (toggleMode == 3) //Degree mode
                 {
                     buttonsList[i].Text = (Math.Round(savedArray[i]*degfromvalue, 2)).ToString(); //Degree mode
-                }
-                
+                }     
             }    
         }
 
@@ -166,13 +224,23 @@ namespace cc841.MScProject
             CheckSPconnection();
             if (((Button)sender).Tag.ToString() == "sc1")
             {
-                //workspaceArray.CopyTo(customArray1, 0);
                 writeArrayToFile("\\SavedCustomInputs\\custom1.txt");
+                CaptureWorkspaceImage("custom1.png");
             }
             if (((Button)sender).Tag.ToString() == "sc2")
             {
-                //workspaceArray.CopyTo(customArray2, 0);
                 writeArrayToFile("\\SavedCustomInputs\\custom2.txt");
+                CaptureWorkspaceImage("custom2.png");
+            }
+            if (((Button)sender).Tag.ToString() == "sc3")
+            {
+                writeArrayToFile("\\SavedCustomInputs\\custom3.txt");
+                CaptureWorkspaceImage("custom3.png");
+            }
+            if (((Button)sender).Tag.ToString() == "sc4")
+            {
+                writeArrayToFile("\\SavedCustomInputs\\custom4.txt");
+                CaptureWorkspaceImage("custom4.png");
             }
         }
 
@@ -233,16 +301,39 @@ namespace cc841.MScProject
                 savedArray3.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc1")
+            else if (((Button)sender).Tag.ToString() == "p4")
             {
-                //customArray1.CopyTo(workspaceArray, 0);
+                savedArray4.CopyTo(workspaceArray, 0);
+                updateWorkspaceColor(workspaceArray);
+            }
+            else if (((Button)sender).Tag.ToString() == "p5")
+            {
+                savedArray5.CopyTo(workspaceArray, 0);
+                updateWorkspaceColor(workspaceArray);
+            }
+            else if (((Button)sender).Tag.ToString() == "p6")
+            {
+                savedArray6.CopyTo(workspaceArray, 0);
+                updateWorkspaceColor(workspaceArray);
+            }
+            else if (((Button)sender).Tag.ToString() == "lc1 || cib1")
+            {
                 readArrayFromFile("\\SavedCustomInputs\\custom1.txt");
                 updateWorkspaceColor(workspaceArray);
             }
-            else if (((Button)sender).Tag.ToString() == "lc2")
+            else if (((Button)sender).Tag.ToString() == "lc2 || cib2")
             {
-                //customArray2.CopyTo(workspaceArray, 0);
                 readArrayFromFile("\\SavedCustomInputs\\custom2.txt");
+                updateWorkspaceColor(workspaceArray);
+            }
+            else if (((Button)sender).Tag.ToString() == "lc3 || cib3")
+            {
+                readArrayFromFile("\\SavedCustomInputs\\custom3.txt");
+                updateWorkspaceColor(workspaceArray);
+            }
+            else if (((Button)sender).Tag.ToString() == "lc4 || cib4")
+            {
+                readArrayFromFile("\\SavedCustomInputs\\custom4.txt");
                 updateWorkspaceColor(workspaceArray);
             }
         }
