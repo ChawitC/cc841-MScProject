@@ -124,10 +124,13 @@
   <data name="custom1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\SavedCustomInputs\custom1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="custom4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\SavedCustomInputs\custom4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="custom2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\SavedCustomInputs\custom2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="custom4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\SavedCustomInputs\custom4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Placeholder_ShapeImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Assets\Placeholder_ShapeImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -27,9 +27,17 @@ namespace cc841.MScProject
         int[] savedArray5 = new int[64] { 1023, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
         int[] savedArray6 = new int[64] { 1023, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
-        SerialPort SP = new SerialPort("COM3", 115200);
+        SerialPort SP1 = new SerialPort("COM1", 115200);
+        SerialPort SP2 = new SerialPort("COM2", 115200);
+        SerialPort SP3 = new SerialPort("COM3", 115200);
+        SerialPort SP4 = new SerialPort("COM4", 115200);
+        SerialPort SP5 = new SerialPort("COM5", 115200);
+        SerialPort SP6 = new SerialPort("COM6", 115200);
+        int lastKnownCOM = 0;
+
         // custom input patterns are to be read from/written to file which is in format of "custom(n).txt"
         bool cloneMode = false;
+        bool spdMode = false;
         int toggleMode = 1;
         double degfromvalue = 180.0f / 1024.0f;
         List<Button> buttonsList = new List<Button>();
@@ -82,13 +90,16 @@ namespace cc841.MScProject
             int[] pushArray = new int[64];
             workspaceArray.CopyTo(pushArray, 0);
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-            Debug.WriteLine("current bin path is:" + filepath);
+            Debug.WriteLine("current bin path is: " + filepath);
 
             // overriding image resources path so that it is relative to the build.
 
             // load Saved custom pattern images to preview buttons
+            // Resource.resx would automatically assist this anyway, but this code is failsafe.
             customImageButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom1.png");
             customImageButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom2.png");
+            customImageButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom3.png");
+            customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom4.png");
 
             //Initialize serial port
             CheckSPconnection();
@@ -106,18 +117,34 @@ namespace cc841.MScProject
 
         public void CheckSPconnection()
         {
-            // Check Serial Port connection status and updates the status button accordingly.
+            // Check Serial Ports connection status and updates the status button accordingly.
             // Checking status is currently not done asynchoronously.
             // Implemented to be called from most user's action.
-            if (!SP.IsOpen) // Only attempt to open if the status is not current open.
+            // Only attempt to open if none of COM ports the status is not current open.
+            if (!SP1.IsOpen && !SP2.IsOpen && !SP3.IsOpen && !SP4.IsOpen && !SP5.IsOpen && !SP6.IsOpen)
             {
-                try { SP.Open(); } catch { Debug.WriteLine("Serial Port not Connected"); }
+                try { SP1.Open(); } catch (Exception e) { Debug.WriteLine("COM1 not Connected"); }
+                try { SP2.Open(); } catch (Exception e) { Debug.WriteLine("COM2 not Connected"); }
+                try { SP3.Open(); } catch (Exception e) { Debug.WriteLine("COM3 not Connected"); }
+                try { SP4.Open(); } catch (Exception e) { Debug.WriteLine("COM4 not Connected"); }
+                try { SP5.Open(); } catch (Exception e) { Debug.WriteLine("COM5 not Connected"); }
+                try { SP6.Open(); } catch (Exception e) { Debug.WriteLine("COM6 not Connected"); }
+                SPCOMnumLabel.Text = "Not connected to any COM Port";
+                lastKnownCOM = 0;
             }
-            if (SP.IsOpen) 
+            // If ANY COM port is Open
+            if (SP1.IsOpen || SP2.IsOpen || SP3.IsOpen || SP4.IsOpen || SP5.IsOpen || SP6.IsOpen)
             {
                 SPstatusButton.Text = "Connected";
                 SPstatusButton.BackColor = Color.Lime;
-                historyLabel.Text = "Serial Port Connected"; 
+                if (SP1.IsOpen) { lastKnownCOM = 1; }
+                else if (SP2.IsOpen) { lastKnownCOM = 2; }
+                else if (SP3.IsOpen) { lastKnownCOM = 3; }
+                else if (SP4.IsOpen) { lastKnownCOM = 4; }
+                else if (SP5.IsOpen) { lastKnownCOM = 5; }
+                else if (SP6.IsOpen) { lastKnownCOM = 6; }
+                SPCOMnumLabel.Text = "Serial Port COM" + lastKnownCOM.ToString() + " connected";
+                historyLabel.Text = "Serial Port COM"+ lastKnownCOM.ToString() +" connected"; 
             }
             else 
             {
@@ -421,20 +448,26 @@ namespace cc841.MScProject
         private void commitButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
-            String sentData = "2.";
-            if (SP.IsOpen)
+            if (lastKnownCOM != 0)
             {
-                historyLabel.Text = "Serial Port is open";
+                historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
                 label2.Text = "Single serial input: 2.";
+                String sentData = "2.";
                 for (int i = 0; i < workspaceArray.Length; i++)
                 {
                     label2.Text += workspaceArray[i].ToString() + ".";
                     sentData += workspaceArray[i].ToString() + ".";
                     Debug.WriteLine("4." + i.ToString() + "." + workspaceArray[i].ToString() + ".");
                 }
-                //SP.Write(sentData); //Uncomment this when done mapping, avoid sending incomplete data
+                //Uncomment these when done mapping, avoid sending incomplete data
+                /*if (lastKnownCOM == 1) { SP1.Write(sentData); }
+                else if (lastKnownCOM == 2) { SP2.Write(sentData); }
+                else if (lastKnownCOM == 3) { SP3.Write(sentData); }
+                else if (lastKnownCOM == 4) { SP4.Write(sentData); }
+                else if (lastKnownCOM == 5) { SP5.Write(sentData); }
+                else if (lastKnownCOM == 6) { SP6.Write(sentData); }*/
             }
-            else { historyLabel.Text = "Serial Port is not open"; }
+            else { historyLabel.Text = "None of the Serial Port is open, no input was sent!"; }
         }
         private void undoButton_Click(object sender, EventArgs e)
         {
@@ -483,9 +516,7 @@ namespace cc841.MScProject
         {
             CheckSPconnection();
             inputTextBox.Text = inputTextBox.Text.Trim();
-            //if can be compile to number
             int textBoxValue = Int32.Parse(inputTextBox.Text);
-            //int textBoxValue = 0;
             if (textBoxValue < 0) { textBoxValue = 0; }
             else if (textBoxValue > 1023) { textBoxValue = 1023; }
             else
@@ -521,6 +552,30 @@ namespace cc841.MScProject
             {
                 MessageBox.Show("Input value can only be numbers");
                 inputTextBox.Text = "";
+            }
+        }
+
+        private void selectPresetDisplayCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            spdMode = selectPresetDisplayCheckBox.Checked;
+            if (!spdMode)
+            {
+                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+            }
+            else
+            {
+                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
             }
         }
     }

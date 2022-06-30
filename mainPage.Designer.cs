@@ -48,7 +48,6 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
-            this.presetButton1 = new System.Windows.Forms.Button();
             this.cloneModeCheckBox = new System.Windows.Forms.CheckBox();
             this.loadCustomButton1 = new System.Windows.Forms.Button();
             this.loadCustomButton2 = new System.Windows.Forms.Button();
@@ -129,11 +128,14 @@
             this.saveCustomButton3 = new System.Windows.Forms.Button();
             this.loadCustomButton4 = new System.Windows.Forms.Button();
             this.loadCustomButton3 = new System.Windows.Forms.Button();
+            this.SPCOMnumLabel = new System.Windows.Forms.Label();
+            this.selectPresetDisplayCheckBox = new System.Windows.Forms.CheckBox();
             this.customImageButton4 = new System.Windows.Forms.Button();
             this.customImageButton3 = new System.Windows.Forms.Button();
             this.customImageButton2 = new System.Windows.Forms.Button();
             this.customImageButton1 = new System.Windows.Forms.Button();
             this.gradiantPictureBox = new System.Windows.Forms.PictureBox();
+            this.presetButton1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -181,7 +183,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(430, 563);
+            this.label2.Location = new System.Drawing.Point(2, 653);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
@@ -367,18 +369,6 @@
             this.button16.Text = "16";
             this.button16.UseVisualStyleBackColor = false;
             // 
-            // presetButton1
-            // 
-            this.presetButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton1.Location = new System.Drawing.Point(31, 80);
-            this.presetButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton1.Name = "presetButton1";
-            this.presetButton1.Size = new System.Drawing.Size(100, 100);
-            this.presetButton1.TabIndex = 20;
-            this.presetButton1.Tag = "p1";
-            this.presetButton1.Text = "Load Preset 1 (Image)";
-            this.presetButton1.UseVisualStyleBackColor = false;
-            // 
             // cloneModeCheckBox
             // 
             this.cloneModeCheckBox.AutoSize = true;
@@ -442,13 +432,15 @@
             // presetButton3
             // 
             this.presetButton3.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton3.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton3.Location = new System.Drawing.Point(241, 80);
             this.presetButton3.Margin = new System.Windows.Forms.Padding(2);
             this.presetButton3.Name = "presetButton3";
             this.presetButton3.Size = new System.Drawing.Size(100, 100);
             this.presetButton3.TabIndex = 28;
             this.presetButton3.Tag = "p3";
-            this.presetButton3.Text = "Load Preset 3 (Image)";
+            this.presetButton3.Text = "Load Preset 3";
             this.presetButton3.UseVisualStyleBackColor = false;
             // 
             // commitButton
@@ -488,13 +480,15 @@
             // presetButton2
             // 
             this.presetButton2.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton2.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton2.Location = new System.Drawing.Point(137, 80);
             this.presetButton2.Margin = new System.Windows.Forms.Padding(2);
             this.presetButton2.Name = "presetButton2";
             this.presetButton2.Size = new System.Drawing.Size(100, 100);
             this.presetButton2.TabIndex = 33;
             this.presetButton2.Tag = "p2";
-            this.presetButton2.Text = "Load Preset 2 (Image)";
+            this.presetButton2.Text = "Load Preset 2";
             this.presetButton2.UseVisualStyleBackColor = false;
             // 
             // redoButton
@@ -567,7 +561,7 @@
             // 
             this.SPstatusButton.BackColor = System.Drawing.Color.Red;
             this.SPstatusButton.Enabled = false;
-            this.SPstatusButton.Location = new System.Drawing.Point(240, 19);
+            this.SPstatusButton.Location = new System.Drawing.Point(202, 19);
             this.SPstatusButton.Margin = new System.Windows.Forms.Padding(2);
             this.SPstatusButton.Name = "SPstatusButton";
             this.SPstatusButton.Size = new System.Drawing.Size(87, 28);
@@ -580,9 +574,9 @@
             this.SRstatusLabel.AutoSize = true;
             this.SRstatusLabel.Location = new System.Drawing.Point(49, 27);
             this.SRstatusLabel.Name = "SRstatusLabel";
-            this.SRstatusLabel.Size = new System.Drawing.Size(187, 13);
+            this.SRstatusLabel.Size = new System.Drawing.Size(148, 13);
             this.SRstatusLabel.TabIndex = 42;
-            this.SRstatusLabel.Text = "Serial Port Connection Status (COM3):";
+            this.SRstatusLabel.Text = "Serial Port Connection Status:";
             // 
             // loadPresetsLabel
             // 
@@ -1172,7 +1166,7 @@
             // ciLabel
             // 
             this.ciLabel.AutoSize = true;
-            this.ciLabel.Location = new System.Drawing.Point(134, 301);
+            this.ciLabel.Location = new System.Drawing.Point(134, 310);
             this.ciLabel.Name = "ciLabel";
             this.ciLabel.Size = new System.Drawing.Size(111, 13);
             this.ciLabel.TabIndex = 92;
@@ -1190,37 +1184,43 @@
             // presetButton4
             // 
             this.presetButton4.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton4.Location = new System.Drawing.Point(31, 184);
             this.presetButton4.Margin = new System.Windows.Forms.Padding(2);
             this.presetButton4.Name = "presetButton4";
             this.presetButton4.Size = new System.Drawing.Size(100, 100);
             this.presetButton4.TabIndex = 96;
             this.presetButton4.Tag = "p4";
-            this.presetButton4.Text = "Load Preset 4 (Image)";
+            this.presetButton4.Text = "Load Preset 4";
             this.presetButton4.UseVisualStyleBackColor = false;
             // 
             // presetButton5
             // 
             this.presetButton5.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton5.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton5.Location = new System.Drawing.Point(137, 184);
             this.presetButton5.Margin = new System.Windows.Forms.Padding(2);
             this.presetButton5.Name = "presetButton5";
             this.presetButton5.Size = new System.Drawing.Size(100, 100);
             this.presetButton5.TabIndex = 97;
             this.presetButton5.Tag = "p5";
-            this.presetButton5.Text = "Load Preset 5 (Image)";
+            this.presetButton5.Text = "Load Preset 5";
             this.presetButton5.UseVisualStyleBackColor = false;
             // 
             // presetButton6
             // 
             this.presetButton6.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton6.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton6.Location = new System.Drawing.Point(241, 184);
             this.presetButton6.Margin = new System.Windows.Forms.Padding(2);
             this.presetButton6.Name = "presetButton6";
             this.presetButton6.Size = new System.Drawing.Size(100, 100);
             this.presetButton6.TabIndex = 98;
             this.presetButton6.Tag = "p6";
-            this.presetButton6.Text = "Load Preset 6 (Image)";
+            this.presetButton6.Text = "Load Preset 6";
             this.presetButton6.UseVisualStyleBackColor = false;
             // 
             // ci2Label
@@ -1307,6 +1307,26 @@
             this.loadCustomButton3.Text = "Load";
             this.loadCustomButton3.UseVisualStyleBackColor = false;
             // 
+            // SPCOMnumLabel
+            // 
+            this.SPCOMnumLabel.AutoSize = true;
+            this.SPCOMnumLabel.Location = new System.Drawing.Point(294, 27);
+            this.SPCOMnumLabel.Name = "SPCOMnumLabel";
+            this.SPCOMnumLabel.Size = new System.Drawing.Size(159, 13);
+            this.SPCOMnumLabel.TabIndex = 110;
+            this.SPCOMnumLabel.Text = "Not connected to any COM Port";
+            // 
+            // selectPresetDisplayCheckBox
+            // 
+            this.selectPresetDisplayCheckBox.AutoSize = true;
+            this.selectPresetDisplayCheckBox.Location = new System.Drawing.Point(72, 284);
+            this.selectPresetDisplayCheckBox.Name = "selectPresetDisplayCheckBox";
+            this.selectPresetDisplayCheckBox.Size = new System.Drawing.Size(217, 17);
+            this.selectPresetDisplayCheckBox.TabIndex = 111;
+            this.selectPresetDisplayCheckBox.Text = "Display Input Patterns instead of Shapes";
+            this.selectPresetDisplayCheckBox.UseVisualStyleBackColor = true;
+            this.selectPresetDisplayCheckBox.CheckedChanged += new System.EventHandler(this.selectPresetDisplayCheckBox_CheckedChanged);
+            // 
             // customImageButton4
             // 
             this.customImageButton4.BackColor = System.Drawing.SystemColors.Control;
@@ -1370,12 +1390,29 @@
             this.gradiantPictureBox.TabIndex = 36;
             this.gradiantPictureBox.TabStop = false;
             // 
+            // presetButton1
+            // 
+            this.presetButton1.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton1.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton1.ForeColor = System.Drawing.Color.Black;
+            this.presetButton1.Location = new System.Drawing.Point(31, 80);
+            this.presetButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton1.Name = "presetButton1";
+            this.presetButton1.Size = new System.Drawing.Size(100, 100);
+            this.presetButton1.TabIndex = 20;
+            this.presetButton1.Tag = "p1";
+            this.presetButton1.Text = "Load Preset 1";
+            this.presetButton1.UseVisualStyleBackColor = false;
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1064, 671);
+            this.Controls.Add(this.selectPresetDisplayCheckBox);
+            this.Controls.Add(this.SPCOMnumLabel);
             this.Controls.Add(this.customImageButton4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -1481,6 +1518,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.intensitySelectTrackBar);
             this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "mainPage";
             this.Text = "8x8 Array Speaker Controller : University of Sussex MSc Project : Candidate No. 2" +
@@ -1599,6 +1637,8 @@
         private System.Windows.Forms.Button saveCustomButton3;
         private System.Windows.Forms.Button loadCustomButton4;
         private System.Windows.Forms.Button loadCustomButton3;
+        private System.Windows.Forms.Label SPCOMnumLabel;
+        private System.Windows.Forms.CheckBox selectPresetDisplayCheckBox;
     }
 }
 

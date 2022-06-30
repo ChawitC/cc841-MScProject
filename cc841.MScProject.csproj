@@ -95,5 +95,8 @@
   <ItemGroup>
     <None Include="bin\Debug\SavedCustomInputs\custom4.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\Placeholder_ShapeImage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
