@@ -92,8 +92,6 @@ namespace cc841.MScProject
             Debug.WriteLine("(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             Debug.WriteLine("current bin path is: " + filepath);
 
-            // overriding image resources path so that it is relative to the build.
-
             // load Saved custom pattern images to preview buttons
             // Resource.resx would automatically assist this anyway, but this code is failsafe.
             customImageButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom1.png");
@@ -150,7 +148,9 @@ namespace cc841.MScProject
             {
                 SPstatusButton.Text = "Disconnected";
                 SPstatusButton.BackColor = Color.Red;
-                historyLabel.Text = "Serial Port Disconnected"; 
+                historyLabel.Text = "Serial Port Disconnected";
+                SPCOMnumLabel.Text = "Not connected to any COM Port";
+                lastKnownCOM = 0;
             }
         }
 
@@ -459,15 +459,18 @@ namespace cc841.MScProject
                     sentData += workspaceArray[i].ToString() + ".";
                     Debug.WriteLine("4." + i.ToString() + "." + workspaceArray[i].ToString() + ".");
                 }
-                //Uncomment these when done mapping, avoid sending incomplete data
-                /*if (lastKnownCOM == 1) { SP1.Write(sentData); }
+                //avoid sending incomplete data
+                if (lastKnownCOM == 1) { SP1.Write(sentData); }
                 else if (lastKnownCOM == 2) { SP2.Write(sentData); }
                 else if (lastKnownCOM == 3) { SP3.Write(sentData); }
                 else if (lastKnownCOM == 4) { SP4.Write(sentData); }
                 else if (lastKnownCOM == 5) { SP5.Write(sentData); }
-                else if (lastKnownCOM == 6) { SP6.Write(sentData); }*/
+                else if (lastKnownCOM == 6) { SP6.Write(sentData); }
             }
-            else { historyLabel.Text = "None of the Serial Port is open, no input was sent!"; }
+            else { 
+                historyLabel.Text = "None of the Serial Port is open, no input was sent!";
+                MessageBox.Show("None of the Serial Port is open, no input was sent!");
+            }
         }
         private void undoButton_Click(object sender, EventArgs e)
         {
