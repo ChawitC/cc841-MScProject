@@ -137,10 +137,11 @@
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
             this.loopStartStopButton = new System.Windows.Forms.Button();
-            this.loopControlsLabel = new System.Windows.Forms.Label();
-            this.loopNextPatternButton = new System.Windows.Forms.Button();
             this.loopPrevPatternButton = new System.Windows.Forms.Button();
-            this.loopLatencyLabel = new System.Windows.Forms.Label();
+            this.loopNextPatternButton = new System.Windows.Forms.Button();
+            this.loopLatencyTextBox = new System.Windows.Forms.TextBox();
+            this.loopControlsLabel = new System.Windows.Forms.Label();
+            this.selectedLatencyLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -185,7 +186,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(533, 981);
+            this.label2.Location = new System.Drawing.Point(497, 926);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 20);
             this.label2.TabIndex = 4;
@@ -424,7 +425,7 @@
             // historyLabel
             // 
             this.historyLabel.AutoSize = true;
-            this.historyLabel.Location = new System.Drawing.Point(666, 812);
+            this.historyLabel.Location = new System.Drawing.Point(497, 965);
             this.historyLabel.Name = "historyLabel";
             this.historyLabel.Size = new System.Drawing.Size(127, 20);
             this.historyLabel.TabIndex = 30;
@@ -1341,28 +1342,31 @@
             // 
             this.loopStartStopButton.BackColor = System.Drawing.SystemColors.Control;
             this.loopStartStopButton.Enabled = false;
-            this.loopStartStopButton.Location = new System.Drawing.Point(588, 894);
+            this.loopStartStopButton.Location = new System.Drawing.Point(610, 860);
             this.loopStartStopButton.Name = "loopStartStopButton";
-            this.loopStartStopButton.Size = new System.Drawing.Size(99, 52);
+            this.loopStartStopButton.Size = new System.Drawing.Size(115, 52);
             this.loopStartStopButton.TabIndex = 112;
             this.loopStartStopButton.Text = "Loop";
             this.loopStartStopButton.UseVisualStyleBackColor = false;
             this.loopStartStopButton.Click += new System.EventHandler(this.loopStartStopButton_Click);
             // 
-            // loopControlsLabel
+            // loopPrevPatternButton
             // 
-            this.loopControlsLabel.AutoSize = true;
-            this.loopControlsLabel.Location = new System.Drawing.Point(548, 864);
-            this.loopControlsLabel.Name = "loopControlsLabel";
-            this.loopControlsLabel.Size = new System.Drawing.Size(190, 20);
-            this.loopControlsLabel.TabIndex = 113;
-            this.loopControlsLabel.Text = "Looped Patterns Controls";
+            this.loopPrevPatternButton.BackColor = System.Drawing.SystemColors.Control;
+            this.loopPrevPatternButton.Enabled = false;
+            this.loopPrevPatternButton.Location = new System.Drawing.Point(544, 860);
+            this.loopPrevPatternButton.Name = "loopPrevPatternButton";
+            this.loopPrevPatternButton.Size = new System.Drawing.Size(60, 52);
+            this.loopPrevPatternButton.TabIndex = 113;
+            this.loopPrevPatternButton.Text = "<";
+            this.loopPrevPatternButton.UseVisualStyleBackColor = false;
+            this.loopPrevPatternButton.Click += new System.EventHandler(this.loopPrevPatternButton_Click);
             // 
             // loopNextPatternButton
             // 
             this.loopNextPatternButton.BackColor = System.Drawing.SystemColors.Control;
             this.loopNextPatternButton.Enabled = false;
-            this.loopNextPatternButton.Location = new System.Drawing.Point(693, 894);
+            this.loopNextPatternButton.Location = new System.Drawing.Point(730, 860);
             this.loopNextPatternButton.Name = "loopNextPatternButton";
             this.loopNextPatternButton.Size = new System.Drawing.Size(60, 52);
             this.loopNextPatternButton.TabIndex = 114;
@@ -1370,27 +1374,34 @@
             this.loopNextPatternButton.UseVisualStyleBackColor = false;
             this.loopNextPatternButton.Click += new System.EventHandler(this.loopNextPatternButton_Click);
             // 
-            // loopPrevPatternButton
+            // loopLatencyTextBox
             // 
-            this.loopPrevPatternButton.BackColor = System.Drawing.SystemColors.Control;
-            this.loopPrevPatternButton.Enabled = false;
-            this.loopPrevPatternButton.Location = new System.Drawing.Point(522, 894);
-            this.loopPrevPatternButton.Name = "loopPrevPatternButton";
-            this.loopPrevPatternButton.Size = new System.Drawing.Size(60, 52);
-            this.loopPrevPatternButton.TabIndex = 115;
-            this.loopPrevPatternButton.Text = "<";
-            this.loopPrevPatternButton.UseVisualStyleBackColor = false;
-            this.loopPrevPatternButton.Click += new System.EventHandler(this.loopPrevPatternButton_Click);
+            this.loopLatencyTextBox.Location = new System.Drawing.Point(812, 883);
+            this.loopLatencyTextBox.Name = "loopLatencyTextBox";
+            this.loopLatencyTextBox.Size = new System.Drawing.Size(65, 26);
+            this.loopLatencyTextBox.TabIndex = 115;
+            this.loopLatencyTextBox.Text = "100";
+            this.loopLatencyTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.loopLatencyTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.loopLatencyTextBox_KeyPress);
             // 
-            // loopLatencyLabel
+            // loopControlsLabel
             // 
-            this.loopLatencyLabel.AutoSize = true;
-            this.loopLatencyLabel.Location = new System.Drawing.Point(759, 897);
-            this.loopLatencyLabel.Name = "loopLatencyLabel";
-            this.loopLatencyLabel.Size = new System.Drawing.Size(100, 20);
-            this.loopLatencyLabel.TabIndex = 117;
-            this.loopLatencyLabel.Text = "Latency (ms)";
-            this.loopLatencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.loopControlsLabel.AutoSize = true;
+            this.loopControlsLabel.Location = new System.Drawing.Point(624, 829);
+            this.loopControlsLabel.Name = "loopControlsLabel";
+            this.loopControlsLabel.Size = new System.Drawing.Size(213, 20);
+            this.loopControlsLabel.TabIndex = 116;
+            this.loopControlsLabel.Text = "Input Patterns Loop Controls";
+            // 
+            // selectedLatencyLabel
+            // 
+            this.selectedLatencyLabel.AutoSize = true;
+            this.selectedLatencyLabel.Location = new System.Drawing.Point(796, 860);
+            this.selectedLatencyLabel.Name = "selectedLatencyLabel";
+            this.selectedLatencyLabel.Size = new System.Drawing.Size(100, 20);
+            this.selectedLatencyLabel.TabIndex = 117;
+            this.selectedLatencyLabel.Text = "Latency (ms)";
+            this.selectedLatencyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mainPage
             // 
@@ -1398,10 +1409,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1596, 1032);
-            this.Controls.Add(this.loopLatencyLabel);
-            this.Controls.Add(this.loopPrevPatternButton);
-            this.Controls.Add(this.loopNextPatternButton);
+            this.Controls.Add(this.selectedLatencyLabel);
             this.Controls.Add(this.loopControlsLabel);
+            this.Controls.Add(this.loopLatencyTextBox);
+            this.Controls.Add(this.loopNextPatternButton);
+            this.Controls.Add(this.loopPrevPatternButton);
             this.Controls.Add(this.loopStartStopButton);
             this.Controls.Add(this.selectPresetDisplayCheckBox);
             this.Controls.Add(this.SPCOMnumLabel);
@@ -1631,10 +1643,11 @@
         private System.Windows.Forms.Label SPCOMnumLabel;
         private System.Windows.Forms.CheckBox selectPresetDisplayCheckBox;
         private System.Windows.Forms.Button loopStartStopButton;
-        private System.Windows.Forms.Label loopControlsLabel;
-        private System.Windows.Forms.Button loopNextPatternButton;
         private System.Windows.Forms.Button loopPrevPatternButton;
-        private System.Windows.Forms.Label loopLatencyLabel;
+        private System.Windows.Forms.Button loopNextPatternButton;
+        private System.Windows.Forms.TextBox loopLatencyTextBox;
+        private System.Windows.Forms.Label loopControlsLabel;
+        private System.Windows.Forms.Label selectedLatencyLabel;
     }
 }
 
