@@ -40,6 +40,7 @@ namespace cc841.MScProject
         int[] savedArray6E = new int[64] { 900, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
         int selectedPattern = 0;
+        int persistentIndex = 0;
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
 
@@ -338,10 +339,11 @@ namespace cc841.MScProject
             int[] pushUndoArray = new int[64];
             workspaceArray.CopyTo(pushUndoArray, 0);
             historyUndoStack.Push(pushUndoArray);
-            undoButton.BackColor = SystemColors.Control;
+            undoButton.Enabled = true;
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-            redoButton.BackColor = SystemColors.ControlDark;
-
+            loopStartStopButton.Enabled = false; //disable first, will be enabled accordingly
+            loopStartStopButton.Text = "Loop";
+            persistentIndex = 0;
             if (((Button)sender).Tag.ToString() == "p1")
             {
                 savedArray1.CopyTo(workspaceArray, 0);
@@ -371,12 +373,16 @@ namespace cc841.MScProject
                 savedArrayList5[0].CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 5;
+                loopStartStopButton.Enabled = true;
+                loopStartStopButton.Text = "Start Loop";
             }
             else if (((Button)sender).Tag.ToString() == "p6")
             {
                 savedArrayList6[0].CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 6;
+                loopStartStopButton.Enabled = true;
+                loopStartStopButton.Text = "Start Loop";
             }
             else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
             {
@@ -421,9 +427,9 @@ namespace cc841.MScProject
                     int[] pushUndoArray = new int[64];
                     workspaceArray.CopyTo(pushUndoArray, 0);
                     historyUndoStack.Push(pushUndoArray);
-                    undoButton.BackColor = SystemColors.Control;
+                    undoButton.Enabled = true;
                     historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-                    redoButton.BackColor = SystemColors.ControlDark;
+                    redoButton.Enabled = false;
                     Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
 
                     workspaceArray[arrayIndex] = selectedColor;
@@ -542,9 +548,9 @@ namespace cc841.MScProject
                 historyUndoStack.Pop().CopyTo(pushArrayUndo, 0);
                 pushArrayUndo.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
-                if (historyUndoStack.Count > 0) { undoButton.BackColor = SystemColors.Control; }
-                else { undoButton.BackColor = SystemColors.ControlDark; }
-                redoButton.BackColor = SystemColors.Control;
+                if (historyUndoStack.Count > 0) { undoButton.Enabled = true; }
+                else { undoButton.Enabled = false; }
+                redoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
@@ -563,9 +569,9 @@ namespace cc841.MScProject
                 historyRedoStack.Pop().CopyTo(pushArrayRedo, 0);
                 pushArrayRedo.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
-                if (historyRedoStack.Count > 0) { redoButton.BackColor = SystemColors.Control; }
-                else { redoButton.BackColor = SystemColors.ControlDark; }
-                undoButton.BackColor = SystemColors.Control;
+                if (historyRedoStack.Count > 0) { redoButton.Enabled = true; }
+                else { redoButton.Enabled = false; }
+                undoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
@@ -640,7 +646,9 @@ namespace cc841.MScProject
         private async void loopStartStopButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
+
             if (selectedPattern < 5 || selectedPattern > 6 ) 
+            //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
                 historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern"; 
@@ -654,25 +662,29 @@ namespace cc841.MScProject
             {
                 if (selectedPattern == 5)
                 {
-                    for (int i = 0; i < savedArrayList5.Count; i++)
+                    if (persistentIndex == savedArrayList5.Count)
                     {
-                        updateWorkspaceColor(savedArrayList5[i]);
-                        sentPatternsThrough(savedArrayList5[i]);
-                        await PutTaskDelay(100);
-                        if (!looping) { break; }
+                        persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
+                    updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                    sentPatternsThrough(savedArrayList5[persistentIndex]);
+                    await PutTaskDelay(100);
+
+                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
                 else if (selectedPattern == 6)
                 {
-                    for (int i = 0; i < savedArrayList6.Count; i++)
+                    if (persistentIndex == savedArrayList6.Count)
                     {
-                        updateWorkspaceColor(savedArrayList6[i]);
-                        sentPatternsThrough(savedArrayList6[i]);
-                        await PutTaskDelay(100);
-                        if (!looping) { break; }
+                        persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
+                    updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                    sentPatternsThrough(savedArrayList6[persistentIndex]);
+                    loopStartStopButton.Text = "Stop Loop";
+                    await PutTaskDelay(100);
+                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
-
+                persistentIndex++;
             }
         }
 

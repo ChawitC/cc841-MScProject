@@ -428,7 +428,8 @@
             // 
             // undoButton
             // 
-            this.undoButton.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.undoButton.BackColor = System.Drawing.SystemColors.Control;
+            this.undoButton.Enabled = false;
             this.undoButton.Location = new System.Drawing.Point(1356, 655);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(96, 68);
@@ -439,7 +440,8 @@
             // 
             // redoButton
             // 
-            this.redoButton.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.redoButton.BackColor = System.Drawing.SystemColors.Control;
+            this.redoButton.Enabled = false;
             this.redoButton.Location = new System.Drawing.Point(1458, 655);
             this.redoButton.Name = "redoButton";
             this.redoButton.Size = new System.Drawing.Size(96, 68);
@@ -1333,12 +1335,14 @@
             // 
             // loopStartStopButton
             // 
+            this.loopStartStopButton.BackColor = System.Drawing.SystemColors.Control;
+            this.loopStartStopButton.Enabled = false;
             this.loopStartStopButton.Location = new System.Drawing.Point(592, 949);
             this.loopStartStopButton.Name = "loopStartStopButton";
             this.loopStartStopButton.Size = new System.Drawing.Size(115, 59);
             this.loopStartStopButton.TabIndex = 112;
-            this.loopStartStopButton.Text = "Start / Stop";
-            this.loopStartStopButton.UseVisualStyleBackColor = true;
+            this.loopStartStopButton.Text = "Loop";
+            this.loopStartStopButton.UseVisualStyleBackColor = false;
             this.loopStartStopButton.Click += new System.EventHandler(this.loopStartStopButton_Click);
             // 
             // mainPage
