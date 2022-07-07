@@ -40,6 +40,7 @@ namespace cc841.MScProject
         int[] savedArray6E = new int[64] { 900, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
         int selectedPattern = 0;
+        int selectedLatency = 100;
         int persistentIndex = 0;
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
@@ -343,6 +344,8 @@ namespace cc841.MScProject
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
             loopStartStopButton.Enabled = false; //disable first, will be enabled accordingly
             loopStartStopButton.Text = "Loop";
+            loopPrevPatternButton.Enabled = false;
+            loopNextPatternButton.Enabled = false;
             persistentIndex = 0;
             if (((Button)sender).Tag.ToString() == "p1")
             {
@@ -375,6 +378,8 @@ namespace cc841.MScProject
                 selectedPattern = 5;
                 loopStartStopButton.Enabled = true;
                 loopStartStopButton.Text = "Start Loop";
+                loopNextPatternButton.Enabled = true;
+                loopPrevPatternButton.Enabled = true;
             }
             else if (((Button)sender).Tag.ToString() == "p6")
             {
@@ -383,6 +388,8 @@ namespace cc841.MScProject
                 selectedPattern = 6;
                 loopStartStopButton.Enabled = true;
                 loopStartStopButton.Text = "Start Loop";
+                loopNextPatternButton.Enabled = true;
+                loopPrevPatternButton.Enabled = true;
             }
             else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
             {
@@ -460,6 +467,7 @@ namespace cc841.MScProject
             previewButton.BackColor = ColorFromHSV(selectedColor);
             inputTextBox.Text = selectedColor.ToString();
         }
+        
         private void cloneModeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             CheckSPconnection();
@@ -470,6 +478,7 @@ namespace cc841.MScProject
                 inputTextBox.Text = selectedColor.ToString();
             }
         }
+        
         private void toggleDisplayModesRadioButtons_CheckedChanged(object sender, EventArgs e)
         {
             CheckSPconnection();
@@ -491,6 +500,7 @@ namespace cc841.MScProject
                 { buttonsList[i].Text = (Math.Round(workspaceArray[i] * degfromvalue, 2)).ToString(); } //Degree mode
             }
         }
+        
         private void commitButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
@@ -502,13 +512,13 @@ namespace cc841.MScProject
             if (lastKnownCOM != 0)
             {
                 historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
-                label2.Text = "Single serial input: 2.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
                 String sentData = "2.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
                     sentData += sentPattern[i].ToString() + ".";
-                    Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
+                    //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                 }
                 //avoid sending incomplete data
                 if (lastKnownCOM == 1) { SP1.Write(sentData); }
@@ -520,13 +530,13 @@ namespace cc841.MScProject
             }
             else
             {
-                label2.Text = "Single serial input: 2.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
                 String sentData = "2.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
                     sentData += sentPattern[i].ToString() + ".";
-                    Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
+                    //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                 }
                 historyLabel.Text = "None of the Serial Port is open, no input was sent!";
                 //MessageBox.Show("None of the Serial Port is open, no input was sent!");
@@ -554,6 +564,7 @@ namespace cc841.MScProject
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
+
         private void redoButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
@@ -576,20 +587,6 @@ namespace cc841.MScProject
             }
         }
 
-        private void inputTextBox_TextChanged(object sender, EventArgs e)
-        {
-            CheckSPconnection();
-            inputTextBox.Text = inputTextBox.Text.Trim();
-            int textBoxValue = Int32.Parse(inputTextBox.Text);
-            if (textBoxValue < 0) { textBoxValue = 0; }
-            else if (textBoxValue > 1023) { textBoxValue = 1023; }
-            else
-            {
-                selectedColor = textBoxValue;
-                textBoxValue = intensitySelectTrackBar.Value;
-            }
-        }
-
         private void inputTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             CheckSPconnection();
@@ -597,11 +594,19 @@ namespace cc841.MScProject
             //Check for Enter Key Press first first
             if (e.KeyChar == (char)Keys.Enter)
             {
-                //Whatever is in the input field will always be parsable to number due to the conditioning below
                 if (inputTextBox.Text == "") { inputTextBox.Text = "0"; } //if field is empty, set value to 0
                 int textBoxValue = Int32.Parse(inputTextBox.Text);
-                if (textBoxValue < 0) { textBoxValue = 0; MessageBox.Show("Input value cannot be lower than 0"); }
-                else if (textBoxValue > 1023) { textBoxValue = 1023; MessageBox.Show("Input value cannot be higher than 1023"); }
+                if (textBoxValue < 0) { 
+                    textBoxValue = 0; 
+                    inputTextBox.Text = "0"; 
+                    MessageBox.Show("Input value cannot be lower than 0"); 
+                }
+                else if (textBoxValue > 1023) 
+                { 
+                    textBoxValue = 1023; 
+                    inputTextBox.Text = "1023"; 
+                    MessageBox.Show("Input value cannot be higher than 1023"); 
+                }
                 else
                 {
                     selectedColor = textBoxValue;
@@ -647,18 +652,18 @@ namespace cc841.MScProject
         {
             CheckSPconnection();
 
-            if (selectedPattern < 5 || selectedPattern > 6 ) 
+            if (selectedPattern < 5 || selectedPattern > 6)
             //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
-                historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern"; 
+                historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern";
             }
             else { looping = !looping; }
             //if there was no selected pattern, or pattern is not a loop
             //without this conditional checking will loop forever,
             //locking the programme.
 
-             while (looping && (selectedPattern==5||selectedPattern==6))
+            while (looping && (selectedPattern == 5 || selectedPattern == 6))
             {
                 if (selectedPattern == 5)
                 {
@@ -667,8 +672,11 @@ namespace cc841.MScProject
                         persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
                     updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                    savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList5[persistentIndex]);
-                    await PutTaskDelay(100);
+                    await PutTaskDelay(selectedLatency);
 
                     if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
@@ -679,9 +687,12 @@ namespace cc841.MScProject
                         persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
                     updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                    savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList6[persistentIndex]);
                     loopStartStopButton.Text = "Stop Loop";
-                    await PutTaskDelay(100);
+                    await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
                 persistentIndex++;
@@ -691,6 +702,101 @@ namespace cc841.MScProject
         async Task PutTaskDelay(int delayMS)
         {
             await Task.Delay(delayMS);
+        }
+
+        private void loopNextPatternButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            if (selectedPattern == 5)
+            {
+                if (persistentIndex == savedArrayList5.Count - 1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList5[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+            }
+            else if (selectedPattern == 6)
+            {
+                if (persistentIndex == savedArrayList6.Count - 1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList6[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+        }
+
+        private void loopPrevPatternButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            if (selectedPattern == 5)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList5.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+                updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList5[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+            else if (selectedPattern == 6)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList6.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+
+                updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList6[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+        }
+
+        private void loopLatencyTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CheckSPconnection();
+            loopLatencyTextBox.Text = loopLatencyTextBox.Text.Trim();
+            //Check for Enter Key Press first first
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "50"; } //if field is empty, set value to 100
+                int textBoxValue = Int32.Parse(loopLatencyTextBox.Text);
+                if (textBoxValue < 50) { 
+                    textBoxValue = 50; loopLatencyTextBox.Text = "50"; 
+                    MessageBox.Show("Input value cannot be lower than 50"); 
+                }
+                //else if (textBoxValue > 1023) { textBoxValue = 1023; MessageBox.Show("Input value cannot be higher than 1023"); }
+                else
+                {
+                    selectedLatency = textBoxValue;
+                    e.Handled = true; //To suppress the Ding sounds, indicating that there is no error.
+                }
+            }
+            // Only accepts numbers and backspace, no alphabets or "."
+            else if (!char.IsDigit(e.KeyChar) && (e.KeyChar != (char)8))
+            {
+                loopLatencyTextBox.Text = "50";
+                selectedLatency = 50;
+                MessageBox.Show("Input value can only be numbers");
+            }
         }
     }
 }
