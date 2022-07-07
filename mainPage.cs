@@ -40,6 +40,7 @@ namespace cc841.MScProject
         int[] savedArray6E = new int[64] { 900, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
         int selectedPattern = 0;
+        //int selectedLatency = 100;
         int persistentIndex = 0;
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
@@ -278,27 +279,7 @@ namespace cc841.MScProject
 
         public void saveWorkspaceToCustom_Click(object sender, EventArgs e)
         {
-            CheckSPconnection();
-            if (((Button)sender).Tag.ToString() == "sc1")
-            {
-                writeArrayToFile("\\SavedCustomInputs\\custom1.txt");
-                CaptureWorkspaceImage("custom1.png");
-            }
-            if (((Button)sender).Tag.ToString() == "sc2")
-            {
-                writeArrayToFile("\\SavedCustomInputs\\custom2.txt");
-                CaptureWorkspaceImage("custom2.png");
-            }
-            if (((Button)sender).Tag.ToString() == "sc3")
-            {
-                writeArrayToFile("\\SavedCustomInputs\\custom3.txt");
-                CaptureWorkspaceImage("custom3.png");
-            }
-            if (((Button)sender).Tag.ToString() == "sc4")
-            {
-                writeArrayToFile("\\SavedCustomInputs\\custom4.txt");
-                CaptureWorkspaceImage("custom4.png");
-            }
+
         }
 
         public void readArrayFromFile(string filenamepath)
@@ -333,124 +314,12 @@ namespace cc841.MScProject
 
         private void PresetsButton_Click(object sender, EventArgs e)
         {
-            CheckSPconnection();
-            //currently it is possible to Undo to Before clicking the presets
-            //Redo to newly selected presets are also possible
-            int[] pushUndoArray = new int[64];
-            workspaceArray.CopyTo(pushUndoArray, 0);
-            historyUndoStack.Push(pushUndoArray);
-            undoButton.Enabled = true;
-            historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-            loopStartStopButton.Enabled = false; //disable first, will be enabled accordingly
-            loopStartStopButton.Text = "Loop";
-            persistentIndex = 0;
-            if (((Button)sender).Tag.ToString() == "p1")
-            {
-                savedArray1.CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 1;
-            }
-            else if (((Button)sender).Tag.ToString() == "p2")
-            {
-                savedArray2.CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 2;
-            }
-            else if (((Button)sender).Tag.ToString() == "p3")
-            {
-                savedArray3.CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 3;
-            }
-            else if (((Button)sender).Tag.ToString() == "p4")
-            {
-                savedArray4.CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 4;
-            }
-            else if (((Button)sender).Tag.ToString() == "p5")
-            {
-                savedArrayList5[0].CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 5;
-                loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
-            }
-            else if (((Button)sender).Tag.ToString() == "p6")
-            {
-                savedArrayList6[0].CopyTo(workspaceArray, 0);
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 6;
-                loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
-            }
-            else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
-            {
-                readArrayFromFile("\\SavedCustomInputs\\custom1.txt");
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 7;
-            }
-            else if (((Button)sender).Tag.ToString() == "lc2" || ((Button)sender).Tag.ToString() == "cib2")
-            {
-                readArrayFromFile("\\SavedCustomInputs\\custom2.txt");
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 8;
-            }
-            else if (((Button)sender).Tag.ToString() == "lc3" || ((Button)sender).Tag.ToString() == "cib3")
-            {
-                readArrayFromFile("\\SavedCustomInputs\\custom3.txt");
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 9;
-            }
-            else if (((Button)sender).Tag.ToString() == "lc4" || ((Button)sender).Tag.ToString() == "cib4")
-            {
-                readArrayFromFile("\\SavedCustomInputs\\custom4.txt");
-                updateWorkspaceColor(workspaceArray);
-                selectedPattern = 10;
-            }
-            looping = false;
+
         }
 
         private void Button_Click(object sender, EventArgs e)
         {
-            CheckSPconnection();
-            string buttonText = ((Button)sender).Tag.ToString();
-            int arrayIndex = Int32.Parse(buttonText);
-            arrayIndex -= 1; //step down since an array's index starts from 0
 
-            if (workspaceArray[arrayIndex] != selectedColor)
-            //if the button's current color is the same as selected color, don't perform any action.
-            {
-                if (!cloneMode) // Input value from trackBar
-                {
-                    //write to History Stack
-                    int[] pushUndoArray = new int[64];
-                    workspaceArray.CopyTo(pushUndoArray, 0);
-                    historyUndoStack.Push(pushUndoArray);
-                    undoButton.Enabled = true;
-                    historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-                    redoButton.Enabled = false;
-                    Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-
-                    workspaceArray[arrayIndex] = selectedColor;
-                    ((Button)sender).BackColor = ColorFromHSV(selectedColor);
-
-                    // recolor button's text to white if color is dark blue or dark red.
-                    if (selectedColor <= 160 || selectedColor >= 940) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
-                    else { ((Button)sender).ForeColor = SystemColors.ControlText; }
-
-                    // Update Text on button depending on which display mode is selected
-                    if (toggleMode == 1) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
-                    else if (toggleMode == 2) { ((Button)sender).Text = selectedColor.ToString(); }
-                    else { ((Button)sender).Text = (Math.Round(selectedColor * degfromvalue, 2)).ToString(); } //Degree mode 1024/180 = 5.68
-                }
-                else //Clone Input value from selected button
-                {
-                    previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
-                    inputTextBox.Text = workspaceArray[arrayIndex].ToString();
-                    intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
-                }
-            }
         }
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
@@ -647,18 +516,18 @@ namespace cc841.MScProject
         {
             CheckSPconnection();
 
-            if (selectedPattern < 5 || selectedPattern > 6 ) 
+            if (selectedPattern < 5 || selectedPattern > 6)
             //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
-                historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern"; 
+                historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern";
             }
             else { looping = !looping; }
             //if there was no selected pattern, or pattern is not a loop
             //without this conditional checking will loop forever,
             //locking the programme.
 
-             while (looping && (selectedPattern==5||selectedPattern==6))
+            while (looping && (selectedPattern == 5 || selectedPattern == 6))
             {
                 if (selectedPattern == 5)
                 {
@@ -667,6 +536,9 @@ namespace cc841.MScProject
                         persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
                     updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                    savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList5[persistentIndex]);
                     await PutTaskDelay(100);
 
@@ -679,6 +551,9 @@ namespace cc841.MScProject
                         persistentIndex = 0; //reset index to 0 if index size exceeds array size
                     }
                     updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                    savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList6[persistentIndex]);
                     loopStartStopButton.Text = "Stop Loop";
                     await PutTaskDelay(100);
@@ -692,5 +567,111 @@ namespace cc841.MScProject
         {
             await Task.Delay(delayMS);
         }
+
+        private void loopNextPatternButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            if (selectedPattern == 5)
+            {
+                if (persistentIndex == savedArrayList5.Count-1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList5[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+            }
+            else if (selectedPattern == 6)
+            {
+                if (persistentIndex == savedArrayList6.Count-1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList6[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+        }
+
+        private void loopPrevPatternButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            if (selectedPattern == 5)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList5.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+                updateWorkspaceColor(savedArrayList5[persistentIndex]);
+                savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList5[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+            else if (selectedPattern == 6)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList6.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+
+                updateWorkspaceColor(savedArrayList6[persistentIndex]);
+                savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                //sentPatternsThrough(savedArrayList6[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+        }
+        /*
+        private void loopLatencyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            loopLatencyLabel.Text = loopLatencyLabel.Text.Trim();
+            int textBoxValue = Int32.Parse(loopLatencyLabel.Text);
+            if (textBoxValue < 0) { textBoxValue = 0; }
+            //else if (textBoxValue > 1023) { textBoxValue = 1023; }
+            else
+            {
+                selectedLatency = textBoxValue;
+            }
+        }
+
+        private void loopLatencyTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            CheckSPconnection();
+            loopLatencyLabel.Text = loopLatencyLabel.Text.Trim();
+            //Check for Enter Key Press first first
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                //Whatever is in the input field will always be parsable to number due to the conditioning below
+                if (loopLatencyLabel.Text == "") { loopLatencyLabel.Text = "100"; } //if field is empty, set value to 100
+                int textBoxValue = Int32.Parse(loopLatencyLabel.Text);
+                if (textBoxValue < 10) { textBoxValue = 0; MessageBox.Show("Input value cannot be lower than 10"); }
+                //else if (textBoxValue > 1023) { textBoxValue = 1023; MessageBox.Show("Input value cannot be higher than 1023"); }
+                else
+                {
+                    selectedLatency = textBoxValue;
+                    e.Handled = true; //To suppress the Ding sounds, indicating that there is no error.
+                }
+
+            }
+            // Only accepts numbers and backspace, no alphabets or "."
+            else if (!char.IsDigit(e.KeyChar) && (e.KeyChar != (char)8))
+            {
+                MessageBox.Show("Input value can only be numbers");
+                loopLatencyLabel.Text = "";
+            }
+        }*/
     }
 }
