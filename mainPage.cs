@@ -341,6 +341,7 @@ namespace cc841.MScProject
             workspaceArray.CopyTo(pushUndoArray, 0);
             historyUndoStack.Push(pushUndoArray);
             undoButton.Enabled = true;
+            redoButton.Enabled = false;
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
             loopStartStopButton.Enabled = false; //disable first, will be enabled accordingly
             loopStartStopButton.Text = "Loop";
