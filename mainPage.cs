@@ -468,7 +468,7 @@ namespace cc841.MScProject
                 redoButton.Enabled = false;
                 Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
                 statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());                    workspaceArray[arrayIndex] = selectedColor;
-                statusMessagesTextBox.AppendText(Environment.NewLine + "workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Assign value to workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
                 ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
                 // recolor button's text to white if color is dark blue or dark red.
@@ -485,7 +485,7 @@ namespace cc841.MScProject
                 previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
                 inputTextBox.Text = workspaceArray[arrayIndex].ToString();
                 intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
-                statusMessagesTextBox.AppendText(Environment.NewLine + "workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Clone value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
              }
         }
 
@@ -627,8 +627,14 @@ namespace cc841.MScProject
             //Check for Enter Key Press first first
             if (e.KeyChar == (char)Keys.Enter)
             {
+                int textBoxValue = 0;
                 if (inputTextBox.Text == "") { inputTextBox.Text = "0"; } //if field is empty, set value to 0
-                int textBoxValue = Int32.Parse(inputTextBox.Text);
+                try { textBoxValue = Int32.Parse(inputTextBox.Text); }
+                catch
+                { //if parse fails (e.g. alphabets inputted), assign value to 0
+                    textBoxValue = 0;
+                    inputTextBox.Text = "0";
+                }
                 if (textBoxValue < 0) { 
                     textBoxValue = 0; 
                     inputTextBox.Text = "0"; 
@@ -814,8 +820,14 @@ namespace cc841.MScProject
             //Check for Enter Key Press first first
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "50"; } //if field is empty, set value to 100
-                int textBoxValue = Int32.Parse(loopLatencyTextBox.Text);
+                int textBoxValue = 50;
+                if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "50"; } //if field is empty, set value to 50
+                try { textBoxValue = Int32.Parse(loopLatencyTextBox.Text); }
+                catch //if parse fails (e.g. alphabets inputted), assign value to 50
+                {
+                    textBoxValue = 50;
+                    loopLatencyTextBox.Text = "50";
+                }
                 if (textBoxValue < 50) { 
                     textBoxValue = 50; loopLatencyTextBox.Text = "50"; 
                     MessageBox.Show("Input value cannot be lower than 50"); 
