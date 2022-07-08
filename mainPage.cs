@@ -367,6 +367,7 @@ namespace cc841.MScProject
             loopStartStopButton.Text = "Loop";
             loopPrevPatternButton.Enabled = false;
             loopNextPatternButton.Enabled = false;
+            loopLatencyTextBox.Enabled = false;
             persistentIndex = 0;
             if (((Button)sender).Tag.ToString() == "p1")
             {
@@ -405,6 +406,7 @@ namespace cc841.MScProject
                 loopStartStopButton.Text = "Start Loop";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
+                loopLatencyTextBox.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 5 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p6")
@@ -416,6 +418,7 @@ namespace cc841.MScProject
                 loopStartStopButton.Text = "Start Loop";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
+                loopLatencyTextBox.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 6 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")

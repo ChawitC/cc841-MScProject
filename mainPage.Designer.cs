@@ -1239,6 +1239,7 @@
             // 
             // loopLatencyTextBox
             // 
+            this.loopLatencyTextBox.Enabled = false;
             this.loopLatencyTextBox.Location = new System.Drawing.Point(812, 883);
             this.loopLatencyTextBox.Name = "loopLatencyTextBox";
             this.loopLatencyTextBox.Size = new System.Drawing.Size(65, 26);
