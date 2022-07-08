@@ -116,6 +116,16 @@ namespace cc841.MScProject
             saveCustomButton3.Click += saveWorkspaceToCustom_Click;
             saveCustomButton4.Click += saveWorkspaceToCustom_Click;
 
+            // > Setting additional parameters for Status Message Textbox
+            // Set the Multiline property to true.
+            // Add vertical scroll bars to the TextBox control.
+            // Allow the TAB key to be entered in the TextBox control.
+            // Set WordWrap to true to allow text to wrap to the next line.
+            // Set the default text of the control.
+            statusMessagesTextBox.Text = "Initializing";
+            statusMessagesTextBox.AppendText(Environment.NewLine + "current bin path is: " + filepath);
+            statusMessagesTextBox.AppendText(Environment.NewLine + "(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
+
             // Initializing
             updateWorkspaceColor(workspaceArray);
             int[] pushArray = new int[64];
@@ -129,6 +139,11 @@ namespace cc841.MScProject
             customImageButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom2.png");
             customImageButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom3.png");
             customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom4.png");
+
+            //Loading Pattern 1, otherwise there is a bug on clone mode
+            savedArray1.CopyTo(workspaceArray, 0);
+            updateWorkspaceColor(workspaceArray);
+            selectedPattern = 1;
 
             //Initialize serial port
             CheckSPconnection();
@@ -193,7 +208,7 @@ namespace cc841.MScProject
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     //Capture picture from indicated coordinate of workspace area
-                    g.CopyFromScreen(new Point(bounds.Left + 433, bounds.Top + 122), Point.Empty, new Size(450, 450));
+                    g.CopyFromScreen(new Point(bounds.Left + 650, bounds.Top + 200), Point.Empty, new Size(450, 450));
                 }
                 //bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png); //Does not work 
                 bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png);
@@ -284,21 +299,25 @@ namespace cc841.MScProject
             {
                 writeArrayToFile("\\SavedCustomInputs\\custom1.txt");
                 CaptureWorkspaceImage("custom1.png");
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace saved to Custom pattern 1");
             }
             if (((Button)sender).Tag.ToString() == "sc2")
             {
                 writeArrayToFile("\\SavedCustomInputs\\custom2.txt");
                 CaptureWorkspaceImage("custom2.png");
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace saved to Custom pattern 2");
             }
             if (((Button)sender).Tag.ToString() == "sc3")
             {
                 writeArrayToFile("\\SavedCustomInputs\\custom3.txt");
                 CaptureWorkspaceImage("custom3.png");
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace saved to Custom pattern 3");
             }
             if (((Button)sender).Tag.ToString() == "sc4")
             {
                 writeArrayToFile("\\SavedCustomInputs\\custom4.txt");
                 CaptureWorkspaceImage("custom4.png");
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace saved to Custom pattern 4");
             }
         }
 
@@ -330,6 +349,7 @@ namespace cc841.MScProject
             // Debug : Read the file  
             string readText = File.ReadAllText(@filepath + filenamepath);
             Debug.WriteLine("The text file " + filenamepath + " is now as follows:\n" + readText);
+            //statusMessagesTextBox.AppendText(Environment.NewLine + "The text file " + filenamepath + " is now as follows:\n" + readText);
         }
 
         private void PresetsButton_Click(object sender, EventArgs e)
@@ -353,24 +373,28 @@ namespace cc841.MScProject
                 savedArray1.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 1;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 1 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p2")
             {
                 savedArray2.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 2;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 2 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p3")
             {
                 savedArray3.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 3;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 3 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p4")
             {
                 savedArray4.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 4;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 4 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p5")
             {
@@ -381,6 +405,7 @@ namespace cc841.MScProject
                 loopStartStopButton.Text = "Start Loop";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 5 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p6")
             {
@@ -391,30 +416,35 @@ namespace cc841.MScProject
                 loopStartStopButton.Text = "Start Loop";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 6 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom1.txt");
                 updateWorkspaceColor(workspaceArray);
-                selectedPattern = 7;
+                selectedPattern = 7; 
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Custom pattern 1 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc2" || ((Button)sender).Tag.ToString() == "cib2")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom2.txt");
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 8;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Custom pattern 2 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc3" || ((Button)sender).Tag.ToString() == "cib3")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom3.txt");
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 9;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Custom pattern 3 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc4" || ((Button)sender).Tag.ToString() == "cib4")
             {
                 readArrayFromFile("\\SavedCustomInputs\\custom4.txt");
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 10;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Custom pattern 4 loaded to workspace");
             }
             looping = false;
         }
@@ -426,39 +456,37 @@ namespace cc841.MScProject
             int arrayIndex = Int32.Parse(buttonText);
             arrayIndex -= 1; //step down since an array's index starts from 0
 
-            if (workspaceArray[arrayIndex] != selectedColor)
             //if the button's current color is the same as selected color, don't perform any action.
+            if (!cloneMode && (workspaceArray[arrayIndex] != selectedColor))// Input value from trackBar
             {
-                if (!cloneMode) // Input value from trackBar
-                {
-                    //write to History Stack
-                    int[] pushUndoArray = new int[64];
-                    workspaceArray.CopyTo(pushUndoArray, 0);
-                    historyUndoStack.Push(pushUndoArray);
-                    undoButton.Enabled = true;
-                    historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
-                    redoButton.Enabled = false;
-                    Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                //write to History Stack
+                int[] pushUndoArray = new int[64];
+                workspaceArray.CopyTo(pushUndoArray, 0);
+                historyUndoStack.Push(pushUndoArray);
+                undoButton.Enabled = true;
+                historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+                redoButton.Enabled = false;
+                Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());                    workspaceArray[arrayIndex] = selectedColor;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+                ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
-                    workspaceArray[arrayIndex] = selectedColor;
-                    ((Button)sender).BackColor = ColorFromHSV(selectedColor);
+                // recolor button's text to white if color is dark blue or dark red.
+                if (selectedColor <= 160 || selectedColor >= 940) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
+                else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
-                    // recolor button's text to white if color is dark blue or dark red.
-                    if (selectedColor <= 160 || selectedColor >= 940) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
-                    else { ((Button)sender).ForeColor = SystemColors.ControlText; }
-
-                    // Update Text on button depending on which display mode is selected
-                    if (toggleMode == 1) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
-                    else if (toggleMode == 2) { ((Button)sender).Text = selectedColor.ToString(); }
-                    else { ((Button)sender).Text = (Math.Round(selectedColor * degfromvalue, 2)).ToString(); } //Degree mode 1024/180 = 5.68
-                }
-                else //Clone Input value from selected button
-                {
-                    previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
-                    inputTextBox.Text = workspaceArray[arrayIndex].ToString();
-                    intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
-                }
-            }
+                // Update Text on button depending on which display mode is selected
+                if (toggleMode == 1) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
+                else if (toggleMode == 2) { ((Button)sender).Text = selectedColor.ToString(); }
+                else { ((Button)sender).Text = (Math.Round(selectedColor * degfromvalue, 2)).ToString(); } //Degree mode 1024/180 = 5.68
+             }
+             else if (cloneMode) //Clone Input value from selected button
+             {
+                previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
+                inputTextBox.Text = workspaceArray[arrayIndex].ToString();
+                intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
+                statusMessagesTextBox.AppendText(Environment.NewLine + "workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+             }
         }
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
@@ -513,6 +541,7 @@ namespace cc841.MScProject
             if (lastKnownCOM != 0)
             {
                 historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
                 label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
                 String sentData = "2.";
                 for (int i = 0; i < sentPattern.Length; i++)
@@ -540,6 +569,7 @@ namespace cc841.MScProject
                     //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                 }
                 historyLabel.Text = "None of the Serial Port is open, no input was sent!";
+                statusMessagesTextBox.AppendText(Environment.NewLine + "None of the Serial Port is open, no input was sent!");
                 //MessageBox.Show("None of the Serial Port is open, no input was sent!");
             }
         }
@@ -563,6 +593,7 @@ namespace cc841.MScProject
                 else { undoButton.Enabled = false; }
                 redoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                statusMessagesTextBox.AppendText(Environment.NewLine + "(Undo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
 
@@ -585,6 +616,7 @@ namespace cc841.MScProject
                 else { redoButton.Enabled = false; }
                 undoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
+                statusMessagesTextBox.AppendText(Environment.NewLine + "(Redo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
 
@@ -718,6 +750,7 @@ namespace cc841.MScProject
                 { persistentIndex++; }
                 updateWorkspaceColor(savedArrayList5[persistentIndex]);
                 savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList5.Count);
                 //sentPatternsThrough(savedArrayList5[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -731,6 +764,7 @@ namespace cc841.MScProject
                 { persistentIndex++; }
                 updateWorkspaceColor(savedArrayList6[persistentIndex]);
                 savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList6.Count);
                 //sentPatternsThrough(savedArrayList6[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
 
@@ -750,6 +784,7 @@ namespace cc841.MScProject
                 { persistentIndex--; }
                 updateWorkspaceColor(savedArrayList5[persistentIndex]);
                 savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList5.Count);
                 //sentPatternsThrough(savedArrayList5[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
 
@@ -765,6 +800,7 @@ namespace cc841.MScProject
 
                 updateWorkspaceColor(savedArrayList6[persistentIndex]);
                 savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList6.Count);
                 //sentPatternsThrough(savedArrayList6[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
 
