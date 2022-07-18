@@ -140,7 +140,7 @@ namespace cc841.MScProject
             customImageButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom3.png");
             customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom4.png");
 
-            //Loading Pattern 1, otherwise there is a bug on clone mode
+            //Loading Pattern 1
             savedArray1.CopyTo(workspaceArray, 0);
             updateWorkspaceColor(workspaceArray);
             selectedPattern = 1;
@@ -167,12 +167,12 @@ namespace cc841.MScProject
             // Only attempt to open if none of COM ports the status is not current open.
             if (!SP1.IsOpen && !SP2.IsOpen && !SP3.IsOpen && !SP4.IsOpen && !SP5.IsOpen && !SP6.IsOpen)
             {
-                try { SP1.Open(); } catch (Exception e) { Debug.WriteLine("COM1 not Connected"); }
-                try { SP2.Open(); } catch (Exception e) { Debug.WriteLine("COM2 not Connected"); }
-                try { SP3.Open(); } catch (Exception e) { Debug.WriteLine("COM3 not Connected"); }
-                try { SP4.Open(); } catch (Exception e) { Debug.WriteLine("COM4 not Connected"); }
-                try { SP5.Open(); } catch (Exception e) { Debug.WriteLine("COM5 not Connected"); }
-                try { SP6.Open(); } catch (Exception e) { Debug.WriteLine("COM6 not Connected"); }
+                try { SP1.Open(); } catch { Debug.WriteLine("COM1 not Connected"); }
+                try { SP2.Open(); } catch { Debug.WriteLine("COM2 not Connected"); }
+                try { SP3.Open(); } catch { Debug.WriteLine("COM3 not Connected"); }
+                try { SP4.Open(); } catch { Debug.WriteLine("COM4 not Connected"); }
+                try { SP5.Open(); } catch { Debug.WriteLine("COM5 not Connected"); }
+                try { SP6.Open(); } catch { Debug.WriteLine("COM6 not Connected"); }
                 SPCOMnumLabel.Text = "Not connected to any COM Port";
                 lastKnownCOM = 0;
             }
@@ -208,7 +208,8 @@ namespace cc841.MScProject
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     //Capture picture from indicated coordinate of workspace area
-                    g.CopyFromScreen(new Point(bounds.Left + 650, bounds.Top + 200), Point.Empty, new Size(450, 450));
+                    g.CopyFromScreen(new Point(bounds.Left + 420, bounds.Top + 100), Point.Empty, new Size(450, 450));
+                    // alt value g.CopyFromScreen(new Point(bounds.Left + 650, bounds.Top + 200), Point.Empty, new Size(450, 450));
                 }
                 //bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png); //Does not work 
                 bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png);
@@ -849,6 +850,11 @@ namespace cc841.MScProject
                 selectedLatency = 50;
                 MessageBox.Show("Input value can only be numbers");
             }
+        }
+
+        private void statusRefreshButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
         }
     }
 }
