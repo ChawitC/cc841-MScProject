@@ -133,6 +133,8 @@
             this.selectedLatencyLabel = new System.Windows.Forms.Label();
             this.statusMessagesTextBox = new System.Windows.Forms.TextBox();
             this.statusMessagesLabel = new System.Windows.Forms.Label();
+            this.statusRefreshButton = new System.Windows.Forms.Button();
+            this.sentXButton = new System.Windows.Forms.Button();
             this.customImageButton4 = new System.Windows.Forms.Button();
             this.customImageButton3 = new System.Windows.Forms.Button();
             this.customImageButton2 = new System.Windows.Forms.Button();
@@ -144,7 +146,6 @@
             this.presetButton2 = new System.Windows.Forms.Button();
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
-            this.statusRefreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
             this.SuspendLayout();
@@ -192,7 +193,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(331, 602);
+            this.label2.Location = new System.Drawing.Point(11, 661);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
@@ -1362,6 +1363,27 @@
             this.statusMessagesLabel.TabIndex = 119;
             this.statusMessagesLabel.Text = "Status Messages";
             // 
+            // statusRefreshButton
+            // 
+            this.statusRefreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.statusRefreshButton.Location = new System.Drawing.Point(294, 19);
+            this.statusRefreshButton.Name = "statusRefreshButton";
+            this.statusRefreshButton.Size = new System.Drawing.Size(32, 28);
+            this.statusRefreshButton.TabIndex = 120;
+            this.statusRefreshButton.Text = "⟳";
+            this.statusRefreshButton.UseVisualStyleBackColor = true;
+            this.statusRefreshButton.Click += new System.EventHandler(this.statusRefreshButton_Click);
+            // 
+            // sentXButton
+            // 
+            this.sentXButton.Location = new System.Drawing.Point(732, 22);
+            this.sentXButton.Name = "sentXButton";
+            this.sentXButton.Size = new System.Drawing.Size(184, 23);
+            this.sentXButton.TabIndex = 121;
+            this.sentXButton.Text = "Set Intensity of all speakers to 512";
+            this.sentXButton.UseVisualStyleBackColor = true;
+            this.sentXButton.Click += new System.EventHandler(this.sentXButton_Click);
+            // 
             // customImageButton4
             // 
             this.customImageButton4.BackColor = System.Drawing.SystemColors.Control;
@@ -1510,23 +1532,13 @@
             this.presetButton1.Text = "Load Preset 1";
             this.presetButton1.UseVisualStyleBackColor = false;
             // 
-            // statusRefreshButton
-            // 
-            this.statusRefreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.statusRefreshButton.Location = new System.Drawing.Point(294, 19);
-            this.statusRefreshButton.Name = "statusRefreshButton";
-            this.statusRefreshButton.Size = new System.Drawing.Size(32, 28);
-            this.statusRefreshButton.TabIndex = 120;
-            this.statusRefreshButton.Text = "⟳";
-            this.statusRefreshButton.UseVisualStyleBackColor = true;
-            this.statusRefreshButton.Click += new System.EventHandler(this.statusRefreshButton_Click);
-            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1065, 683);
+            this.Controls.Add(this.sentXButton);
             this.Controls.Add(this.statusRefreshButton);
             this.Controls.Add(this.statusMessagesLabel);
             this.Controls.Add(this.statusMessagesTextBox);
@@ -1773,6 +1785,7 @@
         private System.Windows.Forms.TextBox statusMessagesTextBox;
         private System.Windows.Forms.Label statusMessagesLabel;
         private System.Windows.Forms.Button statusRefreshButton;
+        private System.Windows.Forms.Button sentXButton;
     }
 }
 

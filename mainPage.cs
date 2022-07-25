@@ -489,6 +489,7 @@ namespace cc841.MScProject
                 previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
                 inputTextBox.Text = workspaceArray[arrayIndex].ToString();
                 intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
+                selectedColor = workspaceArray[arrayIndex]; // have selected color take colour from latest clone mode value, so it functions corretly when switch back.
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Clone value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
              }
         }
@@ -504,12 +505,13 @@ namespace cc841.MScProject
         private void cloneModeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             CheckSPconnection();
-            cloneMode = cloneModeCheckBox.Checked;
-            if (!cloneMode)
+            // Fail safe override, may not be needed
+            /*if (!cloneMode)
             {
                 previewButton.BackColor = ColorFromHSV(selectedColor);
                 inputTextBox.Text = selectedColor.ToString();
-            }
+            }*/
+            cloneMode = cloneModeCheckBox.Checked; 
         }
         
         private void toggleDisplayModesRadioButtons_CheckedChanged(object sender, EventArgs e)
@@ -546,14 +548,15 @@ namespace cc841.MScProject
             {
                 historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
-                String sentData = "2.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 1.";
+                String sentData = "1.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
                     sentData += sentPattern[i].ToString() + ".";
                     //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                 }
+
                 //avoid sending incomplete data
                 if (lastKnownCOM == 1) { SP1.Write(sentData); }
                 else if (lastKnownCOM == 2) { SP2.Write(sentData); }
@@ -564,8 +567,8 @@ namespace cc841.MScProject
             }
             else
             {
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
-                String sentData = "2.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 1.";
+                String sentData = "1.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
@@ -855,6 +858,21 @@ namespace cc841.MScProject
         private void statusRefreshButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
+        }
+
+        private void sentXButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+            //Sent "x" command to set all speaker's intensity to 512
+            if (lastKnownCOM == 1) { SP1.Write("x"); }
+            else if (lastKnownCOM == 2) { SP2.Write("x"); }
+            else if (lastKnownCOM == 3) { SP3.Write("x"); }
+            else if (lastKnownCOM == 4) { SP4.Write("x"); }
+            else if (lastKnownCOM == 5) { SP5.Write("x"); }
+            else if (lastKnownCOM == 6) { SP6.Write("x"); }
+
+            if (lastKnownCOM != 0) { MessageBox.Show("The action was performed successfully!\nX command was sent through COM" + lastKnownCOM.ToString()); }
+            else { MessageBox.Show("COM port connection closed"); }
         }
     }
 }
