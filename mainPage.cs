@@ -548,27 +548,36 @@ namespace cc841.MScProject
             {
                 historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 1.";
-                String sentData = "1.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms";//, Single serial input: 2.";
+                //String sentData = "2.";
+                String sentData = "";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
-                    label2.Text += sentPattern[i].ToString() + ".";
-                    sentData += sentPattern[i].ToString() + ".";
+                    sentData = "1.";
+                    //label2.Text += sentPattern[i].ToString() + ".";
+                    sentData += i.ToString() + "." + sentPattern[i].ToString() + ".";
+                    statusMessagesTextBox.AppendText(Environment.NewLine + sentData);
                     //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
+                    //avoid sending incomplete data
+                    if (lastKnownCOM == 1) { SP1.Write(sentData); }
+                    else if (lastKnownCOM == 2) { SP2.Write(sentData); }
+                    else if (lastKnownCOM == 3) { SP3.Write(sentData); }
+                    else if (lastKnownCOM == 4) { SP4.Write(sentData); }
+                    else if (lastKnownCOM == 5) { SP5.Write(sentData); }
+                    else if (lastKnownCOM == 6) { SP6.Write(sentData); }
                 }
 
-                //avoid sending incomplete data
-                if (lastKnownCOM == 1) { SP1.Write(sentData); }
-                else if (lastKnownCOM == 2) { SP2.Write(sentData); }
-                else if (lastKnownCOM == 3) { SP3.Write(sentData); }
-                else if (lastKnownCOM == 4) { SP4.Write(sentData); }
-                else if (lastKnownCOM == 5) { SP5.Write(sentData); }
-                else if (lastKnownCOM == 6) { SP6.Write(sentData); }
+                /*//avoid sending incomplete data
+                if (lastKnownCOM == 1) { SP1.WriteLine(sentData); }
+                else if (lastKnownCOM == 2) { SP2.WriteLine(sentData); }
+                else if (lastKnownCOM == 3) { SP3.WriteLine(sentData); }
+                else if (lastKnownCOM == 4) { SP4.WriteLine(sentData); }
+                else if (lastKnownCOM == 5) { SP5.WriteLine(sentData); }*/
             }
             else
             {
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 1.";
-                String sentData = "1.";
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
+                String sentData = "2.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
