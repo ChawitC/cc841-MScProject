@@ -13,6 +13,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+// Possible list of improvments that are realized before user test but yet not implemented
+// > Connection status update done should be done asynchoronously
+// > Status messsage filtering with tickboxes
+// > Setting intensity (loudness) of all speakers on load/ on renewed connection
+// > Junk code clean ups
+
 namespace cc841.MScProject
 {
     public partial class mainPage : Form
@@ -529,7 +535,7 @@ namespace cc841.MScProject
                 if (workspaceArray[i] <= 160 || workspaceArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
 
-                if (toggleMode == 1) { buttonsList[i].Text = i.ToString(); }
+                if (toggleMode == 1) { buttonsList[i].Text = (i+1).ToString(); }
                 else if (toggleMode == 2) { buttonsList[i].Text = workspaceArray[i].ToString(); }
                 else //if (toggle Mode == 3) 
                 { buttonsList[i].Text = (Math.Round(workspaceArray[i] * degfromvalue, 2)).ToString(); } //Degree mode
