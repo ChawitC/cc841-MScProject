@@ -16,6 +16,8 @@ using System.Windows.Forms;
 // Possible list of improvments that are realized before user test but yet not implemented
 // > Connection status update done should be done asynchoronously
 // > Status messsage filtering with tickboxes
+// >> Click to generate focal point mode
+// > Tool tips
 // > Setting intensity (loudness) of all speakers on load/ on renewed connection
 // > Junk code clean ups
 
@@ -26,24 +28,24 @@ namespace cc841.MScProject
         int selectedColor = 0;
         int[] workspaceArray = new int[64];
         // presets are loaded into programs and should not be changeable
-        int[] savedArray1 = new int[64] { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 784, 800, 816, 832, 848, 864, 880, 896, 912, 928, 944, 960, 976, 992, 1008 };
+        int[] savedArray1 = new int[64] { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768 };
         int[] savedArray2 = new int[64] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
         int[] savedArray3 = new int[64] { 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray4 = new int[64] { 1023, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 784, 800, 816, 832, 848, 864, 880, 896, 912, 928, 944, 960, 976, 992, 1008 };
-        int[] savedArray5 = new int[64] { 1023, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray6 = new int[64] { 1023, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+        int[] savedArray4 = new int[64] { 768, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768 };
+        int[] savedArray5 = new int[64] { 768, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        int[] savedArray6 = new int[64] { 768, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
         int[] savedArray5A = new int[64] { 200, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
         int[] savedArray5B = new int[64] { 400, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
         int[] savedArray5C = new int[64] { 600, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5D = new int[64] { 800, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5E = new int[64] { 1023, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        int[] savedArray5D = new int[64] { 768, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        int[] savedArray5E = new int[64] { 100, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
 
         int[] savedArray6A = new int[64] { 100, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
         int[] savedArray6B = new int[64] { 300, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
         int[] savedArray6C = new int[64] { 500, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
         int[] savedArray6D = new int[64] { 700, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray6E = new int[64] { 900, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+        int[] savedArray6E = new int[64] { 768, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
 
         int selectedPattern = 0;
         int selectedLatency = 100;
@@ -64,7 +66,6 @@ namespace cc841.MScProject
         bool spdMode = false;
         bool looping = false;
         int toggleMode = 1;
-        double degfromvalue = 180.0f / 1024.0f;
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
         Stack<int[]> historyRedoStack = new Stack<int[]>();
@@ -155,6 +156,11 @@ namespace cc841.MScProject
             CheckSPconnection();
         }
 
+        public double degFromValue(int value)
+        {
+            double deg = -32.22 + (value * 0.342) + (-1.98 * Math.Pow(10,-4) * Math.Pow(value,2));
+            return (deg);
+        }
         public static Image nonLockImageFromFile(string path)
         {
             // Taken from https://stackoverflow.com/questions/4803935/free-file-locked-by-new-bitmapfilepath/8701748
@@ -244,33 +250,40 @@ namespace cc841.MScProject
             // .NET framework does not have built-in RGB > HSV or HSV > Color conversion
             //adapted from https://stackoverflow.com/questions/1335426/is-there-a-built-in-c-net-system-api-for-hsv-to-rgb
             //in our case there is no change in Saturation or Value
-            int saturation = 1;
-            int value = 1;
-            hue /= 4; //input value ranges from 0-1023
-            if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
-            hue = 255 - hue - 8; //inverting value so that 255 is represeting red, and 0 representing blue
-            //original Hue spectrum runs from 0 to 360, but we decided to use only 8-263 since it is representatively sufficient.
-            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
-            double f = hue / 60 - Math.Floor(hue / 60);
 
-            value = value * 255;
-            int v = Convert.ToInt32(value);
-            int p = Convert.ToInt32(value * (1 - saturation));
-            int q = Convert.ToInt32(value * (1 - f * saturation));
-            int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
-
-            if (hi == 0)
-                return Color.FromArgb(255, v, t, p);
-            else if (hi == 1)
-                return Color.FromArgb(255, q, v, p);
-            else if (hi == 2)
-                return Color.FromArgb(255, p, v, t);
-            else if (hi == 3)
-                return Color.FromArgb(255, p, q, v);
-            else if (hi == 4)
-                return Color.FromArgb(255, t, p, v);
+            if (hue == 0)
+            { return Color.Black; } //black represent maximum flat floor value.
             else
-                return Color.FromArgb(255, v, p, q);
+            {
+
+                int saturation = 1;
+                int value = 1;
+                hue /= 2; //input value ranges from 0-768, but colour representation only ranges in in 0-215 to represent diminishing returns
+                if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
+                hue = 255 - hue - 8; //inverting value so that 255 is represeting red, and 0 representing blue
+                                     //original Hue spectrum runs from 0 to 360, but we decided to use only 8-263 since it is representatively sufficient.
+                int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+                double f = hue / 60 - Math.Floor(hue / 60);
+
+                value = value * 255;
+                int v = Convert.ToInt32(value);
+                int p = Convert.ToInt32(value * (1 - saturation));
+                int q = Convert.ToInt32(value * (1 - f * saturation));
+                int t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
+
+                if (hi == 0)
+                    return Color.FromArgb(255, v, t, p);
+                else if (hi == 1)
+                    return Color.FromArgb(255, q, v, p);
+                else if (hi == 2)
+                    return Color.FromArgb(255, p, v, t);
+                else if (hi == 3)
+                    return Color.FromArgb(255, p, q, v);
+                else if (hi == 4)
+                    return Color.FromArgb(255, t, p, v);
+                else
+                    return Color.FromArgb(255, v, p, q);
+            }
         }
 
         public void updateWorkspaceColor(int[] savedArray)
@@ -280,7 +293,7 @@ namespace cc841.MScProject
                 buttonsList[i].BackColor = ColorFromHSV(savedArray[i]);
 
                 // recolor button's text to white if color is dark blue or dark red.
-                if (savedArray[i] <= 160 || savedArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                if (savedArray[i] <= 100 || savedArray[i] >= 480) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
 
                 // display value on each button based on display mode.
@@ -294,7 +307,7 @@ namespace cc841.MScProject
                 }
                 else // if (toggleMode == 3) //Degree mode
                 {
-                    buttonsList[i].Text = (Math.Round(savedArray[i] * degfromvalue, 2)).ToString(); //Degree mode
+                    buttonsList[i].Text = Math.Round(degFromValue(savedArray[i]), 2).ToString() + "°"; //Degree mode
                 }
             }
         }
@@ -477,33 +490,33 @@ namespace cc841.MScProject
                 historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
                 redoButton.Enabled = false;
                 Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());                    workspaceArray[arrayIndex] = selectedColor;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString()); workspaceArray[arrayIndex] = selectedColor;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Assign value to workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
                 ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
                 // recolor button's text to white if color is dark blue or dark red.
-                if (selectedColor <= 160 || selectedColor >= 940) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
+                if (selectedColor <= 100 || selectedColor >= 480) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
                 else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
                 // Update Text on button depending on which display mode is selected
                 if (toggleMode == 1) { ((Button)sender).Text = ((Button)sender).Tag.ToString(); }
                 else if (toggleMode == 2) { ((Button)sender).Text = selectedColor.ToString(); }
-                else { ((Button)sender).Text = (Math.Round(selectedColor * degfromvalue, 2)).ToString(); } //Degree mode 1024/180 = 5.68
-             }
-             else if (cloneMode) //Clone Input value from selected button
-             {
+                else { ((Button)sender).Text = Math.Round(degFromValue(selectedColor), 2).ToString() + "°"; } //Degree mode
+            }
+            else if (cloneMode) //Clone Input value from selected button
+            {
                 previewButton.BackColor = ColorFromHSV(workspaceArray[arrayIndex]);
                 inputTextBox.Text = workspaceArray[arrayIndex].ToString();
                 intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
                 selectedColor = workspaceArray[arrayIndex]; // have selected color take colour from latest clone mode value, so it functions corretly when switch back.
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Clone value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
-             }
+            }
         }
 
         private void intensitySelect_Scroll(object sender, EventArgs e)
         {
             //CheckSPconnection(); //keep checking for port here causes too much programme lag.
-            selectedColor = intensitySelectTrackBar.Value; //minimum 0 and maximum 1023
+            selectedColor = intensitySelectTrackBar.Value; //minimum 0 and maximum 768
             previewButton.BackColor = ColorFromHSV(selectedColor);
             inputTextBox.Text = selectedColor.ToString();
         }
@@ -532,13 +545,15 @@ namespace cc841.MScProject
             for (int i = 0; i < workspaceArray.Length; i++)
             {
                 // recolor button's text to white if color is dark blue or dark red.
-                if (workspaceArray[i] <= 160 || workspaceArray[i] >= 940) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                if (workspaceArray[i] <= 100 || workspaceArray[i] >= 480) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
 
-                if (toggleMode == 1) { buttonsList[i].Text = (i+1).ToString(); }
+                if (toggleMode == 1) { buttonsList[i].Text = (i + 1).ToString(); }
                 else if (toggleMode == 2) { buttonsList[i].Text = workspaceArray[i].ToString(); }
                 else //if (toggle Mode == 3) 
-                { buttonsList[i].Text = (Math.Round(workspaceArray[i] * degfromvalue, 2)).ToString(); } //Degree mode
+                {
+                    buttonsList[i].Text = Math.Round(degFromValue(workspaceArray[i]), 2).ToString() + "°"; //Degree mode
+                }
             }
         }
         
@@ -662,11 +677,11 @@ namespace cc841.MScProject
                     inputTextBox.Text = "0"; 
                     MessageBox.Show("Input value cannot be lower than 0"); 
                 }
-                else if (textBoxValue > 1023) 
+                else if (textBoxValue > 768) 
                 { 
-                    textBoxValue = 1023; 
-                    inputTextBox.Text = "1023"; 
-                    MessageBox.Show("Input value cannot be higher than 1023"); 
+                    textBoxValue = 768; 
+                    inputTextBox.Text = "768"; 
+                    MessageBox.Show("Input value cannot be higher than 768"); 
                 }
                 else
                 {
@@ -854,7 +869,7 @@ namespace cc841.MScProject
                     textBoxValue = 50; loopLatencyTextBox.Text = "50"; 
                     MessageBox.Show("Input value cannot be lower than 50"); 
                 }
-                //else if (textBoxValue > 1023) { textBoxValue = 1023; MessageBox.Show("Input value cannot be higher than 1023"); }
+                //else if (textBoxValue > 768) { textBoxValue = 768; MessageBox.Show("Input value cannot be higher than 768"); }
                 else
                 {
                     selectedLatency = textBoxValue;

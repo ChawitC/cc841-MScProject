@@ -146,8 +146,10 @@
             this.presetButton2 = new System.Windows.Forms.Button();
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -168,7 +170,7 @@
             this.intensitySelectTrackBar.LargeChange = 1;
             this.intensitySelectTrackBar.Location = new System.Drawing.Point(982, 90);
             this.intensitySelectTrackBar.Margin = new System.Windows.Forms.Padding(2);
-            this.intensitySelectTrackBar.Maximum = 1023;
+            this.intensitySelectTrackBar.Maximum = 768;
             this.intensitySelectTrackBar.Name = "intensitySelectTrackBar";
             this.intensitySelectTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.intensitySelectTrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -922,7 +924,7 @@
             // button46
             // 
             this.button46.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button46.Location = new System.Drawing.Point(744, 354);
+            this.button46.Location = new System.Drawing.Point(690, 354);
             this.button46.Margin = new System.Windows.Forms.Padding(2);
             this.button46.Name = "button46";
             this.button46.Size = new System.Drawing.Size(50, 49);
@@ -934,7 +936,7 @@
             // button47
             // 
             this.button47.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button47.Location = new System.Drawing.Point(689, 355);
+            this.button47.Location = new System.Drawing.Point(744, 354);
             this.button47.Margin = new System.Windows.Forms.Padding(2);
             this.button47.Name = "button47";
             this.button47.Size = new System.Drawing.Size(50, 49);
@@ -1483,9 +1485,9 @@
             this.gradiantPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.BackgroundImage")));
             this.gradiantPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.gradiantPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.InitialImage")));
-            this.gradiantPictureBox.Location = new System.Drawing.Point(951, 100);
+            this.gradiantPictureBox.Location = new System.Drawing.Point(951, 190);
             this.gradiantPictureBox.Name = "gradiantPictureBox";
-            this.gradiantPictureBox.Size = new System.Drawing.Size(26, 259);
+            this.gradiantPictureBox.Size = new System.Drawing.Size(26, 169);
             this.gradiantPictureBox.TabIndex = 36;
             this.gradiantPictureBox.TabStop = false;
             // 
@@ -1532,12 +1534,22 @@
             this.presetButton1.Text = "Load Preset 1";
             this.presetButton1.UseVisualStyleBackColor = false;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Red;
+            this.pictureBox1.Location = new System.Drawing.Point(951, 102);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(26, 90);
+            this.pictureBox1.TabIndex = 122;
+            this.pictureBox1.TabStop = false;
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1065, 683);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.sentXButton);
             this.Controls.Add(this.statusRefreshButton);
             this.Controls.Add(this.statusMessagesLabel);
@@ -1662,6 +1674,7 @@
     "44152";
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1786,6 +1799,7 @@
         private System.Windows.Forms.Label statusMessagesLabel;
         private System.Windows.Forms.Button statusRefreshButton;
         private System.Windows.Forms.Button sentXButton;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
