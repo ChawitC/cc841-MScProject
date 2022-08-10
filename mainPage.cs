@@ -63,6 +63,7 @@ namespace cc841.MScProject
         bool cloneMode = false;
         bool spdMode = false;
         bool looping = false;
+        bool cleared = true;
         int toggleMode = 1;
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
@@ -152,18 +153,22 @@ namespace cc841.MScProject
             //initialize preset Degree button's colours and attach to same function
             degreeButton1.BackColor = ColorFromHSV(0);
             degreeButton1.ForeColor = Color.White;
-            degreeButton2.BackColor = ColorFromHSV(10);
+            degreeButton2.BackColor = ColorFromHSV(14);
             degreeButton2.ForeColor = Color.White;
-            degreeButton3.BackColor = ColorFromHSV(96);
-            degreeButton4.BackColor = ColorFromHSV(144);
-            degreeButton5.BackColor = ColorFromHSV(249);
-            degreeButton6.BackColor = ColorFromHSV(309);
-            degreeButton7.BackColor = ColorFromHSV(377);
-            degreeButton8.BackColor = ColorFromHSV(456);
-            degreeButton9.BackColor = ColorFromHSV(554);
+            degreeButton3.BackColor = ColorFromHSV(56);
+            degreeButton3.ForeColor = Color.White;
+            degreeButton4.BackColor = ColorFromHSV(148);
+            degreeButton5.BackColor = ColorFromHSV(198);
+            degreeButton6.BackColor = ColorFromHSV(314);
+            degreeButton7.BackColor = ColorFromHSV(382);
+            degreeButton8.BackColor = ColorFromHSV(462);
+            degreeButton9.BackColor = ColorFromHSV(563);
             degreeButton9.ForeColor = Color.White;
-            degreeButton10.BackColor = ColorFromHSV(768);
+            degreeButton10.BackColor = ColorFromHSV(722);
             degreeButton10.ForeColor = Color.White;
+            degreeButton11.BackColor = ColorFromHSV(768);
+            degreeButton11.ForeColor = Color.White;
+
             degreeButton1.Click += degreeButton_Click;
             degreeButton2.Click += degreeButton_Click;
             degreeButton3.Click += degreeButton_Click;
@@ -174,6 +179,7 @@ namespace cc841.MScProject
             degreeButton8.Click += degreeButton_Click;
             degreeButton9.Click += degreeButton_Click;
             degreeButton10.Click += degreeButton_Click;
+            degreeButton11.Click += degreeButton_Click;
 
             //Initialize serial port
             CheckSPconnection();
@@ -278,10 +284,9 @@ namespace cc841.MScProject
             { return Color.Black; } //black represent maximum flat floor value.
             else
             {
-
                 int saturation = 1;
                 int value = 1;
-                hue /= 2; //input value ranges from 0-768, but colour representation only ranges in in 0-215 to represent diminishing returns
+                hue /= 2.5; //input value ranges from 0-768, but colour representation only ranges in in 0-215 to represent diminishing returns
                 if (hue > 255) { hue = 255; } //a fail save to set hue to not exceed 255 since the programme is design to work with 0-255
                 hue = 255 - hue - 8; //inverting value so that 255 is represeting red, and 0 representing blue
                                      //original Hue spectrum runs from 0 to 360, but we decided to use only 8-263 since it is representatively sufficient.
@@ -316,7 +321,7 @@ namespace cc841.MScProject
                 buttonsList[i].BackColor = ColorFromHSV(savedArray[i]);
 
                 // recolor button's text to white if color is dark blue or dark red.
-                if (savedArray[i] <= 100 || savedArray[i] >= 480) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                if (savedArray[i] <= 60 || savedArray[i] >= 550) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
 
                 // display value on each button based on display mode.
@@ -400,6 +405,7 @@ namespace cc841.MScProject
             CheckSPconnection();
             //currently it is possible to Undo to Before clicking the presets
             //Redo to newly selected presets are also possible
+            cleared = false;
             int[] pushUndoArray = new int[64];
             workspaceArray.CopyTo(pushUndoArray, 0);
             historyUndoStack.Push(pushUndoArray);
@@ -505,6 +511,7 @@ namespace cc841.MScProject
             //if the button's current color is the same as selected color, don't perform any action.
             if (!cloneMode && (workspaceArray[arrayIndex] != selectedColor))// Input value from trackBar
             {
+                cleared = false;
                 //write to History Stack
                 int[] pushUndoArray = new int[64];
                 workspaceArray.CopyTo(pushUndoArray, 0);
@@ -518,7 +525,7 @@ namespace cc841.MScProject
                 ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
                 // recolor button's text to white if color is dark blue or dark red.
-                if (selectedColor <= 100 || selectedColor >= 480) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
+                if (selectedColor <= 60 || selectedColor >= 550) { ((Button)sender).ForeColor = SystemColors.ControlLightLight; }
                 else { ((Button)sender).ForeColor = SystemColors.ControlText; }
 
                 // Update Text on button depending on which display mode is selected
@@ -568,7 +575,7 @@ namespace cc841.MScProject
             for (int i = 0; i < workspaceArray.Length; i++)
             {
                 // recolor button's text to white if color is dark blue or dark red.
-                if (workspaceArray[i] <= 100 || workspaceArray[i] >= 480) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
+                if (workspaceArray[i] <= 60 || workspaceArray[i] >= 550) { buttonsList[i].ForeColor = SystemColors.ControlLightLight; }
                 else { buttonsList[i].ForeColor = SystemColors.ControlText; }
 
                 if (toggleMode == 1) { buttonsList[i].Text = (i + 1).ToString(); }
@@ -775,8 +782,8 @@ namespace cc841.MScProject
                     //there is overhead for this copy action, but it is to support the case
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList5[persistentIndex]);
+                    loopStartStopButton.Text = "Stop Loop";
                     await PutTaskDelay(selectedLatency);
-
                     if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
                 else if (selectedPattern == 6)
@@ -950,6 +957,27 @@ namespace cc841.MScProject
             button25.ForeColor = Color.White;
             button30.ForeColor = Color.White;
             button39.ForeColor = Color.White;
+        }
+
+        private void clearWorkspaceButton_Click(object sender, EventArgs e)
+        {
+            if (!cleared)
+            {
+                cleared = true;
+                int[] pushUndoArray = new int[64];
+                workspaceArray.CopyTo(pushUndoArray, 0);
+                historyUndoStack.Push(pushUndoArray);
+                undoButton.Enabled = true;
+                historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
+                redoButton.Enabled = false;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "(Clear) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
+
+                Array.Clear(workspaceArray, 0, workspaceArray.Length);
+                updateWorkspaceColor(workspaceArray);
+            }
+            else {
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace was already cleared, no action was performed.");
+            }
         }
     }
 }
