@@ -28,18 +28,15 @@ namespace cc841.MScProject
         int selectedColor = 0;
         int[] workspaceArray = new int[64];
         // presets are loaded into programs and should not be changeable
-        int[] savedArray1 = new int[64] { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768 };
-        int[] savedArray2 = new int[64] { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray3 = new int[64] { 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+        int[] savedArray1 = new int[64] { 0, 10, 96, 144, 144, 96, 10, 0, 10, 144, 249, 309, 309, 249, 144, 10, 96, 249, 377, 456, 456, 377, 249, 96, 144, 309, 456, 554, 554, 456, 309, 144, 144, 309, 456, 554, 554, 456, 309, 144, 96, 249, 377, 456, 456, 377, 249, 96, 10, 144, 249, 309, 309, 249, 144, 10, 0, 10, 96, 144, 144, 10, 96, 0 };
+        int[] savedArray2 = new int[64] { 377, 456, 456, 377, 249, 96, 0, 0, 456, 554, 554, 456, 309, 144, 0, 0, 456, 554, 554, 456, 309, 144, 0, 0, 377, 456, 456, 377, 249, 96, 0, 0, 249, 309, 309, 249, 144, 10, 0, 0, 96, 144, 144, 96, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] savedArray3 = new int[64] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 96, 144, 144, 96, 0, 0, 10, 144, 249, 309, 309, 249, 0, 0, 96, 249, 377, 456, 456, 377, 0, 0, 144, 309, 456, 554, 554, 456, 0, 0, 144, 309, 456, 554, 554, 456, 0, 0, 96, 249, 377, 456, 456, 377 };
         int[] savedArray4 = new int[64] { 768, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768 };
-        int[] savedArray5 = new int[64] { 768, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray6 = new int[64] { 768, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-
-        int[] savedArray5A = new int[64] { 200, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5B = new int[64] { 400, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5C = new int[64] { 600, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5D = new int[64] { 768, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
-        int[] savedArray5E = new int[64] { 100, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504 };
+        
+        int[] savedArray5A = new int[64] { 0, 10, 96, 144, 144, 96, 10, 0, 10, 144, 249, 309, 309, 249, 144, 10, 96, 249, 377, 456, 456, 377, 249, 96, 144, 309, 456, 554, 554, 456, 309, 144, 144, 309, 456, 554, 554, 456, 309, 144, 96, 249, 377, 456, 456, 377, 249, 96, 10, 144, 249, 309, 309, 249, 144, 10, 0, 10, 96, 144, 144, 10, 96, 0 };
+        int[] savedArray5B = new int[64] { 377, 456, 456, 377, 249, 96, 0, 0, 456, 554, 554, 456, 309, 144, 0, 0, 456, 554, 554, 456, 309, 144, 0, 0, 377, 456, 456, 377, 249, 96, 0, 0, 249, 309, 309, 249, 144, 10, 0, 0, 96, 144, 144, 96, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] savedArray5C = new int[64] { 0, 10, 96, 144, 144, 96, 10, 0, 10, 144, 249, 309, 309, 249, 144, 10, 96, 249, 377, 456, 456, 377, 249, 96, 144, 309, 456, 554, 554, 456, 309, 144, 144, 309, 456, 554, 554, 456, 309, 144, 96, 249, 377, 456, 456, 377, 249, 96, 10, 144, 249, 309, 309, 249, 144, 10, 0, 10, 96, 144, 144, 10, 96, 0 };
+        int[] savedArray5D = new int[64] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 96, 144, 144, 96, 0, 0, 10, 144, 249, 309, 309, 249, 0, 0, 96, 249, 377, 456, 456, 377, 0, 0, 144, 309, 456, 554, 554, 456, 0, 0, 144, 309, 456, 554, 554, 456, 0, 0, 96, 249, 377, 456, 456, 377 };
 
         int[] savedArray6A = new int[64] { 100, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
         int[] savedArray6B = new int[64] { 300, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
@@ -81,7 +78,6 @@ namespace cc841.MScProject
             savedArrayList5.Add(savedArray5B);
             savedArrayList5.Add(savedArray5C);
             savedArrayList5.Add(savedArray5D);
-            savedArrayList5.Add(savedArray5E);
 
             savedArrayList6.Add(savedArray6A);
             savedArrayList6.Add(savedArray6B);
@@ -149,9 +145,9 @@ namespace cc841.MScProject
             customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom4.png");
 
             //Loading Pattern 1
-            savedArray1.CopyTo(workspaceArray, 0);
-            updateWorkspaceColor(workspaceArray);
-            selectedPattern = 1;
+            //savedArray1.CopyTo(workspaceArray, 0);
+            //updateWorkspaceColor(workspaceArray);
+            //selectedPattern = 1;
 
             //initialize preset Degree button's colours and attach to same function
             degreeButton1.BackColor = ColorFromHSV(0);
@@ -733,20 +729,20 @@ namespace cc841.MScProject
             spdMode = selectPresetDisplayCheckBox.Checked;
             if (!spdMode)
             {
-                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
-                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
-                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset1_shape.png");
+                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset2_shape.png");
+                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset3_shape.png");
                 presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
-                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset5_shape.png");
                 presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
             }
             else
             {
-                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
-                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
-                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset1_pat.png");
+                presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset2_pat.png");
+                presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset3_pat.png");
                 presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
-                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset5_pat.png");
                 presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
             }
         }
@@ -940,6 +936,20 @@ namespace cc841.MScProject
             intensitySelectTrackBar.Value = selectedDegPresetValue;
             previewButton.BackColor = ColorFromHSV(selectedDegPresetValue);
             inputTextBox.Text = selectedDegPresetValue.ToString();
+        }
+
+        private void indicateBrokenButton_Click(object sender, EventArgs e)
+        {
+            button1.BackColor = Color.SaddleBrown;
+            button8.BackColor = Color.SaddleBrown;
+            button25.BackColor = Color.SaddleBrown;
+            button30.BackColor = Color.SaddleBrown;
+            button39.BackColor = Color.SaddleBrown;
+            button1.ForeColor = Color.White;
+            button8.ForeColor = Color.White;
+            button25.ForeColor = Color.White;
+            button30.ForeColor = Color.White;
+            button39.ForeColor = Color.White;
         }
     }
 }

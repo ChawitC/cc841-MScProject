@@ -135,6 +135,19 @@
             this.statusMessagesLabel = new System.Windows.Forms.Label();
             this.statusRefreshButton = new System.Windows.Forms.Button();
             this.sentXButton = new System.Windows.Forms.Button();
+            this.degreeButton1 = new System.Windows.Forms.Button();
+            this.degreeButton2 = new System.Windows.Forms.Button();
+            this.degreeButton3 = new System.Windows.Forms.Button();
+            this.degreeButton4 = new System.Windows.Forms.Button();
+            this.degreeButton5 = new System.Windows.Forms.Button();
+            this.degreeButton6 = new System.Windows.Forms.Button();
+            this.degreeButton7 = new System.Windows.Forms.Button();
+            this.degreeButton8 = new System.Windows.Forms.Button();
+            this.degreeButton9 = new System.Windows.Forms.Button();
+            this.degreeButton10 = new System.Windows.Forms.Button();
+            this.indicateBrokenButton = new System.Windows.Forms.Button();
+            this.bottomValuePictureBox = new System.Windows.Forms.PictureBox();
+            this.topValuePictureBox = new System.Windows.Forms.PictureBox();
             this.customImageButton4 = new System.Windows.Forms.Button();
             this.customImageButton3 = new System.Windows.Forms.Button();
             this.customImageButton2 = new System.Windows.Forms.Button();
@@ -146,22 +159,10 @@
             this.presetButton2 = new System.Windows.Forms.Button();
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
-            this.topValuePictureBox = new System.Windows.Forms.PictureBox();
-            this.degreeButton1 = new System.Windows.Forms.Button();
-            this.degreeButton2 = new System.Windows.Forms.Button();
-            this.degreeButton3 = new System.Windows.Forms.Button();
-            this.degreeButton4 = new System.Windows.Forms.Button();
-            this.degreeButton5 = new System.Windows.Forms.Button();
-            this.degreeButton6 = new System.Windows.Forms.Button();
-            this.degreeButton7 = new System.Windows.Forms.Button();
-            this.degreeButton8 = new System.Windows.Forms.Button();
-            this.degreeButton9 = new System.Windows.Forms.Button();
-            this.bottomValuePictureBox = new System.Windows.Forms.PictureBox();
-            this.degreeButton10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -1398,163 +1399,6 @@
             this.sentXButton.UseVisualStyleBackColor = true;
             this.sentXButton.Click += new System.EventHandler(this.sentXButton_Click);
             // 
-            // customImageButton4
-            // 
-            this.customImageButton4.BackColor = System.Drawing.SystemColors.Control;
-            this.customImageButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom4;
-            this.customImageButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customImageButton4.Location = new System.Drawing.Point(202, 490);
-            this.customImageButton4.Margin = new System.Windows.Forms.Padding(2);
-            this.customImageButton4.Name = "customImageButton4";
-            this.customImageButton4.Size = new System.Drawing.Size(125, 125);
-            this.customImageButton4.TabIndex = 109;
-            this.customImageButton4.Tag = "cib4";
-            this.customImageButton4.UseVisualStyleBackColor = false;
-            // 
-            // customImageButton3
-            // 
-            this.customImageButton3.BackColor = System.Drawing.SystemColors.Control;
-            this.customImageButton3.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom3;
-            this.customImageButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customImageButton3.Location = new System.Drawing.Point(39, 490);
-            this.customImageButton3.Margin = new System.Windows.Forms.Padding(2);
-            this.customImageButton3.Name = "customImageButton3";
-            this.customImageButton3.Size = new System.Drawing.Size(125, 125);
-            this.customImageButton3.TabIndex = 106;
-            this.customImageButton3.Tag = "cib3";
-            this.customImageButton3.UseVisualStyleBackColor = false;
-            // 
-            // customImageButton2
-            // 
-            this.customImageButton2.BackColor = System.Drawing.SystemColors.Control;
-            this.customImageButton2.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom2;
-            this.customImageButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customImageButton2.Location = new System.Drawing.Point(202, 325);
-            this.customImageButton2.Margin = new System.Windows.Forms.Padding(2);
-            this.customImageButton2.Name = "customImageButton2";
-            this.customImageButton2.Size = new System.Drawing.Size(125, 125);
-            this.customImageButton2.TabIndex = 101;
-            this.customImageButton2.Tag = "cib2";
-            this.customImageButton2.UseVisualStyleBackColor = false;
-            // 
-            // presetButton6
-            // 
-            this.presetButton6.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton6.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton6.Location = new System.Drawing.Point(241, 184);
-            this.presetButton6.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton6.Name = "presetButton6";
-            this.presetButton6.Size = new System.Drawing.Size(100, 100);
-            this.presetButton6.TabIndex = 98;
-            this.presetButton6.Tag = "p6";
-            this.presetButton6.Text = "Load Preset 6";
-            this.presetButton6.UseVisualStyleBackColor = false;
-            // 
-            // presetButton5
-            // 
-            this.presetButton5.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton5.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton5.Location = new System.Drawing.Point(137, 184);
-            this.presetButton5.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton5.Name = "presetButton5";
-            this.presetButton5.Size = new System.Drawing.Size(100, 100);
-            this.presetButton5.TabIndex = 97;
-            this.presetButton5.Tag = "p5";
-            this.presetButton5.Text = "Load Preset 5";
-            this.presetButton5.UseVisualStyleBackColor = false;
-            // 
-            // presetButton4
-            // 
-            this.presetButton4.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton4.Location = new System.Drawing.Point(31, 184);
-            this.presetButton4.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton4.Name = "presetButton4";
-            this.presetButton4.Size = new System.Drawing.Size(100, 100);
-            this.presetButton4.TabIndex = 96;
-            this.presetButton4.Tag = "p4";
-            this.presetButton4.Text = "Load Preset 4";
-            this.presetButton4.UseVisualStyleBackColor = false;
-            // 
-            // customImageButton1
-            // 
-            this.customImageButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.customImageButton1.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom1;
-            this.customImageButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customImageButton1.Location = new System.Drawing.Point(39, 325);
-            this.customImageButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.customImageButton1.Name = "customImageButton1";
-            this.customImageButton1.Size = new System.Drawing.Size(125, 125);
-            this.customImageButton1.TabIndex = 95;
-            this.customImageButton1.Tag = "cib1";
-            this.customImageButton1.UseVisualStyleBackColor = false;
-            // 
-            // gradiantPictureBox
-            // 
-            this.gradiantPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.BackgroundImage")));
-            this.gradiantPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.gradiantPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.InitialImage")));
-            this.gradiantPictureBox.Location = new System.Drawing.Point(951, 190);
-            this.gradiantPictureBox.Name = "gradiantPictureBox";
-            this.gradiantPictureBox.Size = new System.Drawing.Size(26, 169);
-            this.gradiantPictureBox.TabIndex = 36;
-            this.gradiantPictureBox.TabStop = false;
-            // 
-            // presetButton2
-            // 
-            this.presetButton2.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton2.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton2.Location = new System.Drawing.Point(137, 80);
-            this.presetButton2.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton2.Name = "presetButton2";
-            this.presetButton2.Size = new System.Drawing.Size(100, 100);
-            this.presetButton2.TabIndex = 33;
-            this.presetButton2.Tag = "p2";
-            this.presetButton2.Text = "Load Preset 2";
-            this.presetButton2.UseVisualStyleBackColor = false;
-            // 
-            // presetButton3
-            // 
-            this.presetButton3.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton3.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton3.Location = new System.Drawing.Point(241, 80);
-            this.presetButton3.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton3.Name = "presetButton3";
-            this.presetButton3.Size = new System.Drawing.Size(100, 100);
-            this.presetButton3.TabIndex = 28;
-            this.presetButton3.Tag = "p3";
-            this.presetButton3.Text = "Load Preset 3";
-            this.presetButton3.UseVisualStyleBackColor = false;
-            // 
-            // presetButton1
-            // 
-            this.presetButton1.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton1.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
-            this.presetButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.presetButton1.ForeColor = System.Drawing.Color.Black;
-            this.presetButton1.Location = new System.Drawing.Point(31, 80);
-            this.presetButton1.Margin = new System.Windows.Forms.Padding(2);
-            this.presetButton1.Name = "presetButton1";
-            this.presetButton1.Size = new System.Drawing.Size(100, 100);
-            this.presetButton1.TabIndex = 20;
-            this.presetButton1.Tag = "p1";
-            this.presetButton1.Text = "Load Preset 1";
-            this.presetButton1.UseVisualStyleBackColor = false;
-            // 
-            // topValuePictureBox
-            // 
-            this.topValuePictureBox.BackColor = System.Drawing.Color.Red;
-            this.topValuePictureBox.Location = new System.Drawing.Point(951, 102);
-            this.topValuePictureBox.Name = "topValuePictureBox";
-            this.topValuePictureBox.Size = new System.Drawing.Size(26, 90);
-            this.topValuePictureBox.TabIndex = 122;
-            this.topValuePictureBox.TabStop = false;
-            // 
             // degreeButton1
             // 
             this.degreeButton1.Location = new System.Drawing.Point(888, 354);
@@ -1645,15 +1489,6 @@
             this.degreeButton9.Text = "96.50°";
             this.degreeButton9.UseVisualStyleBackColor = true;
             // 
-            // bottomValuePictureBox
-            // 
-            this.bottomValuePictureBox.BackColor = System.Drawing.Color.Black;
-            this.bottomValuePictureBox.Location = new System.Drawing.Point(951, 355);
-            this.bottomValuePictureBox.Name = "bottomValuePictureBox";
-            this.bottomValuePictureBox.Size = new System.Drawing.Size(26, 10);
-            this.bottomValuePictureBox.TabIndex = 133;
-            this.bottomValuePictureBox.TabStop = false;
-            // 
             // degreeButton10
             // 
             this.degreeButton10.Location = new System.Drawing.Point(888, 93);
@@ -1664,12 +1499,185 @@
             this.degreeButton10.Text = "113.65°";
             this.degreeButton10.UseVisualStyleBackColor = true;
             // 
+            // indicateBrokenButton
+            // 
+            this.indicateBrokenButton.Location = new System.Drawing.Point(732, 46);
+            this.indicateBrokenButton.Name = "indicateBrokenButton";
+            this.indicateBrokenButton.Size = new System.Drawing.Size(184, 23);
+            this.indicateBrokenButton.TabIndex = 135;
+            this.indicateBrokenButton.Text = "Indicate Blackbox\'s broken indexes";
+            this.indicateBrokenButton.UseVisualStyleBackColor = true;
+            this.indicateBrokenButton.Click += new System.EventHandler(this.indicateBrokenButton_Click);
+            // 
+            // bottomValuePictureBox
+            // 
+            this.bottomValuePictureBox.BackColor = System.Drawing.Color.Black;
+            this.bottomValuePictureBox.Location = new System.Drawing.Point(951, 355);
+            this.bottomValuePictureBox.Name = "bottomValuePictureBox";
+            this.bottomValuePictureBox.Size = new System.Drawing.Size(26, 10);
+            this.bottomValuePictureBox.TabIndex = 133;
+            this.bottomValuePictureBox.TabStop = false;
+            // 
+            // topValuePictureBox
+            // 
+            this.topValuePictureBox.BackColor = System.Drawing.Color.Red;
+            this.topValuePictureBox.Location = new System.Drawing.Point(951, 102);
+            this.topValuePictureBox.Name = "topValuePictureBox";
+            this.topValuePictureBox.Size = new System.Drawing.Size(26, 90);
+            this.topValuePictureBox.TabIndex = 122;
+            this.topValuePictureBox.TabStop = false;
+            // 
+            // customImageButton4
+            // 
+            this.customImageButton4.BackColor = System.Drawing.SystemColors.Control;
+            this.customImageButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom4;
+            this.customImageButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customImageButton4.Location = new System.Drawing.Point(202, 490);
+            this.customImageButton4.Margin = new System.Windows.Forms.Padding(2);
+            this.customImageButton4.Name = "customImageButton4";
+            this.customImageButton4.Size = new System.Drawing.Size(125, 125);
+            this.customImageButton4.TabIndex = 109;
+            this.customImageButton4.Tag = "cib4";
+            this.customImageButton4.UseVisualStyleBackColor = false;
+            // 
+            // customImageButton3
+            // 
+            this.customImageButton3.BackColor = System.Drawing.SystemColors.Control;
+            this.customImageButton3.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom3;
+            this.customImageButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customImageButton3.Location = new System.Drawing.Point(39, 490);
+            this.customImageButton3.Margin = new System.Windows.Forms.Padding(2);
+            this.customImageButton3.Name = "customImageButton3";
+            this.customImageButton3.Size = new System.Drawing.Size(125, 125);
+            this.customImageButton3.TabIndex = 106;
+            this.customImageButton3.Tag = "cib3";
+            this.customImageButton3.UseVisualStyleBackColor = false;
+            // 
+            // customImageButton2
+            // 
+            this.customImageButton2.BackColor = System.Drawing.SystemColors.Control;
+            this.customImageButton2.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom2;
+            this.customImageButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customImageButton2.Location = new System.Drawing.Point(202, 325);
+            this.customImageButton2.Margin = new System.Windows.Forms.Padding(2);
+            this.customImageButton2.Name = "customImageButton2";
+            this.customImageButton2.Size = new System.Drawing.Size(125, 125);
+            this.customImageButton2.TabIndex = 101;
+            this.customImageButton2.Tag = "cib2";
+            this.customImageButton2.UseVisualStyleBackColor = false;
+            // 
+            // presetButton6
+            // 
+            this.presetButton6.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton6.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton6.Location = new System.Drawing.Point(241, 184);
+            this.presetButton6.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton6.Name = "presetButton6";
+            this.presetButton6.Size = new System.Drawing.Size(100, 100);
+            this.presetButton6.TabIndex = 98;
+            this.presetButton6.Tag = "p6";
+            this.presetButton6.Text = "Load Preset 6";
+            this.presetButton6.UseVisualStyleBackColor = false;
+            // 
+            // presetButton5
+            // 
+            this.presetButton5.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton5.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset5_shape;
+            this.presetButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton5.Location = new System.Drawing.Point(137, 184);
+            this.presetButton5.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton5.Name = "presetButton5";
+            this.presetButton5.Size = new System.Drawing.Size(100, 100);
+            this.presetButton5.TabIndex = 97;
+            this.presetButton5.Tag = "p5";
+            this.presetButton5.UseVisualStyleBackColor = false;
+            // 
+            // presetButton4
+            // 
+            this.presetButton4.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton4.Location = new System.Drawing.Point(31, 184);
+            this.presetButton4.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton4.Name = "presetButton4";
+            this.presetButton4.Size = new System.Drawing.Size(100, 100);
+            this.presetButton4.TabIndex = 96;
+            this.presetButton4.Tag = "p4";
+            this.presetButton4.Text = "Load Preset 4";
+            this.presetButton4.UseVisualStyleBackColor = false;
+            // 
+            // customImageButton1
+            // 
+            this.customImageButton1.BackColor = System.Drawing.SystemColors.Control;
+            this.customImageButton1.BackgroundImage = global::cc841.MScProject.Properties.Resources.custom1;
+            this.customImageButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customImageButton1.Location = new System.Drawing.Point(39, 325);
+            this.customImageButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.customImageButton1.Name = "customImageButton1";
+            this.customImageButton1.Size = new System.Drawing.Size(125, 125);
+            this.customImageButton1.TabIndex = 95;
+            this.customImageButton1.Tag = "cib1";
+            this.customImageButton1.UseVisualStyleBackColor = false;
+            // 
+            // gradiantPictureBox
+            // 
+            this.gradiantPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.BackgroundImage")));
+            this.gradiantPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.gradiantPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.InitialImage")));
+            this.gradiantPictureBox.Location = new System.Drawing.Point(951, 190);
+            this.gradiantPictureBox.Name = "gradiantPictureBox";
+            this.gradiantPictureBox.Size = new System.Drawing.Size(26, 169);
+            this.gradiantPictureBox.TabIndex = 36;
+            this.gradiantPictureBox.TabStop = false;
+            // 
+            // presetButton2
+            // 
+            this.presetButton2.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton2.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset2_shape;
+            this.presetButton2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton2.Location = new System.Drawing.Point(137, 80);
+            this.presetButton2.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton2.Name = "presetButton2";
+            this.presetButton2.Size = new System.Drawing.Size(100, 100);
+            this.presetButton2.TabIndex = 33;
+            this.presetButton2.Tag = "p2";
+            this.presetButton2.UseVisualStyleBackColor = false;
+            // 
+            // presetButton3
+            // 
+            this.presetButton3.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton3.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset3_shape;
+            this.presetButton3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton3.Location = new System.Drawing.Point(241, 80);
+            this.presetButton3.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton3.Name = "presetButton3";
+            this.presetButton3.Size = new System.Drawing.Size(100, 100);
+            this.presetButton3.TabIndex = 28;
+            this.presetButton3.Tag = "p3";
+            this.presetButton3.UseVisualStyleBackColor = false;
+            // 
+            // presetButton1
+            // 
+            this.presetButton1.BackColor = System.Drawing.SystemColors.Control;
+            this.presetButton1.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset1_shape;
+            this.presetButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.presetButton1.ForeColor = System.Drawing.Color.Black;
+            this.presetButton1.Location = new System.Drawing.Point(31, 80);
+            this.presetButton1.Margin = new System.Windows.Forms.Padding(2);
+            this.presetButton1.Name = "presetButton1";
+            this.presetButton1.Size = new System.Drawing.Size(100, 100);
+            this.presetButton1.TabIndex = 20;
+            this.presetButton1.Tag = "p1";
+            this.presetButton1.UseVisualStyleBackColor = false;
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1065, 683);
+            this.Controls.Add(this.indicateBrokenButton);
             this.Controls.Add(this.degreeButton10);
             this.Controls.Add(this.bottomValuePictureBox);
             this.Controls.Add(this.degreeButton9);
@@ -1805,9 +1813,9 @@
             this.Text = "8x8 Array Speaker Controller : University of Sussex MSc Project : Candidate No. 2" +
     "44152";
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1944,6 +1952,7 @@
         private System.Windows.Forms.Button degreeButton9;
         private System.Windows.Forms.PictureBox bottomValuePictureBox;
         private System.Windows.Forms.Button degreeButton10;
+        private System.Windows.Forms.Button indicateBrokenButton;
     }
 }
 

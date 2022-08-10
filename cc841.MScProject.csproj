@@ -98,5 +98,29 @@
   <ItemGroup>
     <None Include="bin\Debug\Assets\Placeholder_ShapeImage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset1_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset1_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset2_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset2_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset3_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset3_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset5_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset5_shape.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
