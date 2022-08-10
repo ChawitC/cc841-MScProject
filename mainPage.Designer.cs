@@ -146,10 +146,22 @@
             this.presetButton2 = new System.Windows.Forms.Button();
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.topValuePictureBox = new System.Windows.Forms.PictureBox();
+            this.degreeButton1 = new System.Windows.Forms.Button();
+            this.degreeButton2 = new System.Windows.Forms.Button();
+            this.degreeButton3 = new System.Windows.Forms.Button();
+            this.degreeButton4 = new System.Windows.Forms.Button();
+            this.degreeButton5 = new System.Windows.Forms.Button();
+            this.degreeButton6 = new System.Windows.Forms.Button();
+            this.degreeButton7 = new System.Windows.Forms.Button();
+            this.degreeButton8 = new System.Windows.Forms.Button();
+            this.degreeButton9 = new System.Windows.Forms.Button();
+            this.bottomValuePictureBox = new System.Windows.Forms.PictureBox();
+            this.degreeButton10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -1534,14 +1546,123 @@
             this.presetButton1.Text = "Load Preset 1";
             this.presetButton1.UseVisualStyleBackColor = false;
             // 
-            // pictureBox1
+            // topValuePictureBox
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Red;
-            this.pictureBox1.Location = new System.Drawing.Point(951, 102);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(26, 90);
-            this.pictureBox1.TabIndex = 122;
-            this.pictureBox1.TabStop = false;
+            this.topValuePictureBox.BackColor = System.Drawing.Color.Red;
+            this.topValuePictureBox.Location = new System.Drawing.Point(951, 102);
+            this.topValuePictureBox.Name = "topValuePictureBox";
+            this.topValuePictureBox.Size = new System.Drawing.Size(26, 90);
+            this.topValuePictureBox.TabIndex = 122;
+            this.topValuePictureBox.TabStop = false;
+            // 
+            // degreeButton1
+            // 
+            this.degreeButton1.Location = new System.Drawing.Point(888, 354);
+            this.degreeButton1.Name = "degreeButton1";
+            this.degreeButton1.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton1.TabIndex = 123;
+            this.degreeButton1.Tag = "0";
+            this.degreeButton1.Text = "-32.22°";
+            this.degreeButton1.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton2
+            // 
+            this.degreeButton2.Location = new System.Drawing.Point(888, 332);
+            this.degreeButton2.Name = "degreeButton2";
+            this.degreeButton2.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton2.TabIndex = 124;
+            this.degreeButton2.Tag = "10";
+            this.degreeButton2.Text = "-28.78°";
+            this.degreeButton2.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton3
+            // 
+            this.degreeButton3.Location = new System.Drawing.Point(888, 310);
+            this.degreeButton3.Name = "degreeButton3";
+            this.degreeButton3.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton3.TabIndex = 125;
+            this.degreeButton3.Tag = "96";
+            this.degreeButton3.Text = "-1.05°";
+            this.degreeButton3.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton4
+            // 
+            this.degreeButton4.Location = new System.Drawing.Point(888, 288);
+            this.degreeButton4.Name = "degreeButton4";
+            this.degreeButton4.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton4.TabIndex = 126;
+            this.degreeButton4.Tag = "144";
+            this.degreeButton4.Text = "12.86°";
+            this.degreeButton4.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton5
+            // 
+            this.degreeButton5.Location = new System.Drawing.Point(888, 266);
+            this.degreeButton5.Name = "degreeButton5";
+            this.degreeButton5.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton5.TabIndex = 127;
+            this.degreeButton5.Tag = "249";
+            this.degreeButton5.Text = "40.66°";
+            this.degreeButton5.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton6
+            // 
+            this.degreeButton6.Location = new System.Drawing.Point(888, 244);
+            this.degreeButton6.Name = "degreeButton6";
+            this.degreeButton6.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton6.TabIndex = 128;
+            this.degreeButton6.Tag = "309";
+            this.degreeButton6.Text = "54.60°";
+            this.degreeButton6.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton7
+            // 
+            this.degreeButton7.Location = new System.Drawing.Point(888, 222);
+            this.degreeButton7.Name = "degreeButton7";
+            this.degreeButton7.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton7.TabIndex = 129;
+            this.degreeButton7.Tag = "377";
+            this.degreeButton7.Text = "68.55°";
+            this.degreeButton7.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton8
+            // 
+            this.degreeButton8.Location = new System.Drawing.Point(888, 197);
+            this.degreeButton8.Name = "degreeButton8";
+            this.degreeButton8.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton8.TabIndex = 130;
+            this.degreeButton8.Tag = "456";
+            this.degreeButton8.Text = "82.52°";
+            this.degreeButton8.UseVisualStyleBackColor = true;
+            // 
+            // degreeButton9
+            // 
+            this.degreeButton9.Location = new System.Drawing.Point(888, 166);
+            this.degreeButton9.Name = "degreeButton9";
+            this.degreeButton9.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton9.TabIndex = 131;
+            this.degreeButton9.Tag = "554";
+            this.degreeButton9.Text = "96.50°";
+            this.degreeButton9.UseVisualStyleBackColor = true;
+            // 
+            // bottomValuePictureBox
+            // 
+            this.bottomValuePictureBox.BackColor = System.Drawing.Color.Black;
+            this.bottomValuePictureBox.Location = new System.Drawing.Point(951, 355);
+            this.bottomValuePictureBox.Name = "bottomValuePictureBox";
+            this.bottomValuePictureBox.Size = new System.Drawing.Size(26, 10);
+            this.bottomValuePictureBox.TabIndex = 133;
+            this.bottomValuePictureBox.TabStop = false;
+            // 
+            // degreeButton10
+            // 
+            this.degreeButton10.Location = new System.Drawing.Point(888, 93);
+            this.degreeButton10.Name = "degreeButton10";
+            this.degreeButton10.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton10.TabIndex = 134;
+            this.degreeButton10.Tag = "768";
+            this.degreeButton10.Text = "113.65°";
+            this.degreeButton10.UseVisualStyleBackColor = true;
             // 
             // mainPage
             // 
@@ -1549,7 +1670,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
             this.ClientSize = new System.Drawing.Size(1065, 683);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.degreeButton10);
+            this.Controls.Add(this.bottomValuePictureBox);
+            this.Controls.Add(this.degreeButton9);
+            this.Controls.Add(this.degreeButton8);
+            this.Controls.Add(this.degreeButton7);
+            this.Controls.Add(this.degreeButton6);
+            this.Controls.Add(this.degreeButton5);
+            this.Controls.Add(this.degreeButton4);
+            this.Controls.Add(this.degreeButton3);
+            this.Controls.Add(this.degreeButton2);
+            this.Controls.Add(this.degreeButton1);
+            this.Controls.Add(this.topValuePictureBox);
             this.Controls.Add(this.sentXButton);
             this.Controls.Add(this.statusRefreshButton);
             this.Controls.Add(this.statusMessagesLabel);
@@ -1674,7 +1806,8 @@
     "44152";
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradiantPictureBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1799,7 +1932,18 @@
         private System.Windows.Forms.Label statusMessagesLabel;
         private System.Windows.Forms.Button statusRefreshButton;
         private System.Windows.Forms.Button sentXButton;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox topValuePictureBox;
+        private System.Windows.Forms.Button degreeButton1;
+        private System.Windows.Forms.Button degreeButton2;
+        private System.Windows.Forms.Button degreeButton3;
+        private System.Windows.Forms.Button degreeButton4;
+        private System.Windows.Forms.Button degreeButton5;
+        private System.Windows.Forms.Button degreeButton6;
+        private System.Windows.Forms.Button degreeButton7;
+        private System.Windows.Forms.Button degreeButton8;
+        private System.Windows.Forms.Button degreeButton9;
+        private System.Windows.Forms.PictureBox bottomValuePictureBox;
+        private System.Windows.Forms.Button degreeButton10;
     }
 }
 

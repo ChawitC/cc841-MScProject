@@ -50,6 +50,7 @@ namespace cc841.MScProject
         int selectedPattern = 0;
         int selectedLatency = 100;
         int persistentIndex = 0;
+        int selectedDegPresetValue = 0;
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
 
@@ -151,6 +152,32 @@ namespace cc841.MScProject
             savedArray1.CopyTo(workspaceArray, 0);
             updateWorkspaceColor(workspaceArray);
             selectedPattern = 1;
+
+            //initialize preset Degree button's colours and attach to same function
+            degreeButton1.BackColor = ColorFromHSV(0);
+            degreeButton1.ForeColor = Color.White;
+            degreeButton2.BackColor = ColorFromHSV(10);
+            degreeButton2.ForeColor = Color.White;
+            degreeButton3.BackColor = ColorFromHSV(96);
+            degreeButton4.BackColor = ColorFromHSV(144);
+            degreeButton5.BackColor = ColorFromHSV(249);
+            degreeButton6.BackColor = ColorFromHSV(309);
+            degreeButton7.BackColor = ColorFromHSV(377);
+            degreeButton8.BackColor = ColorFromHSV(456);
+            degreeButton9.BackColor = ColorFromHSV(554);
+            degreeButton9.ForeColor = Color.White;
+            degreeButton10.BackColor = ColorFromHSV(768);
+            degreeButton10.ForeColor = Color.White;
+            degreeButton1.Click += degreeButton_Click;
+            degreeButton2.Click += degreeButton_Click;
+            degreeButton3.Click += degreeButton_Click;
+            degreeButton4.Click += degreeButton_Click;
+            degreeButton5.Click += degreeButton_Click;
+            degreeButton6.Click += degreeButton_Click;
+            degreeButton7.Click += degreeButton_Click;
+            degreeButton8.Click += degreeButton_Click;
+            degreeButton9.Click += degreeButton_Click;
+            degreeButton10.Click += degreeButton_Click;
 
             //Initialize serial port
             CheckSPconnection();
@@ -903,6 +930,16 @@ namespace cc841.MScProject
 
             if (lastKnownCOM != 0) { MessageBox.Show("The action was performed successfully!\nX command was sent through COM" + lastKnownCOM.ToString()); }
             else { MessageBox.Show("COM port connection closed"); }
+        }
+
+        private void degreeButton_Click(object sender, EventArgs e)
+        { 
+            //input values are stored in button tags.
+            selectedDegPresetValue = Convert.ToInt32(((Button)sender).Tag);
+            selectedColor = selectedDegPresetValue;
+            intensitySelectTrackBar.Value = selectedDegPresetValue;
+            previewButton.BackColor = ColorFromHSV(selectedDegPresetValue);
+            inputTextBox.Text = selectedDegPresetValue.ToString();
         }
     }
 }
