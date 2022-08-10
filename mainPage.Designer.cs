@@ -1419,7 +1419,7 @@
             this.degreeButton2.Size = new System.Drawing.Size(57, 23);
             this.degreeButton2.TabIndex = 124;
             this.degreeButton2.Tag = "14";
-            this.degreeButton2.Text = "-27.63°";
+            this.degreeButton2.Text = "-27.47°";
             this.degreeButton2.UseVisualStyleBackColor = true;
             // 
             // degreeButton3
@@ -1429,7 +1429,7 @@
             this.degreeButton3.Size = new System.Drawing.Size(57, 23);
             this.degreeButton3.TabIndex = 125;
             this.degreeButton3.Tag = "56";
-            this.degreeButton3.Text = "-13.79°";
+            this.degreeButton3.Text = "-13.69°";
             this.degreeButton3.UseVisualStyleBackColor = true;
             // 
             // degreeButton4
@@ -1439,7 +1439,7 @@
             this.degreeButton4.Size = new System.Drawing.Size(57, 23);
             this.degreeButton4.TabIndex = 126;
             this.degreeButton4.Tag = "148";
-            this.degreeButton4.Text = "13.95°";
+            this.degreeButton4.Text = "14.06°";
             this.degreeButton4.UseVisualStyleBackColor = true;
             // 
             // degreeButton5
@@ -1449,7 +1449,7 @@
             this.degreeButton5.Size = new System.Drawing.Size(57, 23);
             this.degreeButton5.TabIndex = 127;
             this.degreeButton5.Tag = "198";
-            this.degreeButton5.Text = "27.84°";
+            this.degreeButton5.Text = "27.83°";
             this.degreeButton5.UseVisualStyleBackColor = true;
             // 
             // degreeButton6
@@ -1459,7 +1459,7 @@
             this.degreeButton6.Size = new System.Drawing.Size(57, 23);
             this.degreeButton6.TabIndex = 128;
             this.degreeButton6.Tag = "314";
-            this.degreeButton6.Text = "55.66°";
+            this.degreeButton6.Text = "55.65°";
             this.degreeButton6.UseVisualStyleBackColor = true;
             // 
             // degreeButton7
@@ -1469,7 +1469,7 @@
             this.degreeButton7.Size = new System.Drawing.Size(57, 23);
             this.degreeButton7.TabIndex = 129;
             this.degreeButton7.Tag = "382";
-            this.degreeButton7.Text = "69.60°";
+            this.degreeButton7.Text = "69.53°";
             this.degreeButton7.UseVisualStyleBackColor = true;
             // 
             // degreeButton8
@@ -1479,7 +1479,7 @@
             this.degreeButton8.Size = new System.Drawing.Size(57, 23);
             this.degreeButton8.TabIndex = 130;
             this.degreeButton8.Tag = "462";
-            this.degreeButton8.Text = "83.55°";
+            this.degreeButton8.Text = "83.52°";
             this.degreeButton8.UseVisualStyleBackColor = true;
             // 
             // degreeButton9
@@ -1489,7 +1489,7 @@
             this.degreeButton9.Size = new System.Drawing.Size(57, 23);
             this.degreeButton9.TabIndex = 131;
             this.degreeButton9.Tag = "563";
-            this.degreeButton9.Text = "97.52°";
+            this.degreeButton9.Text = "97.57°";
             this.degreeButton9.UseVisualStyleBackColor = true;
             // 
             // degreeButton11
@@ -1701,7 +1701,7 @@
             this.degreeButton10.Size = new System.Drawing.Size(57, 23);
             this.degreeButton10.TabIndex = 138;
             this.degreeButton10.Tag = "722";
-            this.degreeButton10.Text = "111.50°";
+            this.degreeButton10.Text = "111.49°";
             this.degreeButton10.UseVisualStyleBackColor = true;
             // 
             // mainPage
