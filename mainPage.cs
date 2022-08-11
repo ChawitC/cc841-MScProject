@@ -28,25 +28,105 @@ namespace cc841.MScProject
         int selectedColor = 0;
         int[] workspaceArray = new int[64];
         // presets are loaded into programs and should not be changeable
-        int[] savedArray1 = new int[64] { 462, 563, 563, 462, 314, 148, 0, 0, 563, 722, 722, 563, 382, 198, 14, 0, 563, 722, 722, 563, 382, 198, 14, 0, 462, 563, 563, 462, 314, 148, 0, 0, 314, 382, 382, 314, 198, 56, 0, 0, 148, 198, 198, 148, 56, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        int[] savedArray2 = new int[64] { 0, 56, 148, 198, 198, 148, 56, 0, 56, 198, 314, 382, 382, 314, 198, 56, 148, 314, 462, 563, 563, 462, 314, 148, 198, 382, 563, 722, 722, 563, 382, 198, 198, 382, 563, 722, 722, 563, 382, 198, 148, 314, 462, 563, 563, 462, 314, 148, 56, 198, 314, 382, 382, 314, 198, 56, 0, 56, 148, 198, 198, 56, 148, 0 };
-        int[] savedArray3 = new int[64] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 56, 148, 198, 198, 148, 0, 0, 56, 198, 314, 382, 382, 314, 0, 0, 148, 314, 462, 563, 563, 462, 0, 14, 198, 382, 563, 722, 722, 563, 0, 14, 198, 382, 563, 722, 722, 563, 0, 0, 148, 314, 462, 563, 563, 462 };
-        int[] savedArray4 = new int[64] { 768, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512, 528, 544, 560, 576, 592, 608, 624, 640, 656, 672, 688, 704, 720, 736, 752, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768, 768 };
-        
-        int[] savedArray5A = new int[64] { 462, 563, 563, 462, 314, 148, 0, 0, 563, 722, 722, 563, 382, 198, 14, 0, 563, 722, 722, 563, 382, 198, 14, 0, 462, 563, 563, 462, 314, 148, 0, 0, 314, 382, 382, 314, 198, 56, 0, 0, 148, 198, 198, 148, 56, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-        int[] savedArray5B = new int[64] { 0, 56, 148, 198, 198, 148, 56, 0, 56, 198, 314, 382, 382, 314, 198, 56, 148, 314, 462, 563, 563, 462, 314, 148, 198, 382, 563, 722, 722, 563, 382, 198, 198, 382, 563, 722, 722, 563, 382, 198, 148, 314, 462, 563, 563, 462, 314, 148, 56, 198, 314, 382, 382, 314, 198, 56, 0, 56, 148, 198, 198, 56, 148, 0 };
-        int[] savedArray5C = new int[64] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 56, 148, 198, 198, 148, 0, 0, 56, 198, 314, 382, 382, 314, 0, 0, 148, 314, 462, 563, 563, 462, 0, 14, 198, 382, 563, 722, 722, 563, 0, 14, 198, 382, 563, 722, 722, 563, 0, 0, 148, 314, 462, 563, 563, 462 };
-        
-        int[] savedArray6A = new int[64] { 100, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray6B = new int[64] { 300, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray6C = new int[64] { 500, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray6D = new int[64] { 700, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
-        int[] savedArray6E = new int[64] { 768, 264, 272, 280, 288, 296, 304, 312, 320, 328, 336, 344, 352, 360, 368, 376, 384, 392, 400, 408, 416, 424, 432, 440, 448, 456, 464, 472, 480, 488, 496, 504, 512, 520, 528, 536, 544, 552, 560, 568, 576, 584, 592, 600, 608, 616, 624, 632, 640, 648, 656, 664, 672, 680, 688, 696, 704, 712, 720, 728, 736, 744, 752, 760 };
+          
+        int[] Ref00 = new int[64] { 462, 563, 563, 462, 314, 148, 0, 0, 563, 722, 722, 563, 382, 198, 14, 0, 563, 722, 722, 563, 382, 198, 14, 0, 462, 563, 563, 462, 314, 148, 0, 0, 314, 382, 382, 314, 198, 56, 0, 0, 148, 198, 198, 148, 56, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+        int[] Ref10 = new int[64] {314,  462,563,563,462,314,148,0,
+        382,563,722,722,563,382,198,14,
+        382,563,722,722,563,382,198,14,
+        314,462,563,563,462,314,148,0,
+        198,314,382,382,314,198,56, 0,
+        56, 148,198,198,148,56, 0,  0,
+        0,  0,  14, 14, 0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0};
+        int[] Ref20 = new int[64] { 148, 314,462,563,563,462,314,148,
+        198,382,563,722,722,563,382,198,
+        198,382,563,722,722,563,382,198,
+        148,314,462,563,563,462,314,148,
+        56, 198,314,382,382,314,198,56,
+        0,  56, 148,198,198,148,56, 0,
+        0,  0,  0,  14, 14, 0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0};
+        int[] Ref30 = new int[64] { 0,  148,314,462,563,563,462,314,
+        14, 198,382,563,722,722,563,382,
+        14, 198,382,563,722,722,563,382,
+        0,  148,314,462,563,563,462,314,
+        0,  56, 198,314,382,382,314,198,
+        0,  0,  56, 148,198,198,148,56,
+        0,  0,  0,  0,  14, 14, 0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0 };
+        int[] Ref40 = new int[64]{ 0,   0,  148,    314,    462,    563,    563,    462,
+        0,  14, 198,    382,    563,    722,    722,    563,
+        0,  14, 198,    382,    563,    722,    722,    563,
+        0,  0,  148,    314,    462,    563,    563,    462,
+        0,  0,  56, 198,    314,    382,    382,    314,
+        0,  0,  0,  56, 148,    198,    198,    148,
+        0,  0,  0,  0,  0,  14, 14, 0,
+        0,  0,  0,  0,  0,  0,  0,  0 };
+
+        int[] Ref01 = new int[64];
+        int[] Ref11 = new int[64];
+        int[] Ref21 = new int[64];
+        int[] Ref31 = new int[64];
+        int[] Ref41 = new int[64];
+
+        int[] Ref02 = new int[64];
+        int[] Ref12 = new int[64] { 56, 148,    198,    198,    148,    56, 0,  0,
+        198,    314,    382,    382,    314,    198,    56, 0,
+        314,    462,    563,    563,    462,    314,    148,    0,
+        382,    563,    722,    722,    563,    382,    198,    14,
+        382,    563,    722,    722,    563,    382,    198,    14,
+        314,    462,    563,    563,    462,    314,    148,    0,
+        198,    314,    382,    382,    314,    198,    56, 0,
+        56, 148,    198,    198,    148,    56, 0,  0 };
+        int[] Ref22 = new int[64] { 0,56, 148,198,198,148,56, 0,
+        56, 198,314,382,382,314,198,56,
+        148,314,462,563,563,462,314,148,
+        198,382,563,722,722,563,382,198,
+        198,382,563,722,722,563,382,198,
+        148,314,462,563,563,462,314,148,
+        56, 198,314,382,382,314,198,56,
+        0,  56, 148,198,198,148,56, 0 }; 
+        int[] Ref32 = new int[64]{ 0,   0,  0,  56, 148,    198,    198,    148,
+        0,  0,  56, 198,    314,    382,    382,    314,
+        0,  0,  148,    314,    462,    563,    563,    462,
+        0,  14, 198,    382,    563,    722,    722,    563,
+        0,  14, 198,    382,    563,    722,    722,    563,
+        0,  0,  148,    314,    462,    563,    563,    462,
+        0,  0,  56, 198,    314,    382,    382,    314,
+        0,  0,  0,  56, 148,    198,    198,    148 };
+        int[] Ref42 = new int[64];
+  
+        int[] Ref03 = new int[64];
+        int[] Ref13 = new int[64];
+        int[] Ref23 = new int[64];
+        int[] Ref33 = new int[64];
+        int[] Ref43 = new int[64];
+
+        int[] Ref04 = new int[64] { 0,  0,  0,  0,  0,  0,  0,  0,
+        0,  14, 14, 0,  0,  0,  0,  0,
+        148,    198,    198,    148,    56, 0,  0,  0,
+        314,    382,    382,    314,    198,    56, 0,  0,
+        462,    563,    563,    462,    314,    148,    0,  0,
+        563,    722,    722,    563,    382,    198,    14, 0,
+        563,    722,    722,    563,    382,    198,    14, 0,
+        462,    563,    563,    462,    314,    148,    0,  0 };
+        int[] Ref14 = new int[64];
+        int[] Ref24 = new int[64] { 0,   0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  14, 14, 0,  0,  0,
+        0,  56, 148,    198,    198,    148,    56, 0,
+        56, 198,    314,    382,    382,    314,    198,    56,
+        148,    314,    462,    563,    563,    462,    314,    148,
+        198,    382,    563,    722,    722,    563,    382,    198,
+        198,    382,    563,    722,    722,    563,    382,    198,
+        148,    314,    462,    563,    563,    462,    314,    148 };
+        int[] Ref34 = new int[64];
+        int[] Ref44 = new int[64] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 14, 0, 0, 0, 0, 56, 148, 198, 198, 148, 0, 0, 56, 198, 314, 382, 382, 314, 0, 0, 148, 314, 462, 563, 563, 462, 0, 14, 198, 382, 563, 722, 722, 563, 0, 14, 198, 382, 563, 722, 722, 563, 0, 0, 148, 314, 462, 563, 563, 462 };
 
         int selectedPattern = 0;
         int selectedLatency = 100;
         int persistentIndex = 0;
         int selectedDegPresetValue = 0;
+        List<int[]> savedArrayList4 = new List<int[]>();
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
 
@@ -74,15 +154,22 @@ namespace cc841.MScProject
         {
             InitializeComponent();
 
-            savedArrayList5.Add(savedArray5A);
-            savedArrayList5.Add(savedArray5B);
-            savedArrayList5.Add(savedArray5C);
+            savedArrayList4.Add(Ref04);
+            savedArrayList4.Add(Ref12);
+            savedArrayList4.Add(Ref20);
+            savedArrayList4.Add(Ref32);
+            savedArrayList4.Add(Ref44);
+            savedArrayList4.Add(Ref24);
 
-            savedArrayList6.Add(savedArray6A);
-            savedArrayList6.Add(savedArray6B);
-            savedArrayList6.Add(savedArray6C);
-            savedArrayList6.Add(savedArray6D);
-            savedArrayList6.Add(savedArray6E);
+            savedArrayList5.Add(Ref00);
+            savedArrayList5.Add(Ref22);
+            savedArrayList5.Add(Ref44);
+
+            savedArrayList6.Add(Ref00);
+            savedArrayList6.Add(Ref10);
+            savedArrayList6.Add(Ref20);
+            savedArrayList6.Add(Ref30);
+            savedArrayList6.Add(Ref40);
 
             buttonsList = new List<Button>{
             button1, button2, button3, button4, button5, button6, button7, button8, button9, button10,
@@ -418,31 +505,36 @@ namespace cc841.MScProject
             persistentIndex = 0;
             if (((Button)sender).Tag.ToString() == "p1")
             {
-                savedArray1.CopyTo(workspaceArray, 0);
+                Ref22.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 1;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 1 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p2")
             {
-                savedArray2.CopyTo(workspaceArray, 0);
+                Ref00.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 2;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 2 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p3")
             {
-                savedArray3.CopyTo(workspaceArray, 0);
+                Ref44.CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 3;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 3 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p4")
             {
-                savedArray4.CopyTo(workspaceArray, 0);
+                savedArrayList4[0].CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 4;
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 4 loaded to workspace");
+                loopStartStopButton.Enabled = true;
+                loopStartStopButton.Text = "Start Loop";
+                loopNextPatternButton.Enabled = true;
+                loopPrevPatternButton.Enabled = true;
+                loopLatencyTextBox.Enabled = true;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 4 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p5")
             {
@@ -756,7 +848,7 @@ namespace cc841.MScProject
         {
             CheckSPconnection();
 
-            if (selectedPattern < 5 || selectedPattern > 6)
+            if (selectedPattern < 4 || selectedPattern > 6)
             //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
@@ -767,8 +859,23 @@ namespace cc841.MScProject
             //without this conditional checking will loop forever,
             //locking the programme.
 
-            while (looping && (selectedPattern == 5 || selectedPattern == 6))
+            while (looping && (selectedPattern == 4 || selectedPattern == 5 || selectedPattern == 6))
             {
+                if (selectedPattern == 4)
+                {
+                    if (persistentIndex == savedArrayList4.Count)
+                    {
+                        persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                    }
+                    updateWorkspaceColor(savedArrayList4[persistentIndex]);
+                    savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
+                    sentPatternsThrough(savedArrayList4[persistentIndex]);
+                    loopStartStopButton.Text = "Stop Loop";
+                    await PutTaskDelay(selectedLatency);
+                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                }
                 if (selectedPattern == 5)
                 {
                     if (persistentIndex == savedArrayList5.Count)
@@ -811,7 +918,21 @@ namespace cc841.MScProject
         private void loopNextPatternButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
-            if (selectedPattern == 5)
+            if (selectedPattern == 4)
+            {
+                if (persistentIndex == savedArrayList4.Count - 1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList4[persistentIndex]);
+                savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
+                //sentPatternsThrough(savedArrayList4[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+            }
+            else if (selectedPattern == 5)
             {
                 if (persistentIndex == savedArrayList5.Count - 1)
                 {
@@ -845,7 +966,22 @@ namespace cc841.MScProject
         private void loopPrevPatternButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
-            if (selectedPattern == 5)
+            if (selectedPattern == 4)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList4.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+                updateWorkspaceColor(savedArrayList4[persistentIndex]);
+                savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
+                //sentPatternsThrough(savedArrayList4[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+
+            }
+            else if (selectedPattern == 5)
             {
                 if (persistentIndex == 0)
                 {
