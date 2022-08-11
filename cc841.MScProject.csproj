@@ -122,5 +122,17 @@
   <ItemGroup>
     <None Include="bin\Debug\Assets\preset5_shape.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset4_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset4_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset6_pat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\preset6_shape.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

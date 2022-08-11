@@ -173,6 +173,26 @@ namespace cc841.MScProject.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap preset4_pat {
+            get {
+                object obj = ResourceManager.GetObject("preset4_pat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap preset4_shape {
+            get {
+                object obj = ResourceManager.GetObject("preset4_shape", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap preset5_pat {
             get {
                 object obj = ResourceManager.GetObject("preset5_pat", resourceCulture);
@@ -186,6 +206,26 @@ namespace cc841.MScProject.Properties {
         internal static System.Drawing.Bitmap preset5_shape {
             get {
                 object obj = ResourceManager.GetObject("preset5_shape", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap preset6_pat {
+            get {
+                object obj = ResourceManager.GetObject("preset6_pat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap preset6_shape {
+            get {
+                object obj = ResourceManager.GetObject("preset6_shape", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

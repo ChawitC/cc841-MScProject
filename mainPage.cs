@@ -777,18 +777,18 @@ namespace cc841.MScProject
                 presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset1_shape.png");
                 presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset2_shape.png");
                 presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset3_shape.png");
-                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset4_shape.png");
                 presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset5_shape.png");
-                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_ShapeImage.png");
+                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset6_shape.png");
             }
             else
             {
                 presetButton1.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset1_pat.png");
                 presetButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset2_pat.png");
                 presetButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset3_pat.png");
-                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset4_pat.png");
                 presetButton5.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset5_pat.png");
-                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\Placeholder_InputPatterns.png");
+                presetButton6.BackgroundImage = nonLockImageFromFile(filepath + "\\Assets\\preset6_pat.png");
             }
         }
 

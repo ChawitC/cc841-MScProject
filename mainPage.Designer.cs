@@ -1572,7 +1572,7 @@
             // presetButton6
             // 
             this.presetButton6.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton6.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton6.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset6_shape;
             this.presetButton6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton6.Location = new System.Drawing.Point(241, 184);
             this.presetButton6.Margin = new System.Windows.Forms.Padding(2);
@@ -1580,13 +1580,12 @@
             this.presetButton6.Size = new System.Drawing.Size(100, 100);
             this.presetButton6.TabIndex = 98;
             this.presetButton6.Tag = "p6";
-            this.presetButton6.Text = "Load Preset 6";
             this.presetButton6.UseVisualStyleBackColor = false;
             // 
             // presetButton5
             // 
             this.presetButton5.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton5.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset5_shape;
+            this.presetButton5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("presetButton5.BackgroundImage")));
             this.presetButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton5.Location = new System.Drawing.Point(137, 184);
             this.presetButton5.Margin = new System.Windows.Forms.Padding(2);
@@ -1599,7 +1598,7 @@
             // presetButton4
             // 
             this.presetButton4.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.Placeholder_ShapeImage;
+            this.presetButton4.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset4_shape;
             this.presetButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton4.Location = new System.Drawing.Point(31, 184);
             this.presetButton4.Margin = new System.Windows.Forms.Padding(2);
@@ -1607,7 +1606,6 @@
             this.presetButton4.Size = new System.Drawing.Size(100, 100);
             this.presetButton4.TabIndex = 96;
             this.presetButton4.Tag = "p4";
-            this.presetButton4.Text = "Load Preset 4";
             this.presetButton4.UseVisualStyleBackColor = false;
             // 
             // customImageButton1

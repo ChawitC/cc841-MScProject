@@ -151,10 +151,22 @@
   <data name="preset3_shape" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Assets\preset3_shape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="preset4_pat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Assets\preset4_pat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="preset4_shape" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Assets\preset4_shape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="preset5_pat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Assets\preset5_pat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="preset5_shape" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Assets\preset5_shape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="preset6_pat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Assets\preset6_pat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="preset6_shape" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Assets\preset6_shape.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
