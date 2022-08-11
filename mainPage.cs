@@ -1039,6 +1039,9 @@ namespace cc841.MScProject
             button25.ForeColor = Color.White;
             button30.ForeColor = Color.White;
             button39.ForeColor = Color.White;
+
+            statusMessagesTextBox.AppendText(Environment.NewLine + "Index 1, 8, 25 ,30 and 39 are known broken speakers");
+            cleared = false;
         }
 
         private void clearWorkspaceButton_Click(object sender, EventArgs e)
