@@ -1585,7 +1585,7 @@
             // presetButton5
             // 
             this.presetButton5.BackColor = System.Drawing.SystemColors.Control;
-            this.presetButton5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("presetButton5.BackgroundImage")));
+            this.presetButton5.BackgroundImage = global::cc841.MScProject.Properties.Resources.preset5_shape;
             this.presetButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.presetButton5.Location = new System.Drawing.Point(137, 184);
             this.presetButton5.Margin = new System.Windows.Forms.Padding(2);
@@ -1594,6 +1594,7 @@
             this.presetButton5.TabIndex = 97;
             this.presetButton5.Tag = "p5";
             this.presetButton5.UseVisualStyleBackColor = false;
+            this.presetButton5.Click += new System.EventHandler(this.presetButton5_Click);
             // 
             // presetButton4
             // 
@@ -1623,7 +1624,7 @@
             // 
             // gradiantPictureBox
             // 
-            this.gradiantPictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.BackgroundImage")));
+            this.gradiantPictureBox.BackgroundImage = global::cc841.MScProject.Properties.Resources.ColourGradiant;
             this.gradiantPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.gradiantPictureBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("gradiantPictureBox.InitialImage")));
             this.gradiantPictureBox.Location = new System.Drawing.Point(951, 157);
