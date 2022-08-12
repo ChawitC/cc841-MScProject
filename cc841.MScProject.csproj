@@ -134,5 +134,11 @@
   <ItemGroup>
     <None Include="bin\Debug\Assets\preset6_shape.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\ColourGradiant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Assets\Placeholder_InputPatterns.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

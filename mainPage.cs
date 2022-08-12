@@ -63,6 +63,7 @@ namespace cc841.MScProject
         int selectedLatency = 100;
         int persistentIndex = 0;
         int selectedDegPresetValue = 0;
+        List<int[]> savedArrayList3 = new List<int[]>();
         List<int[]> savedArrayList4 = new List<int[]>();
         List<int[]> savedArrayList5 = new List<int[]>();
         List<int[]> savedArrayList6 = new List<int[]>();
@@ -91,17 +92,25 @@ namespace cc841.MScProject
         {
             InitializeComponent();
 
-            savedArrayList4.Add(Ref04);
-            savedArrayList4.Add(Ref12);
-            savedArrayList4.Add(Ref20);
-            savedArrayList4.Add(Ref32);
-            savedArrayList4.Add(Ref44);
-            savedArrayList4.Add(Ref24);
+            //Verical line
+            savedArrayList3.Add(Ref20);
+            savedArrayList3.Add(Ref22);
+            savedArrayList3.Add(Ref24);
 
+            //Horizonal line
+            savedArrayList4.Add(Ref02);
+            savedArrayList4.Add(Ref22);
+            savedArrayList4.Add(Ref42);
+
+            //Triangle
+            savedArrayList5.Add(Ref04);
+            savedArrayList5.Add(Ref12);
             savedArrayList5.Add(Ref20);
-            savedArrayList5.Add(Ref22);
+            savedArrayList5.Add(Ref32);
+            savedArrayList5.Add(Ref44);
             savedArrayList5.Add(Ref24);
 
+            //Square
             savedArrayList6.Add(Ref00);
             savedArrayList6.Add(Ref10);
             savedArrayList6.Add(Ref20);
@@ -467,10 +476,15 @@ namespace cc841.MScProject
             }
             else if (((Button)sender).Tag.ToString() == "p3")
             {
-                Ref44.CopyTo(workspaceArray, 0);
+                savedArrayList3[0].CopyTo(workspaceArray, 0);
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 3;
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset 3 loaded to workspace");
+                loopStartStopButton.Enabled = true;
+                loopStartStopButton.Text = "Start Loop";
+                loopNextPatternButton.Enabled = true;
+                loopPrevPatternButton.Enabled = true;
+                loopLatencyTextBox.Enabled = true;
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 3 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p4")
             {
@@ -796,7 +810,7 @@ namespace cc841.MScProject
         {
             CheckSPconnection();
 
-            if (selectedPattern < 4 || selectedPattern > 6)
+            if (selectedPattern < 3 || selectedPattern > 6)
             //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
@@ -807,9 +821,24 @@ namespace cc841.MScProject
             //without this conditional checking will loop forever,
             //locking the programme.
 
-            while (looping && (selectedPattern == 4 || selectedPattern == 5 || selectedPattern == 6))
+            while (looping && (selectedPattern == 3 || selectedPattern == 4 || selectedPattern == 5 || selectedPattern == 6))
             {
-                if (selectedPattern == 4)
+                if (selectedPattern == 3)
+                {
+                    if (persistentIndex == savedArrayList3.Count)
+                    {
+                        persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                    }
+                    updateWorkspaceColor(savedArrayList3[persistentIndex]);
+                    savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
+                    //there is overhead for this copy action, but it is to support the case
+                    //where user stops in the middle of the loop and modifying/save input patterns from there
+                    sentPatternsThrough(savedArrayList3[persistentIndex]);
+                    loopStartStopButton.Text = "Stop Loop";
+                    await PutTaskDelay(selectedLatency);
+                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                }
+                else if (selectedPattern == 4)
                 {
                     if (persistentIndex == savedArrayList4.Count)
                     {
@@ -824,7 +853,7 @@ namespace cc841.MScProject
                     await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
                 }
-                if (selectedPattern == 5)
+                else if (selectedPattern == 5)
                 {
                     if (persistentIndex == savedArrayList5.Count)
                     {
@@ -866,7 +895,21 @@ namespace cc841.MScProject
         private void loopNextPatternButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
-            if (selectedPattern == 4)
+            if (selectedPattern == 3)
+            {
+                if (persistentIndex == savedArrayList3.Count - 1)
+                {
+                    persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                }
+                else
+                { persistentIndex++; }
+                updateWorkspaceColor(savedArrayList3[persistentIndex]);
+                savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
+                //sentPatternsThrough(savedArrayList3[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+            }
+            else if (selectedPattern == 4)
             {
                 if (persistentIndex == savedArrayList4.Count - 1)
                 {
@@ -914,7 +957,21 @@ namespace cc841.MScProject
         private void loopPrevPatternButton_Click(object sender, EventArgs e)
         {
             CheckSPconnection();
-            if (selectedPattern == 4)
+            if (selectedPattern == 3)
+            {
+                if (persistentIndex == 0)
+                {
+                    persistentIndex = savedArrayList3.Count - 1; //if index size is 0, start at the last index of the relevant array.
+                }
+                else
+                { persistentIndex--; }
+                updateWorkspaceColor(savedArrayList3[persistentIndex]);
+                savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
+                //sentPatternsThrough(savedArrayList3[persistentIndex]);
+                //currently next pattern button does not sent pattern through, but user can click "Commit"
+            }
+            else if (selectedPattern == 4)
             {
                 if (persistentIndex == 0)
                 {
@@ -927,7 +984,6 @@ namespace cc841.MScProject
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
                 //sentPatternsThrough(savedArrayList4[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
-
             }
             else if (selectedPattern == 5)
             {
@@ -942,7 +998,6 @@ namespace cc841.MScProject
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList5.Count);
                 //sentPatternsThrough(savedArrayList5[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
-
             }
             else if (selectedPattern == 6)
             {
