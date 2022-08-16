@@ -1086,16 +1086,18 @@ namespace cc841.MScProject
         {
             button1.BackColor = Color.SaddleBrown;
             button8.BackColor = Color.SaddleBrown;
+            button23.BackColor = Color.SaddleBrown;
             button25.BackColor = Color.SaddleBrown;
-            button30.BackColor = Color.SaddleBrown;
             button39.BackColor = Color.SaddleBrown;
+            button58.BackColor = Color.SaddleBrown;
             button1.ForeColor = Color.White;
             button8.ForeColor = Color.White;
+            button23.ForeColor = Color.White;
             button25.ForeColor = Color.White;
-            button30.ForeColor = Color.White;
             button39.ForeColor = Color.White;
+            button58.ForeColor = Color.White;
 
-            statusMessagesTextBox.AppendText(Environment.NewLine + "Index 1, 8, 25 ,30 and 39 are known broken speakers");
+            statusMessagesTextBox.AppendText(Environment.NewLine + "Index 1, 8, 23 , 25, 39 and 58 are known broken speakers");
             cleared = false;
         }
 
