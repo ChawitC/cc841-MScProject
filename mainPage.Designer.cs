@@ -146,6 +146,9 @@
             this.degreeButton9 = new System.Windows.Forms.Button();
             this.degreeButton11 = new System.Windows.Forms.Button();
             this.indicateBrokenButton = new System.Windows.Forms.Button();
+            this.timeWarningLabel = new System.Windows.Forms.Label();
+            this.clearWorkspaceButton = new System.Windows.Forms.Button();
+            this.degreeButton10 = new System.Windows.Forms.Button();
             this.bottomValuePictureBox = new System.Windows.Forms.PictureBox();
             this.topValuePictureBox = new System.Windows.Forms.PictureBox();
             this.customImageButton4 = new System.Windows.Forms.Button();
@@ -159,9 +162,6 @@
             this.presetButton2 = new System.Windows.Forms.Button();
             this.presetButton3 = new System.Windows.Forms.Button();
             this.presetButton1 = new System.Windows.Forms.Button();
-            this.timeWarningLabel = new System.Windows.Forms.Label();
-            this.clearWorkspaceButton = new System.Windows.Forms.Button();
-            this.degreeButton10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).BeginInit();
@@ -988,7 +988,7 @@
             // button50
             // 
             this.button50.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button50.Location = new System.Drawing.Point(473, 407);
+            this.button50.Location = new System.Drawing.Point(473, 408);
             this.button50.Margin = new System.Windows.Forms.Padding(2);
             this.button50.Name = "button50";
             this.button50.Size = new System.Drawing.Size(50, 49);
@@ -1084,7 +1084,7 @@
             // button58
             // 
             this.button58.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button58.Location = new System.Drawing.Point(473, 460);
+            this.button58.Location = new System.Drawing.Point(473, 461);
             this.button58.Margin = new System.Windows.Forms.Padding(2);
             this.button58.Name = "button58";
             this.button58.Size = new System.Drawing.Size(50, 49);
@@ -1132,7 +1132,7 @@
             // button62
             // 
             this.button62.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button62.Location = new System.Drawing.Point(744, 460);
+            this.button62.Location = new System.Drawing.Point(690, 460);
             this.button62.Margin = new System.Windows.Forms.Padding(2);
             this.button62.Name = "button62";
             this.button62.Size = new System.Drawing.Size(50, 49);
@@ -1144,7 +1144,7 @@
             // button63
             // 
             this.button63.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button63.Location = new System.Drawing.Point(689, 461);
+            this.button63.Location = new System.Drawing.Point(744, 460);
             this.button63.Margin = new System.Windows.Forms.Padding(2);
             this.button63.Name = "button63";
             this.button63.Size = new System.Drawing.Size(50, 49);
@@ -1512,6 +1512,36 @@
             this.indicateBrokenButton.UseVisualStyleBackColor = true;
             this.indicateBrokenButton.Click += new System.EventHandler(this.indicateBrokenButton_Click);
             // 
+            // timeWarningLabel
+            // 
+            this.timeWarningLabel.AutoSize = true;
+            this.timeWarningLabel.Location = new System.Drawing.Point(347, 597);
+            this.timeWarningLabel.Name = "timeWarningLabel";
+            this.timeWarningLabel.Size = new System.Drawing.Size(234, 26);
+            this.timeWarningLabel.TabIndex = 136;
+            this.timeWarningLabel.Text = "Warning: Setting the latency lower than 70ms\r\nmay cause input display errors on t" +
+    "he first 2 rows";
+            // 
+            // clearWorkspaceButton
+            // 
+            this.clearWorkspaceButton.Location = new System.Drawing.Point(605, 46);
+            this.clearWorkspaceButton.Name = "clearWorkspaceButton";
+            this.clearWorkspaceButton.Size = new System.Drawing.Size(121, 23);
+            this.clearWorkspaceButton.TabIndex = 137;
+            this.clearWorkspaceButton.Text = "Clear Workspace";
+            this.clearWorkspaceButton.UseVisualStyleBackColor = true;
+            this.clearWorkspaceButton.Click += new System.EventHandler(this.clearWorkspaceButton_Click);
+            // 
+            // degreeButton10
+            // 
+            this.degreeButton10.Location = new System.Drawing.Point(888, 116);
+            this.degreeButton10.Name = "degreeButton10";
+            this.degreeButton10.Size = new System.Drawing.Size(57, 23);
+            this.degreeButton10.TabIndex = 138;
+            this.degreeButton10.Tag = "722";
+            this.degreeButton10.Text = "111.49°";
+            this.degreeButton10.UseVisualStyleBackColor = true;
+            // 
             // bottomValuePictureBox
             // 
             this.bottomValuePictureBox.BackColor = System.Drawing.Color.Black;
@@ -1672,36 +1702,6 @@
             this.presetButton1.TabIndex = 20;
             this.presetButton1.Tag = "p1";
             this.presetButton1.UseVisualStyleBackColor = false;
-            // 
-            // timeWarningLabel
-            // 
-            this.timeWarningLabel.AutoSize = true;
-            this.timeWarningLabel.Location = new System.Drawing.Point(347, 597);
-            this.timeWarningLabel.Name = "timeWarningLabel";
-            this.timeWarningLabel.Size = new System.Drawing.Size(234, 26);
-            this.timeWarningLabel.TabIndex = 136;
-            this.timeWarningLabel.Text = "Warning: Setting the latency lower than 70ms\r\nmay cause input display errors on t" +
-    "he first 2 rows";
-            // 
-            // clearWorkspaceButton
-            // 
-            this.clearWorkspaceButton.Location = new System.Drawing.Point(605, 46);
-            this.clearWorkspaceButton.Name = "clearWorkspaceButton";
-            this.clearWorkspaceButton.Size = new System.Drawing.Size(121, 23);
-            this.clearWorkspaceButton.TabIndex = 137;
-            this.clearWorkspaceButton.Text = "Clear Workspace";
-            this.clearWorkspaceButton.UseVisualStyleBackColor = true;
-            this.clearWorkspaceButton.Click += new System.EventHandler(this.clearWorkspaceButton_Click);
-            // 
-            // degreeButton10
-            // 
-            this.degreeButton10.Location = new System.Drawing.Point(888, 116);
-            this.degreeButton10.Name = "degreeButton10";
-            this.degreeButton10.Size = new System.Drawing.Size(57, 23);
-            this.degreeButton10.TabIndex = 138;
-            this.degreeButton10.Tag = "722";
-            this.degreeButton10.Text = "111.49°";
-            this.degreeButton10.UseVisualStyleBackColor = true;
             // 
             // mainPage
             // 
