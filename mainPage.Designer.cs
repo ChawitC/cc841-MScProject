@@ -1624,7 +1624,6 @@
             this.presetButton5.TabIndex = 97;
             this.presetButton5.Tag = "p5";
             this.presetButton5.UseVisualStyleBackColor = false;
-            this.presetButton5.Click += new System.EventHandler(this.presetButton5_Click);
             // 
             // presetButton4
             // 

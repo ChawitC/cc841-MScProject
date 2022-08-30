@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -9,17 +8,8 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-// Possible list of improvments that are realized before user test but yet not implemented
-// > Connection status update done should be done asynchoronously
-// > Status messsage filtering with tickboxes
-// >> Click to generate focal point mode
-// > Tool tips
-// > Setting intensity (loudness) of all speakers on load/ on renewed connection
-// > Junk code clean ups
 
 namespace cc841.MScProject
 {
@@ -186,11 +176,6 @@ namespace cc841.MScProject
             customImageButton2.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom2.png");
             customImageButton3.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom3.png");
             customImageButton4.BackgroundImage = nonLockImageFromFile(filepath + "\\SavedCustomInputs\\custom4.png");
-
-            //Loading Pattern 1
-            //savedArray1.CopyTo(workspaceArray, 0);
-            //updateWorkspaceColor(workspaceArray);
-            //selectedPattern = 1;
 
             //initialize preset Degree button's colours and attach to same function
             degreeButton1.BackColor = ColorFromHSV(0);
@@ -651,16 +636,14 @@ namespace cc841.MScProject
             {
                 historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms";//, Single serial input: 2.";
-                //String sentData = "2.";
+                //We are sending data with command .1 instead since there maybe some buffer size issue with command 2.
+                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms";
                 String sentData = "";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     sentData = "1.";
-                    //label2.Text += sentPattern[i].ToString() + ".";
                     sentData += i.ToString() + "." + sentPattern[i].ToString() + ".";
                     statusMessagesTextBox.AppendText(Environment.NewLine + sentData);
-                    //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                     //avoid sending incomplete data
                     if (lastKnownCOM == 1) { SP1.Write(sentData); }
                     else if (lastKnownCOM == 2) { SP2.Write(sentData); }
@@ -669,13 +652,6 @@ namespace cc841.MScProject
                     else if (lastKnownCOM == 5) { SP5.Write(sentData); }
                     else if (lastKnownCOM == 6) { SP6.Write(sentData); }
                 }
-
-                /*//avoid sending incomplete data
-                if (lastKnownCOM == 1) { SP1.WriteLine(sentData); }
-                else if (lastKnownCOM == 2) { SP2.WriteLine(sentData); }
-                else if (lastKnownCOM == 3) { SP3.WriteLine(sentData); }
-                else if (lastKnownCOM == 4) { SP4.WriteLine(sentData); }
-                else if (lastKnownCOM == 5) { SP5.WriteLine(sentData); }*/
             }
             else
             {
@@ -685,11 +661,9 @@ namespace cc841.MScProject
                 {
                     label2.Text += sentPattern[i].ToString() + ".";
                     sentData += sentPattern[i].ToString() + ".";
-                    //Debug.WriteLine("4." + i.ToString() + "." + sentPattern[i].ToString() + ".");
                 }
                 historyLabel.Text = "None of the Serial Port is open, no input was sent!";
                 statusMessagesTextBox.AppendText(Environment.NewLine + "None of the Serial Port is open, no input was sent!");
-                //MessageBox.Show("None of the Serial Port is open, no input was sent!");
             }
         }
 
@@ -1013,7 +987,6 @@ namespace cc841.MScProject
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList6.Count);
                 //sentPatternsThrough(savedArrayList6[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
-
             }
         }
 
@@ -1120,11 +1093,6 @@ namespace cc841.MScProject
             else {
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace was already cleared, no action was performed.");
             }
-        }
-
-        private void presetButton5_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
