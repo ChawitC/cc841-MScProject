@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -210,6 +211,8 @@ namespace cc841.MScProject
 
             //Initialize serial port
             CheckSPconnection();
+            //Task task = Task.Run((Action)autoPortcheck);
+
         }
 
         public double degFromValue(int value)
@@ -256,13 +259,11 @@ namespace cc841.MScProject
                 else if (SP5.IsOpen) { lastKnownCOM = 5; }
                 else if (SP6.IsOpen) { lastKnownCOM = 6; }
                 SPCOMnumLabel.Text = "Serial Port COM" + lastKnownCOM.ToString() + " connected";
-                historyLabel.Text = "Serial Port COM" + lastKnownCOM.ToString() + " connected";
             }
             else
             {
                 SPstatusButton.Text = "Disconnected";
                 SPstatusButton.BackColor = Color.Red;
-                historyLabel.Text = "Serial Port Disconnected";
                 SPCOMnumLabel.Text = "Not connected to any COM Port";
                 lastKnownCOM = 0;
             }
@@ -440,7 +441,6 @@ namespace cc841.MScProject
             redoButton.Enabled = false;
             historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
             loopStartStopButton.Enabled = false; //disable first, will be enabled accordingly
-            loopStartStopButton.Text = "Loop";
             loopPrevPatternButton.Enabled = false;
             loopNextPatternButton.Enabled = false;
             loopLatencyTextBox.Enabled = false;
@@ -465,7 +465,7 @@ namespace cc841.MScProject
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 3;
                 loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
+                loopStartStopButton.Text = "▶";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
@@ -477,7 +477,7 @@ namespace cc841.MScProject
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 4;
                 loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
+                loopStartStopButton.Text = "▶";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
@@ -489,7 +489,7 @@ namespace cc841.MScProject
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 5;
                 loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
+                loopStartStopButton.Text = "▶";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
@@ -501,7 +501,7 @@ namespace cc841.MScProject
                 updateWorkspaceColor(workspaceArray);
                 selectedPattern = 6;
                 loopStartStopButton.Enabled = true;
-                loopStartStopButton.Text = "Start Loop";
+                loopStartStopButton.Text = "▶";
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
@@ -577,6 +577,7 @@ namespace cc841.MScProject
                 intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
                 selectedColor = workspaceArray[arrayIndex]; // have selected color take colour from latest clone mode value, so it functions corretly when switch back.
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Clone value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+                cloneModeCheckBox.Checked = false;
             }
         }
 
@@ -634,16 +635,15 @@ namespace cc841.MScProject
         {
             if (lastKnownCOM != 0)
             {
-                historyLabel.Text = "Input was sent through Serial Port COM" + lastKnownCOM.ToString();
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
                 //We are sending data with command .1 instead since there maybe some buffer size issue with command 2.
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms";
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Last Speed: " + selectedLatency.ToString() + "ms");
                 String sentData = "";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
                     sentData = "1.";
                     sentData += i.ToString() + "." + sentPattern[i].ToString() + ".";
-                    statusMessagesTextBox.AppendText(Environment.NewLine + sentData);
+                    //statusMessagesTextBox.AppendText(Environment.NewLine + sentData);
                     //avoid sending incomplete data
                     if (lastKnownCOM == 1) { SP1.Write(sentData); }
                     else if (lastKnownCOM == 2) { SP2.Write(sentData); }
@@ -655,15 +655,12 @@ namespace cc841.MScProject
             }
             else
             {
-                label2.Text = "Last Speed: " + selectedLatency.ToString() + "ms, Single serial input: 2.";
                 String sentData = "2.";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
-                    label2.Text += sentPattern[i].ToString() + ".";
                     sentData += sentPattern[i].ToString() + ".";
                 }
-                historyLabel.Text = "None of the Serial Port is open, no input was sent!";
-                statusMessagesTextBox.AppendText(Environment.NewLine + "None of the Serial Port is open, no input was sent!");
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "None of the Serial Port is open, no input was sent!");
             }
         }
 
@@ -788,7 +785,6 @@ namespace cc841.MScProject
             //this condition is technically will never be fulfilled anyway, but being kept as a failsafe.
             {
                 looping = false;
-                historyLabel.Text = "No Pattern was selected or the selected Pattern is not a looping Pattern";
             }
             else { looping = !looping; }
             //if there was no selected pattern, or pattern is not a loop
@@ -801,16 +797,16 @@ namespace cc841.MScProject
                 {
                     if (persistentIndex == savedArrayList3.Count)
                     {
-                        persistentIndex = 0; //reset index to 0 if index size exceeds array size
+                        persistentIndex = 0; //reset index to 0 if index size exceeds array size     
                     }
                     updateWorkspaceColor(savedArrayList3[persistentIndex]);
                     savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
                     //there is overhead for this copy action, but it is to support the case
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList3[persistentIndex]);
-                    loopStartStopButton.Text = "Stop Loop";
+                    loopStartStopButton.Text = "❚❚︎";
                     await PutTaskDelay(selectedLatency);
-                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                    if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
                 else if (selectedPattern == 4)
                 {
@@ -823,9 +819,9 @@ namespace cc841.MScProject
                     //there is overhead for this copy action, but it is to support the case
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList4[persistentIndex]);
-                    loopStartStopButton.Text = "Stop Loop";
+                    loopStartStopButton.Text = "❚❚";
                     await PutTaskDelay(selectedLatency);
-                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                    if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
                 else if (selectedPattern == 5)
                 {
@@ -838,9 +834,9 @@ namespace cc841.MScProject
                     //there is overhead for this copy action, but it is to support the case
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList5[persistentIndex]);
-                    loopStartStopButton.Text = "Stop Loop";
+                    loopStartStopButton.Text = "❚❚";
                     await PutTaskDelay(selectedLatency);
-                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                    if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
                 else if (selectedPattern == 6)
                 {
@@ -853,9 +849,9 @@ namespace cc841.MScProject
                     //there is overhead for this copy action, but it is to support the case
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList6[persistentIndex]);
-                    loopStartStopButton.Text = "Stop Loop";
+                    loopStartStopButton.Text = "❚❚";
                     await PutTaskDelay(selectedLatency);
-                    if (!looping) { loopStartStopButton.Text = "Start Loop"; break; }
+                    if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
                 persistentIndex++;
             }
@@ -876,7 +872,7 @@ namespace cc841.MScProject
                     persistentIndex = 0; //reset index to 0 if index size exceeds array size
                 }
                 else
-                { persistentIndex++; }
+                { persistentIndex++; }               
                 updateWorkspaceColor(savedArrayList3[persistentIndex]);
                 savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
@@ -890,7 +886,7 @@ namespace cc841.MScProject
                     persistentIndex = 0; //reset index to 0 if index size exceeds array size
                 }
                 else
-                { persistentIndex++; }
+                { persistentIndex++; } 
                 updateWorkspaceColor(savedArrayList4[persistentIndex]);
                 savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
@@ -981,7 +977,6 @@ namespace cc841.MScProject
                 }
                 else
                 { persistentIndex--; }
-
                 updateWorkspaceColor(savedArrayList6[persistentIndex]);
                 savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList6.Count);
@@ -997,32 +992,35 @@ namespace cc841.MScProject
             //Check for Enter Key Press first first
             if (e.KeyChar == (char)Keys.Enter)
             {
-                int textBoxValue = 50;
-                if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "50"; } //if field is empty, set value to 50
+                int textBoxValue = 100;
+                if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "100"; } //if field is empty, set value to 100
                 try { textBoxValue = Int32.Parse(loopLatencyTextBox.Text); }
-                catch //if parse fails (e.g. alphabets inputted), assign value to 50
+                catch //if parse fails (e.g. alphabets inputted), assign value to 100
                 {
-                    textBoxValue = 50;
-                    loopLatencyTextBox.Text = "50";
+                    textBoxValue = 100;
+                    loopLatencyTextBox.Text = "100";
                 }
-                if (textBoxValue < 50) { 
-                    textBoxValue = 50; loopLatencyTextBox.Text = "50"; 
-                    MessageBox.Show("Input value cannot be lower than 50"); 
+                if (textBoxValue < 100) { 
+                    textBoxValue = 100; loopLatencyTextBox.Text = "100"; 
+                    MessageBox.Show("Input value cannot be lower than 100"); 
                 }
                 //else if (textBoxValue > 768) { textBoxValue = 768; MessageBox.Show("Input value cannot be higher than 768"); }
                 else
                 {
                     selectedLatency = textBoxValue;
                     e.Handled = true; //To suppress the Ding sounds, indicating that there is no error.
+                    MessageBox.Show("Speed is set to " + selectedLatency.ToString() + " ms");
+                    statusMessagesTextBox.AppendText(Environment.NewLine + "Speed is set to " + selectedLatency.ToString() + " ms");
                 }
             }
             // Only accepts numbers and backspace, no alphabets or "."
             else if (!char.IsDigit(e.KeyChar) && (e.KeyChar != (char)8))
             {
-                loopLatencyTextBox.Text = "50";
-                selectedLatency = 50;
+                loopLatencyTextBox.Text = "100";
+                selectedLatency = 100;
                 MessageBox.Show("Input value can only be numbers");
             }
+ 
         }
 
         private void statusRefreshButton_Click(object sender, EventArgs e)
@@ -1093,6 +1091,48 @@ namespace cc841.MScProject
             else {
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Workspace was already cleared, no action was performed.");
             }
+        }
+
+        private void SPstatusButton_Click(object sender, EventArgs e)
+        {
+            CheckSPconnection();
+        }
+
+        private void loopLatencyTextBox_Leave(object sender, EventArgs e)
+        { //when textbox is defocused
+            CheckSPconnection();
+            loopLatencyTextBox.Text = loopLatencyTextBox.Text.Trim();
+            
+            int textBoxValue = 100;
+            if (loopLatencyTextBox.Text == "") { loopLatencyTextBox.Text = "100"; } //if field is empty, set value to 100
+            try { textBoxValue = Int32.Parse(loopLatencyTextBox.Text); }
+            catch //if parse fails (e.g. alphabets inputted), assign value to 50
+                {
+                    textBoxValue = 100;
+                    loopLatencyTextBox.Text = "100";
+                }
+
+            if (textBoxValue < 100)
+                {
+                    textBoxValue = 100; loopLatencyTextBox.Text = "100";
+                    MessageBox.Show("Input value cannot be lower than 100");
+                }
+                //else if (textBoxValue > 768) { textBoxValue = 768; MessageBox.Show("Input value cannot be higher than 768"); }
+            else
+                {
+                    selectedLatency = textBoxValue;
+            }
+
+            MessageBox.Show("Speed is set to " + selectedLatency.ToString() + " ms");
+            statusMessagesTextBox.AppendText(Environment.NewLine + "Speed is set to " + selectedLatency.ToString() + " ms");
+            
+        }
+
+        private async void autoPortcheck()
+        {
+            CheckSPconnection();
+            //automatically refresh connections every 2 seconds
+            await PutTaskDelay(2000); 
         }
     }
 }
