@@ -73,6 +73,7 @@ namespace cc841.MScProject
         bool looping = false;
         bool cleared = true;
         int toggleMode = 1;
+        int lastConfirmedLatency = 100;
         List<Button> buttonsList = new List<Button>();
         Stack<int[]> historyUndoStack = new Stack<int[]>();
         Stack<int[]> historyRedoStack = new Stack<int[]>();
@@ -160,9 +161,9 @@ namespace cc841.MScProject
             // Allow the TAB key to be entered in the TextBox control.
             // Set WordWrap to true to allow text to wrap to the next line.
             // Set the default text of the control.
-            statusMessagesTextBox.Text = "Initializing";
+            statusMessagesTextBox.Text = "-- Initializing --";
             statusMessagesTextBox.AppendText(Environment.NewLine + "current bin path is: " + filepath);
-            statusMessagesTextBox.AppendText(Environment.NewLine + "(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
+            //statusMessagesTextBox.AppendText(Environment.NewLine + "(Init) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
 
             // Initializing
             updateWorkspaceColor(workspaceArray);
@@ -209,10 +210,29 @@ namespace cc841.MScProject
             degreeButton10.Click += degreeButton_Click;
             degreeButton11.Click += degreeButton_Click;
 
+            //Tool tips implementation
+            ToolTip toolTipGeneral = new ToolTip();
+            ToolTip toolTipLoopControl = new ToolTip();
+
+            // Set up the delays for the ToolTip.
+            toolTipGeneral.AutoPopDelay = 5000;
+            toolTipGeneral.InitialDelay = 1000;
+            toolTipGeneral.ReshowDelay = 500;
+            toolTipLoopControl.AutoPopDelay = 5000;
+            toolTipLoopControl.InitialDelay = 1000;
+            toolTipLoopControl.ReshowDelay = 500;
+            // Force the ToolTip text to be displayed whether or not the form is active.
+            toolTipGeneral.ShowAlways = true;
+            toolTipLoopControl.ShowAlways = true;
+
+
+            // Set up the ToolTip text for the Button and Checkbox.
+            toolTipGeneral.SetToolTip(this.button1, "My button1");
+
             //Initialize serial port
             CheckSPconnection();
             //Task task = Task.Run((Action)autoPortcheck);
-
+            statusMessagesTextBox.AppendText(Environment.NewLine + "-- Ready --");
         }
 
         public double degFromValue(int value)
@@ -246,6 +266,7 @@ namespace cc841.MScProject
                 try { SP6.Open(); } catch { Debug.WriteLine("COM6 not Connected"); }
                 SPCOMnumLabel.Text = "Not connected to any COM Port";
                 lastKnownCOM = 0;
+                commitButton.Enabled = false;
             }
             // If ANY COM port is Open
             if (SP1.IsOpen || SP2.IsOpen || SP3.IsOpen || SP4.IsOpen || SP5.IsOpen || SP6.IsOpen)
@@ -259,6 +280,7 @@ namespace cc841.MScProject
                 else if (SP5.IsOpen) { lastKnownCOM = 5; }
                 else if (SP6.IsOpen) { lastKnownCOM = 6; }
                 SPCOMnumLabel.Text = "Serial Port COM" + lastKnownCOM.ToString() + " connected";
+                commitButton.Enabled = true;
             }
             else
             {
@@ -266,6 +288,7 @@ namespace cc841.MScProject
                 SPstatusButton.BackColor = Color.Red;
                 SPCOMnumLabel.Text = "Not connected to any COM Port";
                 lastKnownCOM = 0;
+                commitButton.Enabled = false;
             }
         }
 
@@ -444,6 +467,9 @@ namespace cc841.MScProject
             loopPrevPatternButton.Enabled = false;
             loopNextPatternButton.Enabled = false;
             loopLatencyTextBox.Enabled = false;
+            loopStepLabel.Enabled = false;
+            loopStepLabel.Text = "N/A";
+            fakeConfirmButton.Enabled = false;
             persistentIndex = 0;
             if (((Button)sender).Tag.ToString() == "p1")
             {
@@ -469,6 +495,9 @@ namespace cc841.MScProject
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
+                loopStepLabel.Enabled=true;
+                loopStepLabel.Text = "1 / 3";
+                fakeConfirmButton.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 3 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p4")
@@ -481,6 +510,9 @@ namespace cc841.MScProject
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
+                loopStepLabel.Enabled = true;
+                loopStepLabel.Text = "1 / 3";
+                fakeConfirmButton.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 4 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p5")
@@ -493,6 +525,9 @@ namespace cc841.MScProject
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
+                loopStepLabel.Enabled = true;
+                loopStepLabel.Text = "1 / 6";
+                fakeConfirmButton.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 5 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "p6")
@@ -505,6 +540,9 @@ namespace cc841.MScProject
                 loopNextPatternButton.Enabled = true;
                 loopPrevPatternButton.Enabled = true;
                 loopLatencyTextBox.Enabled = true;
+                loopStepLabel.Enabled = true;
+                loopStepLabel.Text = "1 / 16";
+                fakeConfirmButton.Enabled = true;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Preset set 6 loaded to workspace");
             }
             else if (((Button)sender).Tag.ToString() == "lc1" || ((Button)sender).Tag.ToString() == "cib1")
@@ -557,7 +595,8 @@ namespace cc841.MScProject
                 historyRedoStack.Clear(); //Redo stack cleared since previous branch is disregarded
                 redoButton.Enabled = false;
                 Debug.WriteLine("(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString()); workspaceArray[arrayIndex] = selectedColor;
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "(New) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString()); 
+                workspaceArray[arrayIndex] = selectedColor;
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Assign value to workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
                 ((Button)sender).BackColor = ColorFromHSV(selectedColor);
 
@@ -576,8 +615,9 @@ namespace cc841.MScProject
                 inputTextBox.Text = workspaceArray[arrayIndex].ToString();
                 intensitySelectTrackBar.Value = workspaceArray[arrayIndex];
                 selectedColor = workspaceArray[arrayIndex]; // have selected color take colour from latest clone mode value, so it functions corretly when switch back.
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Clone value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
+                statusMessagesTextBox.AppendText(Environment.NewLine + "Cloned value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
                 cloneModeCheckBox.Checked = false;
+                valueSectionPictureBox.BackColor = SystemColors.Desktop;
             }
         }
 
@@ -598,7 +638,9 @@ namespace cc841.MScProject
                 previewButton.BackColor = ColorFromHSV(selectedColor);
                 inputTextBox.Text = selectedColor.ToString();
             }*/
-            cloneMode = cloneModeCheckBox.Checked; 
+            cloneMode = cloneModeCheckBox.Checked;
+            if (cloneMode) { valueSectionPictureBox.BackColor = SystemColors.Desktop; }
+            else { valueSectionPictureBox.BackColor = SystemColors.GradientActiveCaption; }
         }
         
         private void toggleDisplayModesRadioButtons_CheckedChanged(object sender, EventArgs e)
@@ -637,7 +679,7 @@ namespace cc841.MScProject
             {
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Input was sent through Serial Port COM" + lastKnownCOM.ToString());
                 //We are sending data with command .1 instead since there maybe some buffer size issue with command 2.
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Last Speed: " + selectedLatency.ToString() + "ms");
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Last Speed: " + selectedLatency.ToString() + "ms");
                 String sentData = "";
                 for (int i = 0; i < sentPattern.Length; i++)
                 {
@@ -683,7 +725,7 @@ namespace cc841.MScProject
                 else { undoButton.Enabled = false; }
                 redoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                statusMessagesTextBox.AppendText(Environment.NewLine + "(Undo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "(Undo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
 
@@ -706,7 +748,7 @@ namespace cc841.MScProject
                 else { redoButton.Enabled = false; }
                 undoButton.Enabled = true;
                 Debug.WriteLine("(End) Undo Stack Size:" + historyUndoStack.Count.ToString() + " |Redo Stack Size:" + historyRedoStack.Count.ToString());
-                statusMessagesTextBox.AppendText(Environment.NewLine + "(Redo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "(Redo) Undo Stack Size:" + historyUndoStack.Count.ToString() + " | Redo Stack Size:" + historyRedoStack.Count.ToString());
             }
         }
 
@@ -805,6 +847,7 @@ namespace cc841.MScProject
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList3[persistentIndex]);
                     loopStartStopButton.Text = "❚❚︎";
+                    loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
                     await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
@@ -820,6 +863,7 @@ namespace cc841.MScProject
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList4[persistentIndex]);
                     loopStartStopButton.Text = "❚❚";
+                    loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
                     await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
@@ -835,6 +879,7 @@ namespace cc841.MScProject
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList5[persistentIndex]);
                     loopStartStopButton.Text = "❚❚";
+                    loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 6";
                     await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
@@ -850,6 +895,7 @@ namespace cc841.MScProject
                     //where user stops in the middle of the loop and modifying/save input patterns from there
                     sentPatternsThrough(savedArrayList6[persistentIndex]);
                     loopStartStopButton.Text = "❚❚";
+                    loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 16";
                     await PutTaskDelay(selectedLatency);
                     if (!looping) { loopStartStopButton.Text = "▶"; break; }
                 }
@@ -875,7 +921,8 @@ namespace cc841.MScProject
                 { persistentIndex++; }               
                 updateWorkspaceColor(savedArrayList3[persistentIndex]);
                 savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
                 //sentPatternsThrough(savedArrayList3[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -889,7 +936,8 @@ namespace cc841.MScProject
                 { persistentIndex++; } 
                 updateWorkspaceColor(savedArrayList4[persistentIndex]);
                 savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
                 //sentPatternsThrough(savedArrayList4[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -903,7 +951,8 @@ namespace cc841.MScProject
                 { persistentIndex++; }
                 updateWorkspaceColor(savedArrayList5[persistentIndex]);
                 savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList5.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 6";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList5.Count);
                 //sentPatternsThrough(savedArrayList5[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -917,7 +966,8 @@ namespace cc841.MScProject
                 { persistentIndex++; }
                 updateWorkspaceColor(savedArrayList6[persistentIndex]);
                 savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList6.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 6";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex+1).ToString() + " out of " + savedArrayList6.Count);
                 //sentPatternsThrough(savedArrayList6[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
 
@@ -937,7 +987,8 @@ namespace cc841.MScProject
                 { persistentIndex--; }
                 updateWorkspaceColor(savedArrayList3[persistentIndex]);
                 savedArrayList3[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 3 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList3.Count);
                 //sentPatternsThrough(savedArrayList3[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -951,7 +1002,8 @@ namespace cc841.MScProject
                 { persistentIndex--; }
                 updateWorkspaceColor(savedArrayList4[persistentIndex]);
                 savedArrayList4[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 3";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 4 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList4.Count);
                 //sentPatternsThrough(savedArrayList4[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -965,7 +1017,8 @@ namespace cc841.MScProject
                 { persistentIndex--; }
                 updateWorkspaceColor(savedArrayList5[persistentIndex]);
                 savedArrayList5[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList5.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 6";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 5 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList5.Count);
                 //sentPatternsThrough(savedArrayList5[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -979,7 +1032,8 @@ namespace cc841.MScProject
                 { persistentIndex--; }
                 updateWorkspaceColor(savedArrayList6[persistentIndex]);
                 savedArrayList6[persistentIndex].CopyTo(workspaceArray, 0);
-                statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList6.Count);
+                loopStepLabel.Text = (persistentIndex + 1).ToString() + " / 16";
+                //statusMessagesTextBox.AppendText(Environment.NewLine + "Show input patterns 6 loaded from #" + (persistentIndex + 1).ToString() + " out of " + savedArrayList6.Count);
                 //sentPatternsThrough(savedArrayList6[persistentIndex]);
                 //currently next pattern button does not sent pattern through, but user can click "Commit"
             }
@@ -1005,9 +1059,10 @@ namespace cc841.MScProject
                     MessageBox.Show("Input value cannot be lower than 100"); 
                 }
                 //else if (textBoxValue > 768) { textBoxValue = 768; MessageBox.Show("Input value cannot be higher than 768"); }
-                else
+                else if (lastConfirmedLatency != textBoxValue)
                 {
                     selectedLatency = textBoxValue;
+                    lastConfirmedLatency = textBoxValue;
                     e.Handled = true; //To suppress the Ding sounds, indicating that there is no error.
                     MessageBox.Show("Speed is set to " + selectedLatency.ToString() + " ms");
                     statusMessagesTextBox.AppendText(Environment.NewLine + "Speed is set to " + selectedLatency.ToString() + " ms");
@@ -1118,14 +1173,13 @@ namespace cc841.MScProject
                     MessageBox.Show("Input value cannot be lower than 100");
                 }
                 //else if (textBoxValue > 768) { textBoxValue = 768; MessageBox.Show("Input value cannot be higher than 768"); }
-            else
+            else if (lastConfirmedLatency != textBoxValue)
                 {
                     selectedLatency = textBoxValue;
-            }
-
-            MessageBox.Show("Speed is set to " + selectedLatency.ToString() + " ms");
-            statusMessagesTextBox.AppendText(Environment.NewLine + "Speed is set to " + selectedLatency.ToString() + " ms");
-            
+                    lastConfirmedLatency = textBoxValue;
+                    MessageBox.Show("Speed is set to " + selectedLatency.ToString() + " ms");
+                    statusMessagesTextBox.AppendText(Environment.NewLine + "Speed is set to " + selectedLatency.ToString() + " ms");
+            }    
         }
 
         private async void autoPortcheck()

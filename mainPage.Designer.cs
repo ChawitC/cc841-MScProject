@@ -167,8 +167,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.valueSectionPictureBox = new System.Windows.Forms.PictureBox();
             this.loopStepLabel = new System.Windows.Forms.Label();
+            this.fakeConfirmButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.intensitySelectTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomValuePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.topValuePictureBox)).BeginInit();
@@ -176,7 +177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valueSectionPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -428,7 +429,7 @@
             // 
             this.cloneModeCheckBox.AutoSize = true;
             this.cloneModeCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.cloneModeCheckBox.Location = new System.Drawing.Point(1002, 386);
+            this.cloneModeCheckBox.Location = new System.Drawing.Point(1007, 383);
             this.cloneModeCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.cloneModeCheckBox.Name = "cloneModeCheckBox";
             this.cloneModeCheckBox.Size = new System.Drawing.Size(97, 19);
@@ -603,7 +604,7 @@
             // 
             this.SPstatusButton.BackColor = System.Drawing.Color.Red;
             this.SPstatusButton.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SPstatusButton.Location = new System.Drawing.Point(206, 22);
+            this.SPstatusButton.Location = new System.Drawing.Point(210, 15);
             this.SPstatusButton.Margin = new System.Windows.Forms.Padding(2);
             this.SPstatusButton.Name = "SPstatusButton";
             this.SPstatusButton.Size = new System.Drawing.Size(106, 28);
@@ -616,7 +617,7 @@
             // 
             this.SRstatusLabel.AutoSize = true;
             this.SRstatusLabel.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SRstatusLabel.Location = new System.Drawing.Point(20, 26);
+            this.SRstatusLabel.Location = new System.Drawing.Point(20, 18);
             this.SRstatusLabel.Name = "SRstatusLabel";
             this.SRstatusLabel.Size = new System.Drawing.Size(190, 18);
             this.SRstatusLabel.TabIndex = 42;
@@ -1374,7 +1375,7 @@
             // 
             this.SPCOMnumLabel.AutoSize = true;
             this.SPCOMnumLabel.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SPCOMnumLabel.Location = new System.Drawing.Point(354, 26);
+            this.SPCOMnumLabel.Location = new System.Drawing.Point(358, 19);
             this.SPCOMnumLabel.Name = "SPCOMnumLabel";
             this.SPCOMnumLabel.Size = new System.Drawing.Size(202, 18);
             this.SPCOMnumLabel.TabIndex = 110;
@@ -1384,7 +1385,7 @@
             // 
             this.selectPresetDisplayCheckBox.AutoSize = true;
             this.selectPresetDisplayCheckBox.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectPresetDisplayCheckBox.Location = new System.Drawing.Point(23, 55);
+            this.selectPresetDisplayCheckBox.Location = new System.Drawing.Point(23, 52);
             this.selectPresetDisplayCheckBox.Name = "selectPresetDisplayCheckBox";
             this.selectPresetDisplayCheckBox.Size = new System.Drawing.Size(275, 22);
             this.selectPresetDisplayCheckBox.TabIndex = 111;
@@ -1397,7 +1398,7 @@
             this.loopStartStopButton.BackColor = System.Drawing.SystemColors.Control;
             this.loopStartStopButton.Enabled = false;
             this.loopStartStopButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.loopStartStopButton.Location = new System.Drawing.Point(109, 428);
+            this.loopStartStopButton.Location = new System.Drawing.Point(82, 428);
             this.loopStartStopButton.Margin = new System.Windows.Forms.Padding(2);
             this.loopStartStopButton.Name = "loopStartStopButton";
             this.loopStartStopButton.Size = new System.Drawing.Size(67, 49);
@@ -1411,7 +1412,7 @@
             this.loopPrevPatternButton.BackColor = System.Drawing.SystemColors.Control;
             this.loopPrevPatternButton.Enabled = false;
             this.loopPrevPatternButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.loopPrevPatternButton.Location = new System.Drawing.Point(57, 428);
+            this.loopPrevPatternButton.Location = new System.Drawing.Point(30, 428);
             this.loopPrevPatternButton.Margin = new System.Windows.Forms.Padding(2);
             this.loopPrevPatternButton.Name = "loopPrevPatternButton";
             this.loopPrevPatternButton.Size = new System.Drawing.Size(48, 49);
@@ -1425,7 +1426,7 @@
             this.loopNextPatternButton.BackColor = System.Drawing.SystemColors.Control;
             this.loopNextPatternButton.Enabled = false;
             this.loopNextPatternButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.loopNextPatternButton.Location = new System.Drawing.Point(180, 429);
+            this.loopNextPatternButton.Location = new System.Drawing.Point(153, 429);
             this.loopNextPatternButton.Margin = new System.Windows.Forms.Padding(2);
             this.loopNextPatternButton.Name = "loopNextPatternButton";
             this.loopNextPatternButton.Size = new System.Drawing.Size(48, 48);
@@ -1438,10 +1439,10 @@
             // 
             this.loopLatencyTextBox.Enabled = false;
             this.loopLatencyTextBox.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loopLatencyTextBox.Location = new System.Drawing.Point(231, 454);
+            this.loopLatencyTextBox.Location = new System.Drawing.Point(207, 454);
             this.loopLatencyTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.loopLatencyTextBox.Name = "loopLatencyTextBox";
-            this.loopLatencyTextBox.Size = new System.Drawing.Size(80, 23);
+            this.loopLatencyTextBox.Size = new System.Drawing.Size(64, 23);
             this.loopLatencyTextBox.TabIndex = 115;
             this.loopLatencyTextBox.Text = "100";
             this.loopLatencyTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1452,7 +1453,7 @@
             // 
             this.loopControlsLabel.AutoSize = true;
             this.loopControlsLabel.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loopControlsLabel.Location = new System.Drawing.Point(73, 406);
+            this.loopControlsLabel.Location = new System.Drawing.Point(49, 406);
             this.loopControlsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.loopControlsLabel.Name = "loopControlsLabel";
             this.loopControlsLabel.Size = new System.Drawing.Size(204, 18);
@@ -1463,7 +1464,7 @@
             // 
             this.selectedLatencyLabel.AutoSize = true;
             this.selectedLatencyLabel.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedLatencyLabel.Location = new System.Drawing.Point(233, 432);
+            this.selectedLatencyLabel.Location = new System.Drawing.Point(215, 432);
             this.selectedLatencyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.selectedLatencyLabel.Name = "selectedLatencyLabel";
             this.selectedLatencyLabel.Size = new System.Drawing.Size(78, 18);
@@ -1498,7 +1499,7 @@
             // statusRefreshButton
             // 
             this.statusRefreshButton.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusRefreshButton.Location = new System.Drawing.Point(316, 22);
+            this.statusRefreshButton.Location = new System.Drawing.Point(320, 15);
             this.statusRefreshButton.Name = "statusRefreshButton";
             this.statusRefreshButton.Size = new System.Drawing.Size(32, 28);
             this.statusRefreshButton.TabIndex = 120;
@@ -1642,7 +1643,7 @@
             // clearWorkspaceButton
             // 
             this.clearWorkspaceButton.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearWorkspaceButton.Location = new System.Drawing.Point(1002, 406);
+            this.clearWorkspaceButton.Location = new System.Drawing.Point(1002, 405);
             this.clearWorkspaceButton.Name = "clearWorkspaceButton";
             this.clearWorkspaceButton.Size = new System.Drawing.Size(106, 23);
             this.clearWorkspaceButton.TabIndex = 137;
@@ -1879,33 +1880,46 @@
             this.pictureBox4.TabIndex = 145;
             this.pictureBox4.TabStop = false;
             // 
-            // pictureBox5
+            // valueSectionPictureBox
             // 
-            this.pictureBox5.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.pictureBox5.Location = new System.Drawing.Point(993, 50);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(204, 490);
-            this.pictureBox5.TabIndex = 146;
-            this.pictureBox5.TabStop = false;
+            this.valueSectionPictureBox.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.valueSectionPictureBox.Location = new System.Drawing.Point(993, 50);
+            this.valueSectionPictureBox.Name = "valueSectionPictureBox";
+            this.valueSectionPictureBox.Size = new System.Drawing.Size(204, 490);
+            this.valueSectionPictureBox.TabIndex = 146;
+            this.valueSectionPictureBox.TabStop = false;
             // 
             // loopStepLabel
             // 
-            this.loopStepLabel.AutoSize = true;
             this.loopStepLabel.Enabled = false;
             this.loopStepLabel.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loopStepLabel.Location = new System.Drawing.Point(331, 422);
+            this.loopStepLabel.Location = new System.Drawing.Point(313, 422);
             this.loopStepLabel.Name = "loopStepLabel";
-            this.loopStepLabel.Size = new System.Drawing.Size(85, 39);
+            this.loopStepLabel.Size = new System.Drawing.Size(118, 54);
             this.loopStepLabel.TabIndex = 147;
-            this.loopStepLabel.Text = "N / N";
+            this.loopStepLabel.Text = "N/A";
             this.loopStepLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fakeConfirmButton
+            // 
+            this.fakeConfirmButton.BackColor = System.Drawing.SystemColors.Control;
+            this.fakeConfirmButton.Enabled = false;
+            this.fakeConfirmButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.fakeConfirmButton.Location = new System.Drawing.Point(272, 454);
+            this.fakeConfirmButton.Margin = new System.Windows.Forms.Padding(2);
+            this.fakeConfirmButton.Name = "fakeConfirmButton";
+            this.fakeConfirmButton.Size = new System.Drawing.Size(26, 23);
+            this.fakeConfirmButton.TabIndex = 148;
+            this.fakeConfirmButton.Text = "✓";
+            this.fakeConfirmButton.UseVisualStyleBackColor = false;
             // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(1209, 749);
+            this.ClientSize = new System.Drawing.Size(1209, 757);
+            this.Controls.Add(this.fakeConfirmButton);
             this.Controls.Add(this.loopStepLabel);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -2045,7 +2059,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.valueSectionPictureBox);
             this.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -2059,7 +2073,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.valueSectionPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2205,8 +2219,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox valueSectionPictureBox;
         private System.Windows.Forms.Label loopStepLabel;
+        private System.Windows.Forms.Button fakeConfirmButton;
     }
 }
 
