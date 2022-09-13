@@ -215,10 +215,10 @@ namespace cc841.MScProject
             ToolTip toolTipLoopControl = new ToolTip();
 
             // Set up the delays for the ToolTip.
-            toolTipGeneral.AutoPopDelay = 5000;
+            toolTipGeneral.AutoPopDelay = 10000;
             toolTipGeneral.InitialDelay = 1000;
             toolTipGeneral.ReshowDelay = 500;
-            toolTipLoopControl.AutoPopDelay = 5000;
+            toolTipLoopControl.AutoPopDelay = 10000;
             toolTipLoopControl.InitialDelay = 1000;
             toolTipLoopControl.ReshowDelay = 500;
             // Force the ToolTip text to be displayed whether or not the form is active.
@@ -243,7 +243,7 @@ namespace cc841.MScProject
             toolTipGeneral.SetToolTip(this.modeRadioButton3, "Display numbers in each box as phase input value from -32.22° to 113.65°");
             toolTipGeneral.SetToolTip(this.cloneModeCheckBox, "Copy the phase input value from an index by clicking on that particular selected index");
             toolTipGeneral.SetToolTip(this.clearWorkspaceButton, "Set the phase input values for all of the indexes within the workspace to 0");
-            toolTipGeneral.SetToolTip(this.intensitySelectTrackBar, "Use this slider to select desired phase input value to be assign to an index\nFine tune selection by using up-down arrow keys");
+            toolTipGeneral.SetToolTip(this.intensitySelectTrackBar, "Use this slider to select desired phase input value to be assign to an index\n\nFine tune selection by using up-down arrow keys");
             toolTipGeneral.SetToolTip(this.topValuePictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nColder colours for lower values, Hotter colours for higher values.");
             toolTipGeneral.SetToolTip(this.gradiantPictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nColder colours for lower values, Hotter colours for higher values.");
             toolTipGeneral.SetToolTip(this.bottomValuePictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nBlack represents phase input value 0.");
@@ -251,19 +251,22 @@ namespace cc841.MScProject
             toolTipGeneral.SetToolTip(this.undoButton, "Undo: Revert the workspace to the previous stage");
             toolTipGeneral.SetToolTip(this.redoButton, "Redo: Revert the workspace to the next stage");
             toolTipGeneral.SetToolTip(this.commitButton, "Submit the phase input values as shown on the workspace to the BlackBox through the Serial port");
-            toolTipGeneral.SetToolTip(this.SPstatusButton, "The current connection status of the Serial port connection\nAutomatically refreshes with most actions on the GUI.\nClick to manually refresh the status");
+            toolTipGeneral.SetToolTip(this.SPstatusButton, "The current connection status of the Serial port connection\nAutomatically refreshes with most actions on the GUI.\n\nClick to manually refresh the connection status");
             toolTipGeneral.SetToolTip(this.statusRefreshButton, "Manually refresh the Serial port connection status");
-            toolTipGeneral.SetToolTip(this.presetButton1, "Load Static preset pattern 1: Spot: in the middle of the array");
-            toolTipGeneral.SetToolTip(this.presetButton2, "Load Static preset pattern 2: Spot: near the top left of the array");
-            toolTipGeneral.SetToolTip(this.presetButton3, "Load Dynamic preset pattern 3: Vertical line: drawing downwards");
-            toolTipGeneral.SetToolTip(this.presetButton4, "Load Dynamic preset pattern 4: Horizontal line: drawing diagnoally rightwards");
-            toolTipGeneral.SetToolTip(this.presetButton5, "Load Dynamic preset pattern 5: Triangle: drawing diagnoally up-rightwards, diagonally right-rightwards and horizontally leftwards");
-            toolTipGeneral.SetToolTip(this.presetButton6, "Load Dynamic preset pattern 6: Square: drawing line rightwards, downwards, leftwords and upwards");
+            toolTipGeneral.SetToolTip(this.presetButton1, "Load Static preset pattern 1 : Spot\nin the middle of the array");
+            toolTipGeneral.SetToolTip(this.presetButton2, "Load Static preset pattern 2 : Spot\nnear the top left of the array");
+            toolTipGeneral.SetToolTip(this.presetButton3, "Load Dynamic preset pattern 3 : Vertical line\nDrawing downwards");
+            toolTipGeneral.SetToolTip(this.presetButton4, "Load Dynamic preset pattern 4 : Horizontal line\nDrawing diagnoally rightwards");
+            toolTipGeneral.SetToolTip(this.presetButton5, "Load Dynamic preset pattern 5 : Triangle\nDrawing lines diagnoally up-rightwards, diagonally down-rightwards and horizontally leftwards");
+            toolTipGeneral.SetToolTip(this.presetButton6, "Load Dynamic preset pattern 6 : Square\nDrawing lines rightwards, downwards, leftwards and upwards");
             toolTipGeneral.SetToolTip(this.loopPrevPatternButton, "Navigate to the previous pattern within the same dynamic pattern set");
             toolTipGeneral.SetToolTip(this.loopNextPatternButton, "Navigate to the next pattern within the same dynamic pattern set");
-            toolTipGeneral.SetToolTip(this.loopStartStopButton, "Plays/Pause the pattern set as a loop automatically\nInput patterns are submitted to the BlackBox automatically if a Serial port connection was established.");
+            toolTipGeneral.SetToolTip(this.loopStartStopButton, "Plays/Pause the pattern set as a loop automatically\nInput patterns are submitted to the BlackBox automatically if a Serial port connection was established.\n\nIf the program hang with the use of this function, restarting the executable is recommended.");
             toolTipGeneral.SetToolTip(this.loopStepLabel, "Currently displayed pattern within the set / total number of patterns within the selected dynamic pattern set");
-            toolTipGeneral.SetToolTip(this.loopLatencyTextBox, "Input the speed between each steps of the input patterns whilst it is being played automatically\nThe speed input value cannot be less than 100ms\n Click on the button on the left, Click away from this textbox or press \"Enter\" to confirm");
+            toolTipGeneral.SetToolTip(this.loopLatencyTextBox, "Input the speed between each steps of the input patterns whilst it is being played automatically\nThe speed input value cannot be less than 100ms\n\nClick on the button on the right, Click away from this textbox or press \"Enter\" to confirm");
+            toolTipGeneral.SetToolTip(this.fakeConfirmButton, "Input the speed between each steps of the input patterns whilst it is being played automatically\nThe speed input value cannot be less than 100ms\n\nClick on this button, Click away from the textbox or press \"Enter\" to confirm");
+            toolTipGeneral.SetToolTip(this.selectedLatencyLabel, "Input the speed between each steps of the input patterns whilst it is being played automatically\nThe speed input value cannot be less than 100ms\n\nClick on the button on the right of the textbox, Click away from the textbox or press \"Enter\" to confirm after typing");
+            toolTipGeneral.SetToolTip(this.loopControlsLabel, "The loop controls are enabled only when one of the dynamic input patterns is selected");
 
             //Initialize serial port
             CheckSPconnection();
