@@ -209,7 +209,7 @@ namespace cc841.MScProject
             degreeButton9.Click += degreeButton_Click;
             degreeButton10.Click += degreeButton_Click;
             degreeButton11.Click += degreeButton_Click;
-
+            
             //Tool tips implementation
             ToolTip toolTipGeneral = new ToolTip();
             ToolTip toolTipLoopControl = new ToolTip();
@@ -225,9 +225,45 @@ namespace cc841.MScProject
             toolTipGeneral.ShowAlways = true;
             toolTipLoopControl.ShowAlways = true;
 
-
-            // Set up the ToolTip text for the Button and Checkbox.
-            toolTipGeneral.SetToolTip(this.button1, "My button1");
+            // Set up the ToolTip text for the Buttons and Checkboxes.
+            toolTipGeneral.SetToolTip(this.loadCustomButton1, "Load Custom Pattern 1 to workspace");
+            toolTipGeneral.SetToolTip(this.loadCustomButton2, "Load Custom Pattern 2 to workspace");
+            toolTipGeneral.SetToolTip(this.loadCustomButton3, "Load Custom Pattern 3 to workspace");
+            toolTipGeneral.SetToolTip(this.loadCustomButton4, "Load Custom Pattern 4 to workspace");
+            toolTipGeneral.SetToolTip(this.customImageButton1, "Load Custom Pattern 1 to workspace");
+            toolTipGeneral.SetToolTip(this.customImageButton2, "Load Custom Pattern 2 to workspace");
+            toolTipGeneral.SetToolTip(this.customImageButton3, "Load Custom Pattern 3 to workspace");
+            toolTipGeneral.SetToolTip(this.customImageButton4, "Load Custom Pattern 4 to workspace");
+            toolTipGeneral.SetToolTip(this.saveCustomButton1, "Save workspace to Custom Pattern 1");
+            toolTipGeneral.SetToolTip(this.saveCustomButton2, "Save workspace to Custom Pattern 2");
+            toolTipGeneral.SetToolTip(this.saveCustomButton3, "Save workspace to Custom Pattern 3");
+            toolTipGeneral.SetToolTip(this.saveCustomButton4, "Save workspace to Custom Pattern 4");
+            toolTipGeneral.SetToolTip(this.modeRadioButton1, "Display numbers in each box as each speaker's indexes from 1 to 64");
+            toolTipGeneral.SetToolTip(this.modeRadioButton2, "Display numbers in each box as phase input value from 0 to 768");
+            toolTipGeneral.SetToolTip(this.modeRadioButton3, "Display numbers in each box as phase input value from -32.22° to 113.65°");
+            toolTipGeneral.SetToolTip(this.cloneModeCheckBox, "Copy the phase input value from an index by clicking on that particular selected index");
+            toolTipGeneral.SetToolTip(this.clearWorkspaceButton, "Set the phase input values for all of the indexes within the workspace to 0");
+            toolTipGeneral.SetToolTip(this.intensitySelectTrackBar, "Use this slider to select desired phase input value to be assign to an index\nFine tune selection by using up-down arrow keys");
+            toolTipGeneral.SetToolTip(this.topValuePictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nColder colours for lower values, Hotter colours for higher values.");
+            toolTipGeneral.SetToolTip(this.gradiantPictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nColder colours for lower values, Hotter colours for higher values.");
+            toolTipGeneral.SetToolTip(this.bottomValuePictureBox, "Colour coding to represent the phase input values assigned to each of the indexes\nBlack represents phase input value 0.");
+            toolTipGeneral.SetToolTip(this.sentXButton, "A Debug function to set all of the indexes' intensity values to 512");
+            toolTipGeneral.SetToolTip(this.undoButton, "Undo: Revert the workspace to the previous stage");
+            toolTipGeneral.SetToolTip(this.redoButton, "Redo: Revert the workspace to the next stage");
+            toolTipGeneral.SetToolTip(this.commitButton, "Submit the phase input values as shown on the workspace to the BlackBox through the Serial port");
+            toolTipGeneral.SetToolTip(this.SPstatusButton, "The current connection status of the Serial port connection\nAutomatically refreshes with most actions on the GUI.\nClick to manually refresh the status");
+            toolTipGeneral.SetToolTip(this.statusRefreshButton, "Manually refresh the Serial port connection status");
+            toolTipGeneral.SetToolTip(this.presetButton1, "Load Static preset pattern 1: Spot: in the middle of the array");
+            toolTipGeneral.SetToolTip(this.presetButton2, "Load Static preset pattern 2: Spot: near the top left of the array");
+            toolTipGeneral.SetToolTip(this.presetButton3, "Load Dynamic preset pattern 3: Vertical line: drawing downwards");
+            toolTipGeneral.SetToolTip(this.presetButton4, "Load Dynamic preset pattern 4: Horizontal line: drawing diagnoally rightwards");
+            toolTipGeneral.SetToolTip(this.presetButton5, "Load Dynamic preset pattern 5: Triangle: drawing diagnoally up-rightwards, diagonally right-rightwards and horizontally leftwards");
+            toolTipGeneral.SetToolTip(this.presetButton6, "Load Dynamic preset pattern 6: Square: drawing line rightwards, downwards, leftwords and upwards");
+            toolTipGeneral.SetToolTip(this.loopPrevPatternButton, "Navigate to the previous pattern within the same dynamic pattern set");
+            toolTipGeneral.SetToolTip(this.loopNextPatternButton, "Navigate to the next pattern within the same dynamic pattern set");
+            toolTipGeneral.SetToolTip(this.loopStartStopButton, "Plays/Pause the pattern set as a loop automatically\nInput patterns are submitted to the BlackBox automatically if a Serial port connection was established.");
+            toolTipGeneral.SetToolTip(this.loopStepLabel, "Currently displayed pattern within the set / total number of patterns within the selected dynamic pattern set");
+            toolTipGeneral.SetToolTip(this.loopLatencyTextBox, "Input the speed between each steps of the input patterns whilst it is being played automatically\nThe speed input value cannot be less than 100ms\n Click on the button on the left, Click away from this textbox or press \"Enter\" to confirm");
 
             //Initialize serial port
             CheckSPconnection();
