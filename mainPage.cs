@@ -339,7 +339,7 @@ namespace cc841.MScProject
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     //Capture picture from indicated coordinate of workspace area
-                    g.CopyFromScreen(new Point(bounds.Left + 420, bounds.Top + 100), Point.Empty, new Size(450, 450));
+                    g.CopyFromScreen(new Point(bounds.Left + 515, bounds.Top + 100), Point.Empty, new Size(450, 450));
                     // alt value g.CopyFromScreen(new Point(bounds.Left + 650, bounds.Top + 200), Point.Empty, new Size(450, 450));
                 }
                 //bitmap.Save("SavedCustomInputs/" + sentImgName, ImageFormat.Png); //Does not work 
@@ -656,7 +656,7 @@ namespace cc841.MScProject
                 selectedColor = workspaceArray[arrayIndex]; // have selected color take colour from latest clone mode value, so it functions corretly when switch back.
                 statusMessagesTextBox.AppendText(Environment.NewLine + "Cloned value from workspaceArray[" + arrayIndex + "] = " + workspaceArray[arrayIndex]);
                 cloneModeCheckBox.Checked = false;
-                valueSectionPictureBox.BackColor = SystemColors.Desktop;
+                valueSectionPictureBox.BackColor = SystemColors.GradientActiveCaption;
             }
         }
 
